@@ -37,19 +37,19 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.likedGroupsListBox = new System.Windows.Forms.ListBox();
-            this.likedMusicListBox = new System.Windows.Forms.ListBox();
-            this.likedPagesListBox = new System.Windows.Forms.ListBox();
-            this.GroupsPictureBox = new System.Windows.Forms.PictureBox();
+            this.friendsPictureBox = new System.Windows.Forms.PictureBox();
             this.MusicPictureBox = new System.Windows.Forms.PictureBox();
-            this.PagesPictureBox = new System.Windows.Forms.PictureBox();
+            this.GroupsPictureBox = new System.Windows.Forms.PictureBox();
+            this.likedFriendsListBox = new System.Windows.Forms.ListBox();
+            this.likedMusicListBox = new System.Windows.Forms.ListBox();
+            this.likedGroupsListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MusicPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PagesPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -144,10 +144,10 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.PagesPictureBox);
+            this.tabPage2.Controls.Add(this.friendsPictureBox);
             this.tabPage2.Controls.Add(this.MusicPictureBox);
             this.tabPage2.Controls.Add(this.GroupsPictureBox);
-            this.tabPage2.Controls.Add(this.likedPagesListBox);
+            this.tabPage2.Controls.Add(this.likedFriendsListBox);
             this.tabPage2.Controls.Add(this.likedMusicListBox);
             this.tabPage2.Controls.Add(this.likedGroupsListBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 31);
@@ -158,15 +158,39 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // likedGroupsListBox
+            // friendsPictureBox
             // 
-            this.likedGroupsListBox.FormattingEnabled = true;
-            this.likedGroupsListBox.ItemHeight = 22;
-            this.likedGroupsListBox.Location = new System.Drawing.Point(30, 163);
-            this.likedGroupsListBox.Name = "likedGroupsListBox";
-            this.likedGroupsListBox.Size = new System.Drawing.Size(157, 136);
-            this.likedGroupsListBox.TabIndex = 0;
-            this.likedGroupsListBox.SelectedIndexChanged += new System.EventHandler(this.likedGroupsListBox_SelectedIndexChanged);
+            this.friendsPictureBox.Location = new System.Drawing.Point(515, 249);
+            this.friendsPictureBox.Name = "friendsPictureBox";
+            this.friendsPictureBox.Size = new System.Drawing.Size(55, 50);
+            this.friendsPictureBox.TabIndex = 5;
+            this.friendsPictureBox.TabStop = false;
+            // 
+            // MusicPictureBox
+            // 
+            this.MusicPictureBox.Location = new System.Drawing.Point(317, 249);
+            this.MusicPictureBox.Name = "MusicPictureBox";
+            this.MusicPictureBox.Size = new System.Drawing.Size(55, 50);
+            this.MusicPictureBox.TabIndex = 4;
+            this.MusicPictureBox.TabStop = false;
+            // 
+            // GroupsPictureBox
+            // 
+            this.GroupsPictureBox.Location = new System.Drawing.Point(132, 249);
+            this.GroupsPictureBox.Name = "GroupsPictureBox";
+            this.GroupsPictureBox.Size = new System.Drawing.Size(55, 50);
+            this.GroupsPictureBox.TabIndex = 3;
+            this.GroupsPictureBox.TabStop = false;
+            // 
+            // likedFriendsListBox
+            // 
+            this.likedFriendsListBox.FormattingEnabled = true;
+            this.likedFriendsListBox.ItemHeight = 22;
+            this.likedFriendsListBox.Location = new System.Drawing.Point(404, 163);
+            this.likedFriendsListBox.Name = "likedFriendsListBox";
+            this.likedFriendsListBox.Size = new System.Drawing.Size(166, 136);
+            this.likedFriendsListBox.TabIndex = 2;
+            this.likedFriendsListBox.SelectedIndexChanged += new System.EventHandler(this.likedFriendsListBox_SelectedIndexChanged);
             // 
             // likedMusicListBox
             // 
@@ -178,39 +202,15 @@
             this.likedMusicListBox.TabIndex = 1;
             this.likedMusicListBox.SelectedIndexChanged += new System.EventHandler(this.likedMusicListBox_SelectedIndexChanged);
             // 
-            // likedPagesListBox
+            // likedGroupsListBox
             // 
-            this.likedPagesListBox.FormattingEnabled = true;
-            this.likedPagesListBox.ItemHeight = 22;
-            this.likedPagesListBox.Location = new System.Drawing.Point(404, 163);
-            this.likedPagesListBox.Name = "likedPagesListBox";
-            this.likedPagesListBox.Size = new System.Drawing.Size(166, 136);
-            this.likedPagesListBox.TabIndex = 2;
-            // 
-            // GroupsPictureBox
-            // 
-            this.GroupsPictureBox.Location = new System.Drawing.Point(132, 249);
-            this.GroupsPictureBox.Name = "GroupsPictureBox";
-            this.GroupsPictureBox.Size = new System.Drawing.Size(55, 50);
-            this.GroupsPictureBox.TabIndex = 3;
-            this.GroupsPictureBox.TabStop = false;
-            // 
-            // MusicPictureBox
-            // 
-            this.MusicPictureBox.Location = new System.Drawing.Point(317, 249);
-            this.MusicPictureBox.Name = "MusicPictureBox";
-            this.MusicPictureBox.Size = new System.Drawing.Size(55, 50);
-            this.MusicPictureBox.TabIndex = 4;
-            this.MusicPictureBox.TabStop = false;
-            // 
-            // PagesPictureBox
-            // 
-            this.PagesPictureBox.Location = new System.Drawing.Point(515, 249);
-            this.PagesPictureBox.Name = "PagesPictureBox";
-            this.PagesPictureBox.Size = new System.Drawing.Size(55, 50);
-            this.PagesPictureBox.TabIndex = 5;
-            this.PagesPictureBox.TabStop = false;
-            this.PagesPictureBox.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.likedGroupsListBox.FormattingEnabled = true;
+            this.likedGroupsListBox.ItemHeight = 22;
+            this.likedGroupsListBox.Location = new System.Drawing.Point(30, 163);
+            this.likedGroupsListBox.Name = "likedGroupsListBox";
+            this.likedGroupsListBox.Size = new System.Drawing.Size(157, 136);
+            this.likedGroupsListBox.TabIndex = 0;
+            this.likedGroupsListBox.SelectedIndexChanged += new System.EventHandler(this.likedGroupsListBox_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -229,9 +229,9 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MusicPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PagesPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -247,10 +247,10 @@
         private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Button buttonConnectAsDesig;
-        private System.Windows.Forms.PictureBox PagesPictureBox;
+        private System.Windows.Forms.PictureBox friendsPictureBox;
         private System.Windows.Forms.PictureBox MusicPictureBox;
         private System.Windows.Forms.PictureBox GroupsPictureBox;
-        private System.Windows.Forms.ListBox likedPagesListBox;
+        private System.Windows.Forms.ListBox likedFriendsListBox;
         private System.Windows.Forms.ListBox likedMusicListBox;
         private System.Windows.Forms.ListBox likedGroupsListBox;
     }

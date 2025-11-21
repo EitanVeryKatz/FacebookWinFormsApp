@@ -40,6 +40,8 @@ namespace BasicFacebookFeatures
                 "email",
                 "public_profile"
                 /// add any relevant permissions
+                , "user_friends",
+                "user_likes"
                 );
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -90,9 +92,10 @@ namespace BasicFacebookFeatures
             likedMusicListBox.DataSource = user.Music;
             likedMusicListBox.DisplayMember = "Name";
 
-            likedGroupsListBox.Items.Clear();
-            likedGroupsListBox.DataSource = user.Groups;
-            likedGroupsListBox.DisplayMember = "Name";
+            likedFriendsListBox.Items.Clear();
+            likedFriendsListBox.DataSource = user.Friends;
+            likedFriendsListBox.DisplayMember = "Name";
+
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -120,14 +123,16 @@ namespace BasicFacebookFeatures
             MusicPictureBox.ImageLocation = (likedMusicListBox.SelectedItem as Page).PictureNormalURL;
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void likedGroupsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             GroupsPictureBox.ImageLocation = (likedGroupsListBox.SelectedItem as Page).PictureNormalURL;
         }
+
+        private void likedFriendsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            friendsPictureBox.ImageLocation = (likedFriendsListBox.SelectedItem as Page).PictureNormalURL;
+        }
+
+       
     }
 }
