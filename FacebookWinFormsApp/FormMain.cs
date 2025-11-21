@@ -133,6 +133,10 @@ namespace BasicFacebookFeatures
             friendsPictureBox.ImageLocation = (likedFriendsListBox.SelectedItem as Page).PictureNormalURL;
         }
 
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ComparingPagesWindow comparingPagesWindow = new ComparingPagesWindow(m_LoginResult.LoggedInUser);
+            comparingPagesWindow.ShowDialog();
+        }
     }
 }

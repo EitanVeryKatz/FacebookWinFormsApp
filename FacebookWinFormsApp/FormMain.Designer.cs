@@ -43,6 +43,8 @@
             this.likedFriendsListBox = new System.Windows.Forms.ListBox();
             this.likedMusicListBox = new System.Windows.Forms.ListBox();
             this.likedGroupsListBox = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -144,6 +146,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.friendsPictureBox);
             this.tabPage2.Controls.Add(this.MusicPictureBox);
             this.tabPage2.Controls.Add(this.GroupsPictureBox);
@@ -212,6 +216,25 @@
             this.likedGroupsListBox.TabIndex = 0;
             this.likedGroupsListBox.SelectedIndexChanged += new System.EventHandler(this.likedGroupsListBox_SelectedIndexChanged);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(652, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 61);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "ComparePagesFeatureBtn";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(652, 195);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(129, 61);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -253,6 +276,8 @@
         private System.Windows.Forms.ListBox likedFriendsListBox;
         private System.Windows.Forms.ListBox likedMusicListBox;
         private System.Windows.Forms.ListBox likedGroupsListBox;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 
