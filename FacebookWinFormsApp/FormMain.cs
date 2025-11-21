@@ -71,6 +71,28 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
             buttonLogin.Enabled = false;
             buttonLogout.Enabled = true;
+
+            setUpUserInformationDisplay();
+        }
+
+        private void setUpUserInformationDisplay()
+        {
+            if (m_LoginResult == null)
+            {
+                throw new Exception("User is not logged in");
+            }
+            User user = m_LoginResult.LoggedInUser;
+            likedGroupsListBox.Items.Clear();
+            likedGroupsListBox.DataSource = user.LikedPages;
+            likedGroupsListBox.DisplayMember = "Name";
+            
+            likedMusicListBox.Items.Clear();
+            likedMusicListBox.DataSource = user.Music;
+            likedMusicListBox.DisplayMember = "Name";
+
+            likedGroupsListBox.Items.Clear();
+            likedGroupsListBox.DataSource = user.Groups;
+            likedGroupsListBox.DisplayMember = "Name";
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -93,9 +115,19 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void likedMusicListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MusicPictureBox.ImageLocation = (likedMusicListBox.SelectedItem as Page).PictureNormalURL;
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void likedGroupsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GroupsPictureBox.ImageLocation = (likedGroupsListBox.SelectedItem as Page).PictureNormalURL;
         }
     }
 }
