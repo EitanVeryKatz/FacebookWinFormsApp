@@ -38,9 +38,9 @@ namespace BasicFacebookFeatures
                 textBoxAppID.Text,
                 /// requested permissions:
                 "email",
-                "public_profile"
+                "public_profile",
                 /// add any relevant permissions
-                , "user_friends",
+                "user_friends",
                 "user_likes"
                 );
 
@@ -135,8 +135,28 @@ namespace BasicFacebookFeatures
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (m_LoginResult == null || m_LoginResult.LoggedInUser == null)
+            {
+                MessageBox.Show("Please login first.");
+                return;
+            }
+
             ComparingPagesWindow comparingPagesWindow = new ComparingPagesWindow(m_LoginResult.LoggedInUser);
             comparingPagesWindow.ShowDialog();
+        }
+
+        private void buttonMostPhotogenicYear_Click(object sender, EventArgs e)
+        {
+            if (m_LoginResult == null || m_LoginResult.LoggedInUser == null)
+            {
+                MessageBox.Show("Please login first.");
+                return;
+            }
+
+            MostPhotogenicYearAnalyzer mostPhotogenicYearAnalyzer = new MostPhotogenicYearAnalyzer(m_LoginResult.LoggedInUser);
+            {
+                mostPhotogenicYearAnalyzer.ShowDialog();
+            }
         }
     }
 }
