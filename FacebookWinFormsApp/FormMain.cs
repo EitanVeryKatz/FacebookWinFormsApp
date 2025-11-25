@@ -41,7 +41,13 @@ namespace BasicFacebookFeatures
                 "public_profile",
                 /// add any relevant permissions
                 "user_friends",
-                "user_likes"
+                "user_likes",
+                "user_photos",
+                "user_posts",
+                "user_events",
+                "user_birthday",
+                "user_age_range",
+                "user_hometown"
                 );
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -141,8 +147,11 @@ namespace BasicFacebookFeatures
                 return;
             }
 
-            ComparingPagesWindow comparingPagesWindow = new ComparingPagesWindow(m_LoginResult.LoggedInUser);
-            comparingPagesWindow.ShowDialog();
+            //            ComparingPagesWindow comparingPagesWindow = new ComparingPagesWindow(m_LoginResult.LoggedInUser);
+            //            comparingPagesWindow.ShowDialog();
+
+            HigherOrLowerForm higherOrLowerForm = new HigherOrLowerForm(m_LoginResult.LoggedInUser);
+            higherOrLowerForm.ShowDialog();
         }
 
         private void buttonMostPhotogenicYear_Click(object sender, EventArgs e)

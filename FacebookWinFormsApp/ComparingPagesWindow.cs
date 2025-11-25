@@ -20,6 +20,7 @@ namespace BasicFacebookFeatures
         private PictureBox winnerPicturebox;
         private Label winnerLabel;
         private readonly User r_LoggedInUser;
+        private readonly GroupComperator r_groupComperator;
         private Page m_PageToCompare1;
         private ListBox likedPagesListBox2;
         private Page m_PageToCompare2;
@@ -34,6 +35,9 @@ namespace BasicFacebookFeatures
             r_LoggedInUser = i_LoggedInUser;
 
             InitializeComponent();
+
+            r_groupComperator = new GroupComperator(r_LoggedInUser);
+
             BindingSource bindingSource1 = new BindingSource();
             BindingSource bindingSource2 = new BindingSource();
 
@@ -189,7 +193,7 @@ namespace BasicFacebookFeatures
 
         private void compareBtn_Click(object sender, EventArgs e)
         {
-            Page winnerPage = comparePages(m_PageToCompare1, m_PageToCompare2);
+            Page winnerPage = r_groupComperator.comparePages(m_PageToCompare1, m_PageToCompare2);
             winnerLabel.Text = $"Winner: {winnerPage.Name}";
             winnerPicturebox.ImageLocation = winnerPage.PictureNormalURL;
             if (postCommentCheckbox.Checked)
@@ -198,26 +202,19 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void postComparisonComment(Page winnerPage)
+        private void postComparisonComment(Page i_WinnerPage)
         {
-            throw new NotImplementedException();
+            StringBuilder stringBuilder = new StringBuilder(postComparisonCommentTextbox.Text);
+            stringBuilder.Replace("{Winner}", i_WinnerPage.Name);
+            try {
+            r_LoggedInUser.PostStatus(stringBuilder.ToString());
+            }catch(Exception e)
+            {
+                MessageBox.Show("Unable to post comment: " + stringBuilder.ToString() + "\nerror: " + e.Message);
+            }
         }
 
-        private Page comparePages(Page i_PageToCompare1, Page i_PageToCompare2)
-        {
-            Page winnerPage;
-            //TODO : add more comparison criteria
-            if (i_PageToCompare1.LikesCount > i_PageToCompare2.LikesCount)
-            {
-                winnerPage = i_PageToCompare1;
-            }
-            else
-            {
-                winnerPage = i_PageToCompare2;
-            }
-
-            return winnerPage;
-        }
+        
 
         private void likedPagesListBox2_SelectedIndexChanged_1(object sender, EventArgs e)
         {
