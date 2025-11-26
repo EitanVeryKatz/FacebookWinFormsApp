@@ -39,6 +39,7 @@
             this.nextPostOrGroupNameLabel = new System.Windows.Forms.Label();
             this.currentPostOrGroupNameLabel = new System.Windows.Forms.Label();
             this.currentGameItemValueLabel = new System.Windows.Forms.Label();
+            this.highscoreLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -150,11 +151,21 @@
             this.currentGameItemValueLabel.TabIndex = 12;
             this.currentGameItemValueLabel.Click += new System.EventHandler(this.label2_Click);
             // 
+            // highscoreLabel
+            // 
+            this.highscoreLabel.AutoSize = true;
+            this.highscoreLabel.Location = new System.Drawing.Point(365, 633);
+            this.highscoreLabel.Name = "highscoreLabel";
+            this.highscoreLabel.Size = new System.Drawing.Size(128, 24);
+            this.highscoreLabel.TabIndex = 13;
+            this.highscoreLabel.Text = "Highschore: 0";
+            // 
             // HigherOrLowerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1060, 668);
+            this.Controls.Add(this.highscoreLabel);
             this.Controls.Add(this.currentGameItemValueLabel);
             this.Controls.Add(this.currentPostOrGroupNameLabel);
             this.Controls.Add(this.nextPostOrGroupNameLabel);
@@ -168,7 +179,7 @@
             this.Controls.Add(this.nextGroupOrProfilePictureBox);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "HigherOrLowerForm";
-            this.Text = "HigherOrLowerForm";
+            this.Text = "Higher Or Lower";
             this.Load += new System.EventHandler(this.HigherOrLowerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
@@ -190,5 +201,6 @@
         private System.Windows.Forms.Label nextPostOrGroupNameLabel;
         private System.Windows.Forms.Label currentPostOrGroupNameLabel;
         private System.Windows.Forms.Label currentGameItemValueLabel;
+        private System.Windows.Forms.Label highscoreLabel;
     }
 }

@@ -70,6 +70,7 @@ namespace BasicFacebookFeatures
             startNewGameBtn.Enabled = false;
             currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}";
             this.BackColor = SystemColors.Control;
+            highscoreLabel.Text = $"Highscore: {r_HigherLowerGameLogic.MaxScore}";
         }
 
         private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox,Label i_Label, FacebookObject i_Item)
