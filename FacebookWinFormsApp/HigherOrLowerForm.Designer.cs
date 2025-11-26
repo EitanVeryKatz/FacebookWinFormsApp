@@ -40,6 +40,8 @@
             this.currentPostOrGroupNameLabel = new System.Windows.Forms.Label();
             this.currentGameItemValueLabel = new System.Windows.Forms.Label();
             this.highscoreLabel = new System.Windows.Forms.Label();
+            this.isLabel = new System.Windows.Forms.Label();
+            this.thanLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -160,11 +162,30 @@
             this.highscoreLabel.TabIndex = 13;
             this.highscoreLabel.Text = "Highschore: 0";
             // 
+            // isLabel
+            // 
+            this.isLabel.AutoSize = true;
+            this.isLabel.Location = new System.Drawing.Point(58, 449);
+            this.isLabel.Name = "isLabel";
+            this.isLabel.Size = new System.Drawing.Size(0, 24);
+            this.isLabel.TabIndex = 14;
+            this.isLabel.Click += new System.EventHandler(this.label2_Click_1);
+            // 
+            // thanLabel
+            // 
+            this.thanLabel.AutoSize = true;
+            this.thanLabel.Location = new System.Drawing.Point(624, 449);
+            this.thanLabel.Name = "thanLabel";
+            this.thanLabel.Size = new System.Drawing.Size(0, 24);
+            this.thanLabel.TabIndex = 15;
+            // 
             // HigherOrLowerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1060, 668);
+            this.Controls.Add(this.thanLabel);
+            this.Controls.Add(this.isLabel);
             this.Controls.Add(this.highscoreLabel);
             this.Controls.Add(this.currentGameItemValueLabel);
             this.Controls.Add(this.currentPostOrGroupNameLabel);
@@ -202,5 +223,7 @@
         private System.Windows.Forms.Label currentPostOrGroupNameLabel;
         private System.Windows.Forms.Label currentGameItemValueLabel;
         private System.Windows.Forms.Label highscoreLabel;
+        private System.Windows.Forms.Label isLabel;
+        private System.Windows.Forms.Label thanLabel;
     }
 }

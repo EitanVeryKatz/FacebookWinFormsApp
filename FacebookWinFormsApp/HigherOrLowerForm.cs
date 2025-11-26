@@ -70,6 +70,8 @@ namespace BasicFacebookFeatures
             startNewGameBtn.Enabled = false;
             currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}";
             this.BackColor = SystemColors.Control;
+            thanLabel.Text = "than";
+            isLabel.Text = "is";
         }
 
         private void updateHighScoreLabel()
@@ -151,6 +153,11 @@ namespace BasicFacebookFeatures
                 " The game continues until you make" +
                 " an incorrect guess." +
                 " Try to achieve the highest score possible!");
+        }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
