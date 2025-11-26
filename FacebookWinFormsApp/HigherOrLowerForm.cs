@@ -70,6 +70,10 @@ namespace BasicFacebookFeatures
             startNewGameBtn.Enabled = false;
             currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}";
             this.BackColor = SystemColors.Control;
+        }
+
+        private void updateHighScoreLabel()
+        {
             highscoreLabel.Text = $"Highscore: {r_HigherLowerGameLogic.MaxScore}";
         }
 
@@ -105,6 +109,7 @@ namespace BasicFacebookFeatures
             higherBtn.Enabled = false;
             startNewGameBtn.Enabled = true;
             this.BackColor = Color.Red;
+            updateHighScoreLabel();
         }
 
         private void lowerBtn_Click(object sender, EventArgs e)
@@ -122,6 +127,7 @@ namespace BasicFacebookFeatures
             else
             {
                 endGame();
+
             }
         }
 
