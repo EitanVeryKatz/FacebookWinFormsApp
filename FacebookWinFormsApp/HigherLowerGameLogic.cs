@@ -14,7 +14,7 @@ namespace BasicFacebookFeatures
 {
     internal class HigherLowerGameLogic
     {
-        private readonly Dictionary<FacebookObject, int> r_ItemsWithValues = new Dictionary<FacebookObject, int>();
+        private readonly Dictionary<FacebookObject, long> r_ItemsWithValues = new Dictionary<FacebookObject, long>();
         public int Score { get; private set; } = 0;
         public bool GameIsRunning{ get; private set; } = false;
         public int MaxScore { get; private set; } = 0;
@@ -25,6 +25,10 @@ namespace BasicFacebookFeatures
         public FacebookObject NextItem
         {
             get { return m_nextItem; }
+        }
+        public long CurrentItemValue
+        {
+            get { return r_ItemsWithValues[m_currentItem]; }
         }
 
         private FacebookObject m_currentItem;
@@ -40,11 +44,12 @@ namespace BasicFacebookFeatures
 
         public void SetupNewGame(List<FacebookObject> i_facebookObjects)
         {
+            
+            addFacebookObjectsForComparison(i_facebookObjects);
             if (r_ItemsWithValues.Count < 2)
             {
                 throw new Exception("Not enough items to play (need at least 2)");
             }
-            addFacebookObjectsForComparison(i_facebookObjects);
             m_currentItem = GetRandomItem();
             m_nextItem = GetRandomItem();
             while (m_nextItem == m_currentItem)
@@ -91,6 +96,7 @@ namespace BasicFacebookFeatures
 
         private void generateNextItem()
         {
+            m_currentItem = m_nextItem;
             m_nextItem = GetRandomItem();
             while (m_nextItem == m_currentItem)
             {
@@ -112,16 +118,34 @@ namespace BasicFacebookFeatures
                     {
                         r_ItemsWithValues.Add(post, post.LikedBy.Count);
                     }
-                    //else if (facebookObject is Page page)
-                    //{
-                    //    r_ItemsWithValues.Add(page, page.LikesCount as int);
-                    //}
+                    
                 }
                 catch (Exception)
                 {
                     // Skip objects that cannot be accessed
                 }
             }
+        }
+
+        internal void SetupNewGameWithDummyValues(List<FacebookObject> i_facebookObjects)
+        {
+            foreach (FacebookObject facebookObject in i_facebookObjects)
+            {
+                r_ItemsWithValues.Add(facebookObject, r_random.Next(1, 1000));
+            }
+            if (r_ItemsWithValues.Count < 2)
+            {
+                throw new Exception("Not enough items to play (need at least 2)");
+            }
+            m_currentItem = GetRandomItem();
+            m_nextItem = GetRandomItem();
+            while (m_nextItem == m_currentItem)
+            {
+                m_nextItem = GetRandomItem();
+            }
+
+            GameIsRunning = true;
+            Score = 0;
         }
     }
 }
