@@ -32,6 +32,8 @@
             this.labelTopYear = new System.Windows.Forms.Label();
             this.labelYearDetails = new System.Windows.Forms.Label();
             this.pictureBoxTopPhoto = new System.Windows.Forms.PictureBox();
+            this.labelClickListBoxInstructions = new System.Windows.Forms.Label();
+            this.labelMostRecentPhoto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTopPhoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,7 +42,7 @@
             this.listBoxYearStats.FormattingEnabled = true;
             this.listBoxYearStats.ItemHeight = 16;
             this.listBoxYearStats.Location = new System.Drawing.Point(16, 310);
-            this.listBoxYearStats.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxYearStats.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxYearStats.Name = "listBoxYearStats";
             this.listBoxYearStats.Size = new System.Drawing.Size(295, 228);
             this.listBoxYearStats.TabIndex = 0;
@@ -56,7 +58,7 @@
             // 
             // labelYearDetails
             // 
-            this.labelYearDetails.Location = new System.Drawing.Point(12, 250);
+            this.labelYearDetails.Location = new System.Drawing.Point(370, 310);
             this.labelYearDetails.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelYearDetails.Name = "labelYearDetails";
             this.labelYearDetails.Size = new System.Drawing.Size(296, 41);
@@ -64,24 +66,44 @@
             // 
             // pictureBoxTopPhoto
             // 
-            this.pictureBoxTopPhoto.Location = new System.Drawing.Point(385, 310);
-            this.pictureBoxTopPhoto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxTopPhoto.Location = new System.Drawing.Point(722, 309);
+            this.pictureBoxTopPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxTopPhoto.Name = "pictureBoxTopPhoto";
             this.pictureBoxTopPhoto.Size = new System.Drawing.Size(280, 229);
             this.pictureBoxTopPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxTopPhoto.TabIndex = 3;
             this.pictureBoxTopPhoto.TabStop = false;
             // 
+            // labelClickListBoxInstructions
+            // 
+            this.labelClickListBoxInstructions.Location = new System.Drawing.Point(15, 265);
+            this.labelClickListBoxInstructions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelClickListBoxInstructions.Name = "labelClickListBoxInstructions";
+            this.labelClickListBoxInstructions.Size = new System.Drawing.Size(296, 41);
+            this.labelClickListBoxInstructions.TabIndex = 4;
+            this.labelClickListBoxInstructions.Text = "Select an item to view details";
+            // 
+            // labelMostRecentPhoto
+            // 
+            this.labelMostRecentPhoto.Location = new System.Drawing.Point(719, 264);
+            this.labelMostRecentPhoto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelMostRecentPhoto.Name = "labelMostRecentPhoto";
+            this.labelMostRecentPhoto.Size = new System.Drawing.Size(296, 41);
+            this.labelMostRecentPhoto.TabIndex = 5;
+            this.labelMostRecentPhoto.Text = "Most Recent Photo";
+            // 
             // MostPhotogenicYearAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.labelMostRecentPhoto);
+            this.Controls.Add(this.labelClickListBoxInstructions);
             this.Controls.Add(this.pictureBoxTopPhoto);
             this.Controls.Add(this.labelYearDetails);
             this.Controls.Add(this.labelTopYear);
             this.Controls.Add(this.listBoxYearStats);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MostPhotogenicYearAnalyzer";
             this.Text = "MostActiveFriendAnalyzer";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTopPhoto)).EndInit();
@@ -95,5 +117,7 @@
         private System.Windows.Forms.Label labelTopYear;
         private System.Windows.Forms.Label labelYearDetails;
         private System.Windows.Forms.PictureBox pictureBoxTopPhoto;
+        private System.Windows.Forms.Label labelClickListBoxInstructions;
+        private System.Windows.Forms.Label labelMostRecentPhoto;
     }
 }
