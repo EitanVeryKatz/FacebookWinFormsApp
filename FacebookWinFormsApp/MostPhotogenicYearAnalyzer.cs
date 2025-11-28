@@ -54,13 +54,13 @@ namespace BasicFacebookFeatures
 
         private void buildPhotosPerYearDict(Dictionary<int, int> i_PhotosPerYear)
         {
-            foreach (Album album in r_LoggedInUser.Albums)
+            try
             {
-                try
+                foreach (Album album in r_LoggedInUser.Albums)
                 {
-                    foreach (Photo photo in album.Photos)
+                    try
                     {
-                        if (photo.CreatedTime.HasValue)
+                        foreach (Photo photo in album.Photos)
                         {
                             int year = photo.CreatedTime.Value.Year;
 
@@ -72,12 +72,16 @@ namespace BasicFacebookFeatures
                             i_PhotosPerYear[year]++;
                         }
                     }
-                }
-                catch (KeyNotFoundException)
-                {
-                    continue;
-                }
+                    catch (KeyNotFoundException)
+                    {
+                        continue;
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving photos: " + ex.Message);
             }
         }
 

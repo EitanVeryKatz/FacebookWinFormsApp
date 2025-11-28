@@ -87,6 +87,14 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GroupComperator.cs" />
+    <Compile Include="HigherLowerGameLogic.cs" />
+    <Compile Include="HigherOrLowerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HigherOrLowerForm.Designer.cs">
+      <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MostPhotogenicYearAnalyzer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HigherOrLowerForm.resx">
+      <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MostPhotogenicYearAnalyzer.resx">
       <DependentUpon>MostPhotogenicYearAnalyzer.cs</DependentUpon>
