@@ -113,7 +113,7 @@ namespace BasicFacebookFeatures
             labelYearDetails.Text = $"In {i_Year} you have {countPerYear} photos " + 
                 $"({percentageOfYear:F1}% of all your dated photos)";
 
-            Photo topPhoto = findMostLikedPhotoForYear(i_Year);
+            Photo topPhoto = findMostRecentPhotoForYear(i_Year);
 
             if (topPhoto != null)
             {
@@ -125,10 +125,10 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private Photo findMostLikedPhotoForYear(int i_Year)
+        private Photo findMostRecentPhotoForYear(int i_Year)
         {
-            Photo bestPhotoOfYear = null;
-            int bestLikesCount = -1;
+            Photo latestPhotoOfYear = null;
+            DateTime latestTime = DateTime.MinValue;
 
             foreach (Album album in r_LoggedInUser.Albums)
             {
@@ -146,12 +146,12 @@ namespace BasicFacebookFeatures
                             continue;
                         }
 
-                        int likesCount = photo.LikedBy?.Count ?? 0;
+                        DateTime photoTime = photo.CreatedTime.Value;
 
-                        if (likesCount > bestLikesCount)
+                        if (photoTime > latestTime)
                         {
-                            bestLikesCount = likesCount;
-                            bestPhotoOfYear = photo;
+                            latestTime = photoTime;
+                            latestPhotoOfYear = photo;
                         }
                     }
                 }
@@ -161,7 +161,7 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            return bestPhotoOfYear;
+            return latestPhotoOfYear;
         }
 
 
