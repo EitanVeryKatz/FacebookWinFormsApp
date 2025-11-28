@@ -24,12 +24,19 @@ namespace BasicFacebookFeatures
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("design.patterns");
-
-            if (m_LoginResult == null)
+            try
             {
-                login();
+                Clipboard.SetText("design.patterns");
+
+                if (m_LoginResult == null)
+                {
+                    login();
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Failed to connect to Facebook.\nCheck your connection...");
             }
+            
         }
 
         private void login()
@@ -94,7 +101,11 @@ namespace BasicFacebookFeatures
             r_userPosts.Clear();
             foreach (Post post in user.Posts)
             {
-                r_userPosts.Add(post.Message);
+                string postStatus = post.Message;
+                if (!string.IsNullOrEmpty(postStatus))
+                {
+                    r_userPosts.Add(post.Message);
+                }
             }
 
             likedGroupsListBox.Items.Clear();
@@ -177,6 +188,17 @@ namespace BasicFacebookFeatures
             {
                 mostPhotogenicYearAnalyzer.ShowDialog();
             }
+        }
+
+        private void selectPostBtn_Click(object sender, EventArgs e)
+        {
+            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;
+            currentFavoritePostLabel.Text = chosenPost;
+        }
+
+        private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectPostBtn.Enabled = true;
         }
     }
 }
