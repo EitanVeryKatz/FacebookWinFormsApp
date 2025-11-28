@@ -13,15 +13,15 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        private FacebookWrapper.LoginResult m_LoginResult;
+        private readonly List<string> r_userPosts = new List<string>();
+
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
         }
-
-        private FacebookWrapper.LoginResult m_LoginResult;
-        private readonly List<string> r_userPosts = new List<string>();
-
+        
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             try
@@ -32,11 +32,10 @@ namespace BasicFacebookFeatures
                 {
                     login();
                 }
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 MessageBox.Show("Failed to connect to Facebook.\nCheck your connection...");
             }
-            
         }
 
         private void login()
@@ -51,11 +50,7 @@ namespace BasicFacebookFeatures
                 "user_friends",
                 "user_likes",
                 "user_photos",
-                "user_posts",
-                "user_events",
-                "user_birthday",
-                "user_age_range",
-                "user_hometown"
+                "user_posts"
                 );
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -70,10 +65,9 @@ namespace BasicFacebookFeatures
             try
             {
                 m_LoginResult = FacebookService.Connect("EAAUm6cZC4eUEBPZCFs9rJRpwlUmdHcPvU1tUNkIyP37zRZCjSvfdHaW5t3xsOnUL0bEKHL8Snjk6AZC3O32KWEbaItglEnXWQ2zEMXHqsdfdv0ecXNs3hO69juHrZCfRN9FGvfuJZAXhP4Pm57DRRoDeB8De6ZABnfrRflh6zgPwnavpyHS3ZCYX1E6K1QLTHff5sAZDZD");
-
                 afterLogin();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show(m_LoginResult.ErrorMessage, "Login Failed");
             }
@@ -81,7 +75,6 @@ namespace BasicFacebookFeatures
 
         private void afterLogin()
         {
-
             buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
             buttonLogin.BackColor = Color.LightGreen;
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
@@ -97,11 +90,14 @@ namespace BasicFacebookFeatures
             {
                 throw new Exception("User is not logged in");
             }
+
             User user = m_LoginResult.LoggedInUser;
+            
             r_userPosts.Clear();
             foreach (Post post in user.Posts)
             {
                 string postStatus = post.Message;
+            
                 if (!string.IsNullOrEmpty(postStatus))
                 {
                     r_userPosts.Add(post.Message);
@@ -122,8 +118,6 @@ namespace BasicFacebookFeatures
 
             profilePictureBox.ImageLocation = user.PictureNormalURL;
             postsComboBox.DataSource = r_userPosts;
-
-
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)

@@ -78,16 +78,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComparingPagesWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GroupComperator.cs" />
     <Compile Include="HigherLowerGameLogic.cs" />
     <Compile Include="HigherOrLowerForm.cs">
       <SubType>Form</SubType>
@@ -103,9 +99,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ComparingPagesWindow.resx">
-      <DependentUpon>ComparingPagesWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
