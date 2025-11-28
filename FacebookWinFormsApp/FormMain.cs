@@ -19,7 +19,8 @@ namespace BasicFacebookFeatures
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
         }
 
-        FacebookWrapper.LoginResult m_LoginResult;
+        private FacebookWrapper.LoginResult m_LoginResult;
+        private readonly List<string> r_userPosts = new List<string>();
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -90,6 +91,12 @@ namespace BasicFacebookFeatures
                 throw new Exception("User is not logged in");
             }
             User user = m_LoginResult.LoggedInUser;
+            r_userPosts.Clear();
+            foreach (Post post in user.Posts)
+            {
+                r_userPosts.Add(post.Message);
+            }
+
             likedGroupsListBox.Items.Clear();
             likedGroupsListBox.DataSource = user.LikedPages;
             likedGroupsListBox.DisplayMember = "Name";
@@ -101,6 +108,10 @@ namespace BasicFacebookFeatures
             likedFriendsListBox.Items.Clear();
             likedFriendsListBox.DataSource = user.Friends;
             likedFriendsListBox.DisplayMember = "Name";
+
+            profilePictureBox.ImageLocation = user.PictureNormalURL;
+            postsComboBox.DataSource = r_userPosts;
+
 
         }
 
