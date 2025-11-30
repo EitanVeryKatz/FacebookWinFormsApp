@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,13 +32,20 @@ namespace BasicFacebookFeatures
 
             try
             {
+                Thread showLoadingScreen = new Thread(() => MessageBox.Show("Game is loading...\nPlease wait..."));
+
+                showLoadingScreen.Start();
                 r_HigherLowerGameLogic.SetupNewGame(r_gameItems);
             }
             catch (Exception ex)
             {
+                
                 StringBuilder errorMessage = new StringBuilder(ex.Message);
+
                 errorMessage.AppendLine("Starting game with dummy values...");
-                MessageBox.Show(errorMessage.ToString());
+                Thread errorWhileLoadingScreen = new Thread(() => MessageBox.Show(errorMessage.ToString()));
+                
+                errorWhileLoadingScreen.Start();
                 r_HigherLowerGameLogic.SetupNewGameWithDummyValues(r_gameItems);
             }
             finally

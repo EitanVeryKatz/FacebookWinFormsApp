@@ -13,21 +13,28 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        private FacebookWrapper.LoginResult m_LoginResult;
+        private readonly List<string> r_userPosts = new List<string>();
+
         public FormMain()
         {
             InitializeComponent();
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
         }
-
-        FacebookWrapper.LoginResult m_LoginResult;
-
+        
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("design.patterns");
-
-            if (m_LoginResult == null)
+            try
             {
-                login();
+                Clipboard.SetText("design.patterns");
+
+                if (m_LoginResult == null)
+                {
+                    login();
+                }
+            }catch(Exception)
+            {
+                MessageBox.Show("Failed to connect to Facebook.\nCheck your connection...");
             }
         }
 
@@ -43,11 +50,7 @@ namespace BasicFacebookFeatures
                 "user_friends",
                 "user_likes",
                 "user_photos",
-                "user_posts",
-                "user_events",
-                "user_birthday",
-                "user_age_range",
-                "user_hometown"
+                "user_posts"
                 );
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
@@ -62,10 +65,9 @@ namespace BasicFacebookFeatures
             try
             {
                 m_LoginResult = FacebookService.Connect("EAAUm6cZC4eUEBPZCFs9rJRpwlUmdHcPvU1tUNkIyP37zRZCjSvfdHaW5t3xsOnUL0bEKHL8Snjk6AZC3O32KWEbaItglEnXWQ2zEMXHqsdfdv0ecXNs3hO69juHrZCfRN9FGvfuJZAXhP4Pm57DRRoDeB8De6ZABnfrRflh6zgPwnavpyHS3ZCYX1E6K1QLTHff5sAZDZD");
-
                 afterLogin();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show(m_LoginResult.ErrorMessage, "Login Failed");
             }
@@ -73,7 +75,6 @@ namespace BasicFacebookFeatures
 
         private void afterLogin()
         {
-
             buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
             buttonLogin.BackColor = Color.LightGreen;
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
@@ -89,7 +90,20 @@ namespace BasicFacebookFeatures
             {
                 throw new Exception("User is not logged in");
             }
+
             User user = m_LoginResult.LoggedInUser;
+            
+            r_userPosts.Clear();
+            foreach (Post post in user.Posts)
+            {
+                string postStatus = post.Message;
+            
+                if (!string.IsNullOrEmpty(postStatus))
+                {
+                    r_userPosts.Add(post.Message);
+                }
+            }
+
             likedGroupsListBox.Items.Clear();
             likedGroupsListBox.DataSource = user.LikedPages;
             likedGroupsListBox.DisplayMember = "Name";
@@ -102,6 +116,8 @@ namespace BasicFacebookFeatures
             likedFriendsListBox.DataSource = user.Friends;
             likedFriendsListBox.DisplayMember = "Name";
 
+            profilePictureBox.ImageLocation = user.PictureNormalURL;
+            postsComboBox.DataSource = r_userPosts;
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -166,6 +182,17 @@ namespace BasicFacebookFeatures
             {
                 mostPhotogenicYearAnalyzer.ShowDialog();
             }
+        }
+
+        private void selectPostBtn_Click(object sender, EventArgs e)
+        {
+            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;
+            currentFavoritePostLabel.Text = chosenPost;
+        }
+
+        private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectPostBtn.Enabled = true;
         }
     }
 }
