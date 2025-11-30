@@ -268,6 +268,7 @@
             // 
             this.buttonMostPhotogenicYear.BackColor = System.Drawing.Color.LightSlateGray;
             this.buttonMostPhotogenicYear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonMostPhotogenicYear.Enabled = false;
             this.buttonMostPhotogenicYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMostPhotogenicYear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonMostPhotogenicYear.ForeColor = System.Drawing.Color.White;
@@ -283,6 +284,7 @@
             // 
             this.higherOrLowerBtn.BackColor = System.Drawing.Color.LightSlateGray;
             this.higherOrLowerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.higherOrLowerBtn.Enabled = false;
             this.higherOrLowerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.higherOrLowerBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.higherOrLowerBtn.ForeColor = System.Drawing.Color.White;

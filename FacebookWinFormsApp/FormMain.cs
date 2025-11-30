@@ -118,6 +118,9 @@ namespace BasicFacebookFeatures
 
             profilePictureBox.ImageLocation = user.PictureNormalURL;
             postsComboBox.DataSource = r_userPosts;
+
+            higherOrLowerBtn.Enabled = true;
+            buttonMostPhotogenicYear.Enabled = true;
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
