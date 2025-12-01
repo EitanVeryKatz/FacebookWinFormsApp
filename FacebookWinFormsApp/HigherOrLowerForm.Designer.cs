@@ -138,7 +138,7 @@
             this.scoreLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.scoreLabel.Location = new System.Drawing.Point(465, 480);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(100, 37);
+            this.scoreLabel.Size = new System.Drawing.Size(102, 37);
             this.scoreLabel.TabIndex = 8;
             this.scoreLabel.Text = "Score: ";
             this.scoreLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -184,7 +184,6 @@
             this.currentGameItemValueLabel.Size = new System.Drawing.Size(300, 35);
             this.currentGameItemValueLabel.TabIndex = 12;
             this.currentGameItemValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.currentGameItemValueLabel.Click += new System.EventHandler(this.label2_Click);
             // 
             // highscoreLabel
             // 
@@ -193,7 +192,7 @@
             this.highscoreLabel.ForeColor = System.Drawing.Color.DimGray;
             this.highscoreLabel.Location = new System.Drawing.Point(880, 625);
             this.highscoreLabel.Name = "highscoreLabel";
-            this.highscoreLabel.Size = new System.Drawing.Size(109, 23);
+            this.highscoreLabel.Size = new System.Drawing.Size(114, 23);
             this.highscoreLabel.TabIndex = 13;
             this.highscoreLabel.Text = "Highschore: 0";
             // 
@@ -205,7 +204,6 @@
             this.isLabel.Name = "isLabel";
             this.isLabel.Size = new System.Drawing.Size(0, 23);
             this.isLabel.TabIndex = 14;
-            this.isLabel.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // thanLabel
             // 
@@ -218,7 +216,7 @@
             // 
             // HigherOrLowerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1060, 668);
@@ -243,11 +241,11 @@
             this.Name = "HigherOrLowerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Higher Or Lower";
-            this.Load += new System.EventHandler(this.HigherOrLowerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

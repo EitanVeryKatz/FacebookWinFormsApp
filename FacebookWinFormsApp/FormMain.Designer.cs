@@ -172,7 +172,6 @@
             this.textBoxAppID.TabIndex = 54;
             this.textBoxAppID.Text = "1153277586983935";
             this.textBoxAppID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxAppID.TextChanged += new System.EventHandler(this.textBoxAppID_TextChanged);
             // 
             // facebookBasicExperiancePage
             // 
@@ -294,7 +293,7 @@
             this.higherOrLowerBtn.TabIndex = 6;
             this.higherOrLowerBtn.Text = "Higher or Lower";
             this.higherOrLowerBtn.UseVisualStyleBackColor = false;
-            this.higherOrLowerBtn.Click += new System.EventHandler(this.button1_Click);
+            this.higherOrLowerBtn.Click += new System.EventHandler(this.higherOrLowerBtn_Click);
             // 
             // friendsPictureBox
             // 
@@ -373,7 +372,6 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OurFacebookApp";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.facebookExperianceWindow.ResumeLayout(false);
             this.loginPage.ResumeLayout(false);
             this.loginPage.PerformLayout();

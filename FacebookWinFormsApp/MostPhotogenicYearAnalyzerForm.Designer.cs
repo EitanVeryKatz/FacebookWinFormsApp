@@ -1,6 +1,6 @@
 ﻿namespace BasicFacebookFeatures
 {
-    partial class MostPhotogenicYearAnalyzer
+    partial class MostPhotogenicYearAnalyzerForm
     {
         /// <summary>
         /// Required designer variable.

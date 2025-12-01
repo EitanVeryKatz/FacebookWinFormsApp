@@ -91,11 +91,11 @@
     <Compile Include="HigherOrLowerForm.Designer.cs">
       <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MostPhotogenicYearAnalyzer.cs">
+    <Compile Include="MostPhotogenicYearAnalyzerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MostPhotogenicYearAnalyzer.Designer.cs">
-      <DependentUpon>MostPhotogenicYearAnalyzer.cs</DependentUpon>
+    <Compile Include="MostPhotogenicYearAnalyzerForm.Designer.cs">
+      <DependentUpon>MostPhotogenicYearAnalyzerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,8 +105,8 @@
     <EmbeddedResource Include="HigherOrLowerForm.resx">
       <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MostPhotogenicYearAnalyzer.resx">
-      <DependentUpon>MostPhotogenicYearAnalyzer.cs</DependentUpon>
+    <EmbeddedResource Include="MostPhotogenicYearAnalyzerForm.resx">
+      <DependentUpon>MostPhotogenicYearAnalyzerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
