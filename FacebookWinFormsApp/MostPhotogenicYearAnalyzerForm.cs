@@ -30,19 +30,20 @@ namespace BasicFacebookFeatures
                 return;                                                                    
             }                                                                              
                                                                                            
-            m_TotalPhotosCount = r_PhotosPerYear.Values.Sum();                             
-            var orderedStats = r_PhotosPerYear                                             
-                .OrderByDescending(yearStat => yearStat.Value)                             
-                .ToList();                                                                 
-                                                                                           
-            listBoxYearStats.Items.Clear();                                                
-            foreach (var yearStat in orderedStats)                                         
-            {                                                                              
-                listBoxYearStats.Items.Add($"{yearStat.Key} - {yearStat.Value} photos");   
-            }                                                                              
-                                                                                           
-            int bestYear = orderedStats[0].Key;                                            
-            int bestCount = orderedStats[0].Value;                                         
+            m_TotalPhotosCount = r_PhotosPerYear.Values.Sum();
+            List<int> orderedYears = r_PhotosPerYear
+                .OrderByDescending(pair => pair.Value)
+                .Select(pair => pair.Key)
+                .ToList();
+
+            listBoxYearStats.Items.Clear();
+            foreach (int year in orderedYears)
+            {
+                listBoxYearStats.Items.Add($"{year} - {r_PhotosPerYear[year]} photos");
+            }
+
+            int bestYear = orderedYears[0];
+            int bestCount = r_PhotosPerYear[bestYear];
                                                                                            
             labelTopYear.Text = $"Your most photogenic year: {bestYear} ({bestCount} photos)";
         }                                                                                     
