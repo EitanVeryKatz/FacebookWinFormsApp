@@ -91,6 +91,7 @@
     <Compile Include="HigherOrLowerForm.Designer.cs">
       <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IFacebookObjectAdapter.cs" />
     <Compile Include="MostPhotogenicYearAnalyzerForm.cs">
       <SubType>Form</SubType>
     </Compile>

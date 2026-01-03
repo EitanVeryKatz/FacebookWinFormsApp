@@ -46,7 +46,7 @@ namespace BasicFacebookFeatures
             {                                                                                                      
                 StringBuilder errorMessage = new StringBuilder(ex.Message);                                        
                                                                                                                    
-                errorMessage.AppendLine("Starting game with dummy values...");                                     
+                errorMessage.AppendLine("Starting game with dummy values...");                           
                 Thread errorWhileLoadingScreen = new Thread(() => MessageBox.Show(errorMessage.ToString()));       
                                                                                                                    
                 errorWhileLoadingScreen.Start();                                                                   
