@@ -14,6 +14,10 @@ namespace BasicFacebookFeatures
 
         public FbPostAdapter(Post i_Post,User i_user)
         {
+            if (i_Post.Message == null)
+            {
+                throw new ArgumentNullException();
+            }
             r_Post = i_Post;
             r_User = i_user;
         }
@@ -38,7 +42,16 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Post.LikedBy.Count;
+                long result;
+                try
+                {
+                    result = r_Post.LikedBy.Count;
+                }
+                catch
+                {
+                    result = 0;
+                }
+                return result;
             }
         }
     }

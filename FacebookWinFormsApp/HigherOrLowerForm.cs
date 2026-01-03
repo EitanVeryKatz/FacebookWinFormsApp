@@ -26,7 +26,8 @@ namespace BasicFacebookFeatures
         public HigherOrLowerForm(User i_LoggedInUser)                                             
         {                                                                                         
             InitializeComponent();                                                                
-            r_LoggedInUser = i_LoggedInUser;                                                      
+            r_LoggedInUser = i_LoggedInUser;
+            r_FacebookAdapterFactory.UploadingUser = r_LoggedInUser;
         }                                                                                         
                                                                                                   
         private void startNewGameBtn_Click(object sender, EventArgs e)                            

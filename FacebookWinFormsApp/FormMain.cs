@@ -71,11 +71,15 @@ namespace BasicFacebookFeatures
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
         private void afterLogin()                                                                                                                                                                                                                                      
-        {                                                                                                                                                                                                                                                              
-            buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";                                                                                                                                                                                      
-            buttonLogin.BackColor = Color.LightGreen;   
-            buttonLogin.Enabled = false;                                                                                                                                                                                                                               
-            buttonLogout.Enabled = true;  
+        {           
+            buttonLogin.Invoke(new Action(() => 
+                buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}"));
+            buttonLogin.Invoke(new Action(() =>
+                buttonLogin.BackColor = Color.LightGreen));
+            buttonLogin.Invoke(new Action(() =>
+                buttonLogin.Enabled = false));
+            buttonLogout.Invoke(new Action(() =>
+                buttonLogout.Enabled = true));
             new Thread(setUpUserInformationDisplay).Start();
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        

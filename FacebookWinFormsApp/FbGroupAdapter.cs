@@ -35,7 +35,16 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Group.Members.Count;
+                long result;
+                try
+                {
+                    result = r_Group.Members.Count;
+                }
+                catch
+                {
+                    result = 0;
+                }
+                return result;
             }
         }
     }

@@ -37,11 +37,16 @@ namespace BasicFacebookFeatures
             Collection<IFacebookObjectAdapter> facebookObjectAdapterList = new Collection<IFacebookObjectAdapter>();
             foreach (T facebookObject in i_FacebookObject)
             {
-                IFacebookObjectAdapter facebookObjectAdapter = CreateFacebookObjectAdapter(facebookObject);
-                if (facebookObjectAdapter != null)
+                try
                 {
-                    facebookObjectAdapterList.Add(facebookObjectAdapter);
+                    IFacebookObjectAdapter facebookObjectAdapter = CreateFacebookObjectAdapter(facebookObject);
+                    if (facebookObjectAdapter != null)
+                    {
+                        facebookObjectAdapterList.Add(facebookObjectAdapter);
+                    }
                 }
+                catch
+                { }
             }
             return facebookObjectAdapterList;
         }
