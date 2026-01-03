@@ -11,6 +11,7 @@ namespace BasicFacebookFeatures
     public partial class HigherOrLowerForm : Form
     {
         private readonly User r_LoggedInUser;
+        private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
         private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();           
         private const string k_RulesMessage = "every turn you must guess whether" +               
@@ -63,26 +64,17 @@ namespace BasicFacebookFeatures
             
             try 
             {
-                foreach (Group group in r_LoggedInUser.Groups)
-                {
-                    r_gameItems.Add(new FbGroupAdapter(group));
-                }
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
             }                                                   
             catch (Exception) { }
             try
             {
-                foreach (Page likedPage in r_LoggedInUser.LikedPages)
-                {
-                    r_gameItems.Add(new FbPageAdapter(likedPage));
-                }
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
             }
             catch (Exception) { }
             try
             {
-                foreach (Post post in r_LoggedInUser.Posts)
-                {
-                    r_gameItems.Add(new FbPostAdapter(post));
-                }
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
             }
             catch (Exception) { }                                                                         
         }                                                                                                          

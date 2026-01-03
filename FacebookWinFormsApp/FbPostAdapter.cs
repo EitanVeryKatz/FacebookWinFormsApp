@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FacebookWrapper.ObjectModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,13 @@ namespace BasicFacebookFeatures
 {
     internal class FbPostAdapter: IFacebookObjectAdapter
     {
-        private readonly FacebookWrapper.ObjectModel.Post r_Post;
+        private readonly Post r_Post;
+        private readonly User r_User;
 
-        public FbPostAdapter(FacebookWrapper.ObjectModel.Post i_Post)
+        public FbPostAdapter(Post i_Post,User i_user)
         {
             r_Post = i_Post;
+            r_User = i_user;
         }
 
         public String Text
@@ -27,7 +30,7 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Post.PictureURL;
+                return r_User.PictureNormalURL;
             }
         }
 
