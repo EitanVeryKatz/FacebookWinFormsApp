@@ -10,6 +10,6 @@ namespace BasicFacebookFeatures
     {
         String Text { get; }
         String ImageUrl { get; }
-        int LikesCount { get; }
+        long LikesCount { get; }
     }
 }

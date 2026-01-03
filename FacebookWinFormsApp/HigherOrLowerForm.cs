@@ -12,7 +12,7 @@ namespace BasicFacebookFeatures
     {
         private readonly User r_LoggedInUser;
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private readonly List<FacebookObject> r_gameItems = new List<FacebookObject>();           
+        private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();           
         private const string k_RulesMessage = "every turn you must guess whether" +               
                 " the next item's value is higher or lower" +                                     
                 " than the current item's value." +                                               
@@ -59,19 +59,38 @@ namespace BasicFacebookFeatures
         }                                                                                                          
                                                                                                                    
         private void setupGameItems()                                                                              
-        {                                                                                                          
-            try { r_gameItems.AddRange(r_LoggedInUser.Groups); }                                                   
-            catch (Exception) { }                                                                                  
-            try{r_gameItems.AddRange(r_LoggedInUser.LikedPages);}                                                  
-            catch (Exception) { }                                                                                  
-            try { r_gameItems.AddRange(r_LoggedInUser.Posts); }                                                    
-            catch (Exception) { }                                                                                  
+        {   
+            
+            try 
+            {
+                foreach (Group group in r_LoggedInUser.Groups)
+                {
+                    r_gameItems.Add(new FbGroupAdapter(group));
+                }
+            }                                                   
+            catch (Exception) { }
+            try
+            {
+                foreach (Page likedPage in r_LoggedInUser.LikedPages)
+                {
+                    r_gameItems.Add(new FbPageAdapter(likedPage));
+                }
+            }
+            catch (Exception) { }
+            try
+            {
+                foreach (Post post in r_LoggedInUser.Posts)
+                {
+                    r_gameItems.Add(new FbPostAdapter(post));
+                }
+            }
+            catch (Exception) { }                                                                         
         }                                                                                                          
                                                                                                                    
         private void updateControllsForNewRound()                                                                  
         {                                                                                                          
-            FacebookObject currentItem = r_HigherLowerGameLogic.CurrentItem;                                       
-            FacebookObject nextItem = r_HigherLowerGameLogic.NextItem;                                             
+            IFacebookObjectAdapter currentItem = r_HigherLowerGameLogic.CurrentItem;                                       
+            IFacebookObjectAdapter nextItem = r_HigherLowerGameLogic.NextItem;                                             
                                                                                                                    
             updatePictureBox(currentGroupOrProfilePictureBox, currentPostOrGroupNameLabel, currentItem);           
             updatePictureBox(nextGroupOrProfilePictureBox, nextPostOrGroupNameLabel, nextItem);                    
@@ -90,23 +109,10 @@ namespace BasicFacebookFeatures
             highscoreLabel.Text = $"Highscore: {r_HigherLowerGameLogic.MaxScore}";                                 
         }                                                                                                          
                                                                                                                    
-        private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, FacebookObject i_Item) 
+        private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, IFacebookObjectAdapter i_Item) 
         {                                                                                                          
-            if (i_Item is Group)                                                                                   
-            {                                                                                                      
-                i_Label.Text = (i_Item as Group).Name;                                                             
-                i_GroupOrProfilePictureBox.Load((i_Item as Group).PictureNormalURL);                               
-            }                                                                                                      
-            else if (i_Item is Page)                                                                               
-            {                                                                                                      
-                i_Label.Text = (i_Item as Page).Name;                                                              
-                i_GroupOrProfilePictureBox.Load((i_Item as Page).PictureNormalURL);                                
-            }                                                                                                      
-            else if (i_Item is Post)                                                                               
-            {                                                                                                      
-                i_Label.Text = (i_Item as Post).Message;                                                           
-                i_GroupOrProfilePictureBox.Load(r_LoggedInUser.PictureNormalURL);                                  
-            }                                                                                                      
+                i_Label.Text = i_Item.Text;                                                           
+                i_GroupOrProfilePictureBox.Load(i_Item.ImageUrl);                               
         }                                                                                                          
                                                                                                                    
         private void higherBtn_Click(object sender, EventArgs e)                                                   

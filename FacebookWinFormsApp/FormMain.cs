@@ -77,7 +77,6 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = false;                                                                                                                                                                                                                               
             buttonLogout.Enabled = true;  
             new Thread(setUpUserInformationDisplay).Start();
-            
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
         private void setUpUserInformationDisplay()                                                                                                                                                                                                                     

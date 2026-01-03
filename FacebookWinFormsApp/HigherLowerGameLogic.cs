@@ -7,15 +7,15 @@ namespace BasicFacebookFeatures
 {
     internal class HigherLowerGameLogic
     {
-        private readonly Dictionary<FacebookObject, long> r_ItemsWithValues = new Dictionary<FacebookObject, long>();
+        private readonly Dictionary<IFacebookObjectAdapter, long> r_ItemsWithValues = new Dictionary<IFacebookObjectAdapter, long>();
         public int Score { get; private set; } = 0;                                                                  
         public bool GameIsRunning{ get; private set; } = false;                                                      
         public int MaxScore { get; private set; } = 0;                                                               
-        public FacebookObject CurrentItem                                                                            
+        public IFacebookObjectAdapter CurrentItem                                                                            
         {                                                                                                            
             get { return m_currentItem; }                                                                            
         }                                                                                                            
-        public FacebookObject NextItem                                                                               
+        public IFacebookObjectAdapter NextItem                                                                               
         {                                                                                                            
             get { return m_nextItem; }                                                                               
         }                                                                                                            
@@ -24,18 +24,18 @@ namespace BasicFacebookFeatures
             get { return r_ItemsWithValues[m_currentItem]; }                                                         
         }                                                                                                            
                                                                                                                      
-        private FacebookObject m_currentItem;                                                                        
-        private FacebookObject m_nextItem;                                                                           
+        private IFacebookObjectAdapter m_currentItem;                                                                        
+        private IFacebookObjectAdapter m_nextItem;                                                                           
         private Random r_random = new Random();                                                                      
                                                                                                                      
-        public FacebookObject GetRandomItem()                                                                        
+        public IFacebookObjectAdapter GetRandomItem()                                                                        
         {                                                                                                            
             int randomIndex = r_random.Next(r_ItemsWithValues.Count);                                                
                                                                                                                      
             return r_ItemsWithValues.ElementAt(randomIndex).Key;                                                     
         }                                                                                                            
                                                                                                                      
-        public void SetupNewGame(List<FacebookObject> i_facebookObjects)                                             
+        public void SetupNewGame(List<IFacebookObjectAdapter> i_facebookObjects)                                             
         {                                                                                                            
             addFacebookObjectsForComparison(i_facebookObjects);                                                      
             if (r_ItemsWithValues.Count < 2)                                                                         
@@ -97,20 +97,14 @@ namespace BasicFacebookFeatures
             }                                                                                                        
         }                                                                                                            
                                                                                                                      
-        private void addFacebookObjectsForComparison(List<FacebookObject> i_facebookObjects)                         
+        private void addFacebookObjectsForComparison(List<IFacebookObjectAdapter> i_facebookObjects)                         
         {                                                                                                            
-            foreach (FacebookObject facebookObject in i_facebookObjects)                                             
+            foreach (IFacebookObjectAdapter facebookObject in i_facebookObjects)                                             
             {                                                                                                        
                 try                                                                                                  
-                {                                                                                                    
-                    if (facebookObject is Group group)                                                               
-                    {                                                                                                
-                        r_ItemsWithValues.Add(group, group.Members.Count);                                           
-                    }                                                                                                
-                    else if (facebookObject is Post post)                                                            
-                    {                                                                                                
-                        r_ItemsWithValues.Add(post, post.LikedBy.Count);                                             
-                    }                                                                                                
+                {     
+                    r_ItemsWithValues.Add(facebookObject, facebookObject.LikesCount);
+                                                                                                         
                 }                                                                                                    
                 catch (Exception)                                                                                    
                 {                                                                                                    
@@ -118,9 +112,9 @@ namespace BasicFacebookFeatures
             }                                                                                                        
         }                                                                                                            
                                                                                                                      
-        public void SetupNewGameWithDummyValues(List<FacebookObject> i_facebookObjects)                              
+        public void SetupNewGameWithDummyValues(List<IFacebookObjectAdapter> i_facebookObjects)                              
         {                                                                                                            
-            foreach (FacebookObject facebookObject in i_facebookObjects)                                             
+            foreach (IFacebookObjectAdapter facebookObject in i_facebookObjects)                                             
             {                                                                                                        
                 r_ItemsWithValues.Add(facebookObject, r_random.Next(1, 1000));                                       
             }                                                                                                        
