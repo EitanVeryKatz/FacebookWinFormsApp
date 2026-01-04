@@ -28,6 +28,7 @@ namespace BasicFacebookFeatures
             InitializeComponent();                                                                
             r_LoggedInUser = i_LoggedInUser;
             r_FacebookAdapterFactory.UploadingUser = r_LoggedInUser;
+            HigherLowerDataSource.DataSource = r_HigherLowerGameLogic;
         }                                                                                         
                                                                                                   
         private void startNewGameBtn_Click(object sender, EventArgs e)                            
@@ -97,11 +98,6 @@ namespace BasicFacebookFeatures
             isLabel.Text = "is";                                                                                   
         }                                                                                                          
                                                                                                                    
-        private void updateHighScoreLabel()                                                                        
-        {                                                                                                          
-            highscoreLabel.Text = $"Highscore: {r_HigherLowerGameLogic.MaxScore}";                                 
-        }                                                                                                          
-                                                                                                                   
         private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, IFacebookObjectAdapter i_Item) 
         {                                                                                                          
                 i_Label.Text = i_Item.Text;                                                           
@@ -120,7 +116,6 @@ namespace BasicFacebookFeatures
             higherBtn.Enabled = false;                                                                             
             startNewGameBtn.Enabled = true;                                                                        
             this.BackColor = Color.Red;                                                                            
-            updateHighScoreLabel();                                                                                
         }                                                                                                          
                                                                                                                    
         private void lowerBtn_Click(object sender, EventArgs e)                                                    

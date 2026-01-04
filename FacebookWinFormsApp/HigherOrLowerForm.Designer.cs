@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.nextGroupOrProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.currentGroupOrProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.higherBtn = new System.Windows.Forms.Button();
@@ -42,8 +43,12 @@
             this.highscoreLabel = new System.Windows.Forms.Label();
             this.isLabel = new System.Windows.Forms.Label();
             this.thanLabel = new System.Windows.Forms.Label();
+            this.highschoreValueLabel = new System.Windows.Forms.Label();
+            this.scoreValueLabel = new System.Windows.Forms.Label();
+            this.HigherLowerDataSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nextGroupOrProfilePictureBox
@@ -192,9 +197,9 @@
             this.highscoreLabel.ForeColor = System.Drawing.Color.DimGray;
             this.highscoreLabel.Location = new System.Drawing.Point(880, 625);
             this.highscoreLabel.Name = "highscoreLabel";
-            this.highscoreLabel.Size = new System.Drawing.Size(114, 23);
+            this.highscoreLabel.Size = new System.Drawing.Size(105, 23);
             this.highscoreLabel.TabIndex = 13;
-            this.highscoreLabel.Text = "Highschore: 0";
+            this.highscoreLabel.Text = "Highschore: ";
             // 
             // isLabel
             // 
@@ -214,12 +219,37 @@
             this.thanLabel.Size = new System.Drawing.Size(0, 23);
             this.thanLabel.TabIndex = 15;
             // 
+            // highschoreValueLabel
+            // 
+            this.highschoreValueLabel.AutoSize = true;
+            this.highschoreValueLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.HigherLowerDataSource, "MaxScore", true));
+            this.highschoreValueLabel.Location = new System.Drawing.Point(991, 625);
+            this.highschoreValueLabel.Name = "highschoreValueLabel";
+            this.highschoreValueLabel.Size = new System.Drawing.Size(55, 23);
+            this.highschoreValueLabel.TabIndex = 16;
+            this.highschoreValueLabel.Text = "label2";
+            // 
+            // scoreValueLabel
+            // 
+            this.scoreValueLabel.AutoSize = true;
+            this.scoreValueLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.HigherLowerDataSource, "Score", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.scoreValueLabel.Location = new System.Drawing.Point(575, 492);
+            this.scoreValueLabel.Name = "scoreValueLabel";
+            this.scoreValueLabel.Size = new System.Drawing.Size(0, 23);
+            this.scoreValueLabel.TabIndex = 17;
+            // 
+            // HigherLowerDataSource
+            // 
+            this.HigherLowerDataSource.DataSource = typeof(BasicFacebookFeatures.HigherLowerGameLogic);
+            // 
             // HigherOrLowerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1060, 668);
+            this.Controls.Add(this.scoreValueLabel);
+            this.Controls.Add(this.highschoreValueLabel);
             this.Controls.Add(this.thanLabel);
             this.Controls.Add(this.isLabel);
             this.Controls.Add(this.highscoreLabel);
@@ -234,6 +264,7 @@
             this.Controls.Add(this.higherBtn);
             this.Controls.Add(this.currentGroupOrProfilePictureBox);
             this.Controls.Add(this.nextGroupOrProfilePictureBox);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.HigherLowerDataSource, "MaxScore", true));
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -243,6 +274,7 @@
             this.Text = "Higher Or Lower";
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +296,8 @@
         private System.Windows.Forms.Label highscoreLabel;
         private System.Windows.Forms.Label isLabel;
         private System.Windows.Forms.Label thanLabel;
+        private System.Windows.Forms.BindingSource HigherLowerDataSource;
+        private System.Windows.Forms.Label highschoreValueLabel;
+        private System.Windows.Forms.Label scoreValueLabel;
     }
 }

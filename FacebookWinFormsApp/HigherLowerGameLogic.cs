@@ -103,8 +103,7 @@ namespace BasicFacebookFeatures
             {                                                                                                        
                 try                                                                                                  
                 {     
-                    r_ItemsWithValues.Add(facebookObject, facebookObject.LikesCount);
-                                                                                                         
+                    r_ItemsWithValues.Add(facebookObject, facebookObject.LikesCount);                                                                        
                 }                                                                                                    
                 catch (Exception)                                                                                    
                 {                                                                                                    
