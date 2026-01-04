@@ -157,7 +157,7 @@ namespace BasicFacebookFeatures
         {                                                                                                                                                                                                                                                              
             string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;
 
-            label2.Text = chosenPost;                                                                                                                                                                                                                
+            currentFavoritePostLabel.Text = chosenPost;                                                                                                                                                                                                                
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
         private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                                    
