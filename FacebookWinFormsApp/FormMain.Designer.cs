@@ -71,7 +71,6 @@
             this.firstNameTextBox = new System.Windows.Forms.TextBox();
             this.ProfileInfoPictureBox = new System.Windows.Forms.PictureBox();
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             createdTimeLabel = new System.Windows.Forms.Label();
             birthdayLabel = new System.Windows.Forms.Label();
             emailLabel = new System.Windows.Forms.Label();
@@ -265,7 +264,6 @@
             // facebookBasicExperiancePage
             // 
             this.facebookBasicExperiancePage.BackColor = System.Drawing.Color.White;
-            this.facebookBasicExperiancePage.Controls.Add(this.label2);
             this.facebookBasicExperiancePage.Controls.Add(createdTimeLabel);
             this.facebookBasicExperiancePage.Controls.Add(this.createdTimeDateTimePicker);
             this.facebookBasicExperiancePage.Controls.Add(this.friendsPictureBox);
@@ -553,15 +551,6 @@
             this.lastNameTextBox.Size = new System.Drawing.Size(217, 25);
             this.lastNameTextBox.TabIndex = 9;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(330, 141);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 19);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "label2";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -633,7 +622,6 @@
         private System.Windows.Forms.PictureBox ProfileInfoPictureBox;
         private System.Windows.Forms.TextBox lastNameTextBox;
         private System.Windows.Forms.Label localeLabel1;
-        private System.Windows.Forms.Label label2;
     }
 }
 
