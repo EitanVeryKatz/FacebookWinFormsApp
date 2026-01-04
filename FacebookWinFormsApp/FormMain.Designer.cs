@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +38,10 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.facebookBasicExperiancePage = new System.Windows.Forms.TabPage();
+            this.musicPictureBox = new System.Windows.Forms.PictureBox();
+            this.musicBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupPictureBox = new System.Windows.Forms.PictureBox();
+            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectPostBtn = new System.Windows.Forms.Button();
             this.myPostsLabel = new System.Windows.Forms.Label();
             this.postsComboBox = new System.Windows.Forms.ComboBox();
@@ -45,20 +50,22 @@
             this.profilePictureBox = new System.Windows.Forms.PictureBox();
             this.buttonMostPhotogenicYear = new System.Windows.Forms.Button();
             this.higherOrLowerBtn = new System.Windows.Forms.Button();
-            this.friendsPictureBox = new System.Windows.Forms.PictureBox();
-            this.MusicPictureBox = new System.Windows.Forms.PictureBox();
-            this.GroupsPictureBox = new System.Windows.Forms.PictureBox();
             this.likedFriendsListBox = new System.Windows.Forms.ListBox();
             this.likedMusicListBox = new System.Windows.Forms.ListBox();
             this.likedGroupsListBox = new System.Windows.Forms.ListBox();
+            this.friendsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.friendsPictureBox = new System.Windows.Forms.PictureBox();
             this.facebookExperianceWindow.SuspendLayout();
             this.loginPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.facebookBasicExperiancePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.musicPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.musicBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MusicPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonLogin
@@ -102,7 +109,7 @@
             this.label1.Location = new System.Drawing.Point(240, 30);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(352, 69);
+            this.label1.Size = new System.Drawing.Size(299, 57);
             this.label1.TabIndex = 53;
             this.label1.Text = "This is the AppID of \"Design Patterns App 2.4\".\r\nThe grader will use it to test y" +
     "our app.\r\nType here your own AppID to test it:\r\n";
@@ -117,7 +124,7 @@
             this.facebookExperianceWindow.Location = new System.Drawing.Point(0, 0);
             this.facebookExperianceWindow.Name = "facebookExperianceWindow";
             this.facebookExperianceWindow.SelectedIndex = 0;
-            this.facebookExperianceWindow.Size = new System.Drawing.Size(983, 545);
+            this.facebookExperianceWindow.Size = new System.Drawing.Size(979, 545);
             this.facebookExperianceWindow.TabIndex = 54;
             // 
             // loginPage
@@ -129,10 +136,10 @@
             this.loginPage.Controls.Add(this.label1);
             this.loginPage.Controls.Add(this.buttonLogout);
             this.loginPage.Controls.Add(this.buttonLogin);
-            this.loginPage.Location = new System.Drawing.Point(4, 32);
+            this.loginPage.Location = new System.Drawing.Point(4, 26);
             this.loginPage.Name = "loginPage";
             this.loginPage.Padding = new System.Windows.Forms.Padding(3);
-            this.loginPage.Size = new System.Drawing.Size(975, 509);
+            this.loginPage.Size = new System.Drawing.Size(975, 515);
             this.loginPage.TabIndex = 0;
             this.loginPage.Text = "Login";
             // 
@@ -168,7 +175,7 @@
             this.textBoxAppID.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAppID.Location = new System.Drawing.Point(240, 110);
             this.textBoxAppID.Name = "textBoxAppID";
-            this.textBoxAppID.Size = new System.Drawing.Size(500, 31);
+            this.textBoxAppID.Size = new System.Drawing.Size(500, 26);
             this.textBoxAppID.TabIndex = 54;
             this.textBoxAppID.Text = "1153277586983935";
             this.textBoxAppID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -176,6 +183,9 @@
             // facebookBasicExperiancePage
             // 
             this.facebookBasicExperiancePage.BackColor = System.Drawing.Color.White;
+            this.facebookBasicExperiancePage.Controls.Add(this.friendsPictureBox);
+            this.facebookBasicExperiancePage.Controls.Add(this.musicPictureBox);
+            this.facebookBasicExperiancePage.Controls.Add(this.groupPictureBox);
             this.facebookBasicExperiancePage.Controls.Add(this.selectPostBtn);
             this.facebookBasicExperiancePage.Controls.Add(this.myPostsLabel);
             this.facebookBasicExperiancePage.Controls.Add(this.postsComboBox);
@@ -184,18 +194,41 @@
             this.facebookBasicExperiancePage.Controls.Add(this.profilePictureBox);
             this.facebookBasicExperiancePage.Controls.Add(this.buttonMostPhotogenicYear);
             this.facebookBasicExperiancePage.Controls.Add(this.higherOrLowerBtn);
-            this.facebookBasicExperiancePage.Controls.Add(this.friendsPictureBox);
-            this.facebookBasicExperiancePage.Controls.Add(this.MusicPictureBox);
-            this.facebookBasicExperiancePage.Controls.Add(this.GroupsPictureBox);
             this.facebookBasicExperiancePage.Controls.Add(this.likedFriendsListBox);
             this.facebookBasicExperiancePage.Controls.Add(this.likedMusicListBox);
             this.facebookBasicExperiancePage.Controls.Add(this.likedGroupsListBox);
-            this.facebookBasicExperiancePage.Location = new System.Drawing.Point(4, 32);
+            this.facebookBasicExperiancePage.Location = new System.Drawing.Point(4, 26);
             this.facebookBasicExperiancePage.Name = "facebookBasicExperiancePage";
             this.facebookBasicExperiancePage.Padding = new System.Windows.Forms.Padding(3);
-            this.facebookBasicExperiancePage.Size = new System.Drawing.Size(975, 509);
+            this.facebookBasicExperiancePage.Size = new System.Drawing.Size(971, 515);
             this.facebookBasicExperiancePage.TabIndex = 1;
             this.facebookBasicExperiancePage.Text = "The Facebook Experience";
+            // 
+            // musicPictureBox
+            // 
+            this.musicPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.musicBindingSource, "ImageNormal", true));
+            this.musicPictureBox.Location = new System.Drawing.Point(419, 251);
+            this.musicPictureBox.Name = "musicPictureBox";
+            this.musicPictureBox.Size = new System.Drawing.Size(102, 93);
+            this.musicPictureBox.TabIndex = 16;
+            this.musicPictureBox.TabStop = false;
+            // 
+            // musicBindingSource
+            // 
+            this.musicBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Page);
+            // 
+            // groupPictureBox
+            // 
+            this.groupPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.groupBindingSource, "ImageNormal", true));
+            this.groupPictureBox.Location = new System.Drawing.Point(125, 247);
+            this.groupPictureBox.Name = "groupPictureBox";
+            this.groupPictureBox.Size = new System.Drawing.Size(102, 93);
+            this.groupPictureBox.TabIndex = 15;
+            this.groupPictureBox.TabStop = false;
+            // 
+            // groupBindingSource
+            // 
+            this.groupBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Page);
             // 
             // selectPostBtn
             // 
@@ -219,7 +252,7 @@
             this.myPostsLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.myPostsLabel.Location = new System.Drawing.Point(200, 30);
             this.myPostsLabel.Name = "myPostsLabel";
-            this.myPostsLabel.Size = new System.Drawing.Size(85, 23);
+            this.myPostsLabel.Size = new System.Drawing.Size(73, 19);
             this.myPostsLabel.TabIndex = 13;
             this.myPostsLabel.Text = "My Posts:";
             // 
@@ -229,7 +262,7 @@
             this.postsComboBox.FormattingEnabled = true;
             this.postsComboBox.Location = new System.Drawing.Point(204, 60);
             this.postsComboBox.Name = "postsComboBox";
-            this.postsComboBox.Size = new System.Drawing.Size(400, 31);
+            this.postsComboBox.Size = new System.Drawing.Size(400, 25);
             this.postsComboBox.TabIndex = 12;
             this.postsComboBox.SelectedIndexChanged += new System.EventHandler(this.postsComboBox_SelectedIndexChanged);
             // 
@@ -240,7 +273,7 @@
             this.currentFavoritePostLabel.ForeColor = System.Drawing.Color.DarkBlue;
             this.currentFavoritePostLabel.Location = new System.Drawing.Point(360, 140);
             this.currentFavoritePostLabel.Name = "currentFavoritePostLabel";
-            this.currentFavoritePostLabel.Size = new System.Drawing.Size(0, 23);
+            this.currentFavoritePostLabel.Size = new System.Drawing.Size(0, 19);
             this.currentFavoritePostLabel.TabIndex = 11;
             // 
             // myFavoritePostLabel
@@ -249,7 +282,7 @@
             this.myFavoritePostLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.myFavoritePostLabel.Location = new System.Drawing.Point(200, 140);
             this.myFavoritePostLabel.Name = "myFavoritePostLabel";
-            this.myFavoritePostLabel.Size = new System.Drawing.Size(146, 23);
+            this.myFavoritePostLabel.Size = new System.Drawing.Size(124, 19);
             this.myFavoritePostLabel.TabIndex = 10;
             this.myFavoritePostLabel.Text = "My favorite Post:";
             // 
@@ -295,77 +328,61 @@
             this.higherOrLowerBtn.UseVisualStyleBackColor = false;
             this.higherOrLowerBtn.Click += new System.EventHandler(this.higherOrLowerBtn_Click);
             // 
-            // friendsPictureBox
-            // 
-            this.friendsPictureBox.BackColor = System.Drawing.Color.Gainsboro;
-            this.friendsPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.friendsPictureBox.Location = new System.Drawing.Point(710, 260);
-            this.friendsPictureBox.Name = "friendsPictureBox";
-            this.friendsPictureBox.Size = new System.Drawing.Size(80, 80);
-            this.friendsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.friendsPictureBox.TabIndex = 5;
-            this.friendsPictureBox.TabStop = false;
-            // 
-            // MusicPictureBox
-            // 
-            this.MusicPictureBox.BackColor = System.Drawing.Color.Gainsboro;
-            this.MusicPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MusicPictureBox.Location = new System.Drawing.Point(430, 260);
-            this.MusicPictureBox.Name = "MusicPictureBox";
-            this.MusicPictureBox.Size = new System.Drawing.Size(80, 80);
-            this.MusicPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.MusicPictureBox.TabIndex = 4;
-            this.MusicPictureBox.TabStop = false;
-            // 
-            // GroupsPictureBox
-            // 
-            this.GroupsPictureBox.BackColor = System.Drawing.Color.Gainsboro;
-            this.GroupsPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GroupsPictureBox.Location = new System.Drawing.Point(140, 260);
-            this.GroupsPictureBox.Name = "GroupsPictureBox";
-            this.GroupsPictureBox.Size = new System.Drawing.Size(80, 80);
-            this.GroupsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.GroupsPictureBox.TabIndex = 3;
-            this.GroupsPictureBox.TabStop = false;
-            // 
             // likedFriendsListBox
             // 
             this.likedFriendsListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.likedFriendsListBox.DataSource = this.friendsBindingSource;
+            this.likedFriendsListBox.DisplayMember = "Name";
             this.likedFriendsListBox.FormattingEnabled = true;
-            this.likedFriendsListBox.ItemHeight = 23;
-            this.likedFriendsListBox.Location = new System.Drawing.Point(640, 350);
+            this.likedFriendsListBox.ItemHeight = 17;
+            this.likedFriendsListBox.Location = new System.Drawing.Point(653, 350);
             this.likedFriendsListBox.Name = "likedFriendsListBox";
-            this.likedFriendsListBox.Size = new System.Drawing.Size(220, 140);
+            this.likedFriendsListBox.Size = new System.Drawing.Size(220, 138);
             this.likedFriendsListBox.TabIndex = 2;
             this.likedFriendsListBox.SelectedIndexChanged += new System.EventHandler(this.likedFriendsListBox_SelectedIndexChanged);
             // 
             // likedMusicListBox
             // 
             this.likedMusicListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.likedMusicListBox.DataSource = this.musicBindingSource;
+            this.likedMusicListBox.DisplayMember = "Name";
             this.likedMusicListBox.FormattingEnabled = true;
-            this.likedMusicListBox.ItemHeight = 23;
+            this.likedMusicListBox.ItemHeight = 17;
             this.likedMusicListBox.Location = new System.Drawing.Point(360, 350);
             this.likedMusicListBox.Name = "likedMusicListBox";
-            this.likedMusicListBox.Size = new System.Drawing.Size(220, 140);
+            this.likedMusicListBox.Size = new System.Drawing.Size(220, 138);
             this.likedMusicListBox.TabIndex = 1;
-            this.likedMusicListBox.SelectedIndexChanged += new System.EventHandler(this.likedMusicListBox_SelectedIndexChanged);
             // 
             // likedGroupsListBox
             // 
             this.likedGroupsListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.likedGroupsListBox.DataSource = this.groupBindingSource;
+            this.likedGroupsListBox.DisplayMember = "Name";
             this.likedGroupsListBox.FormattingEnabled = true;
-            this.likedGroupsListBox.ItemHeight = 23;
-            this.likedGroupsListBox.Location = new System.Drawing.Point(70, 350);
+            this.likedGroupsListBox.ItemHeight = 17;
+            this.likedGroupsListBox.Location = new System.Drawing.Point(66, 350);
             this.likedGroupsListBox.Name = "likedGroupsListBox";
-            this.likedGroupsListBox.Size = new System.Drawing.Size(220, 140);
+            this.likedGroupsListBox.Size = new System.Drawing.Size(220, 138);
             this.likedGroupsListBox.TabIndex = 0;
-            this.likedGroupsListBox.SelectedIndexChanged += new System.EventHandler(this.likedGroupsListBox_SelectedIndexChanged);
+            // 
+            // friendsBindingSource
+            // 
+            this.friendsBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Page);
+            // 
+            // friendsPictureBox
+            // 
+            this.friendsPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.friendsBindingSource, "ImageNormal", true));
+            this.friendsPictureBox.Location = new System.Drawing.Point(712, 251);
+            this.friendsPictureBox.Name = "friendsPictureBox";
+            this.friendsPictureBox.Size = new System.Drawing.Size(102, 93);
+            this.friendsPictureBox.TabIndex = 17;
+            this.friendsPictureBox.TabStop = false;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(983, 545);
+            this.ClientSize = new System.Drawing.Size(979, 545);
             this.Controls.Add(this.facebookExperianceWindow);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -378,10 +395,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.facebookBasicExperiancePage.ResumeLayout(false);
             this.facebookBasicExperiancePage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.musicPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.musicBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MusicPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupsPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -397,9 +417,6 @@
         private System.Windows.Forms.TextBox textBoxAppID;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Button buttonConnectAsDesig;
-        private System.Windows.Forms.PictureBox friendsPictureBox;
-        private System.Windows.Forms.PictureBox MusicPictureBox;
-        private System.Windows.Forms.PictureBox GroupsPictureBox;
         private System.Windows.Forms.ListBox likedFriendsListBox;
         private System.Windows.Forms.ListBox likedMusicListBox;
         private System.Windows.Forms.ListBox likedGroupsListBox;
@@ -411,6 +428,12 @@
         private System.Windows.Forms.Button selectPostBtn;
         private System.Windows.Forms.Label myPostsLabel;
         private System.Windows.Forms.ComboBox postsComboBox;
+        private System.Windows.Forms.PictureBox groupPictureBox;
+        private System.Windows.Forms.BindingSource groupBindingSource;
+        private System.Windows.Forms.PictureBox musicPictureBox;
+        private System.Windows.Forms.BindingSource musicBindingSource;
+        private System.Windows.Forms.PictureBox friendsPictureBox;
+        private System.Windows.Forms.BindingSource friendsBindingSource;
     }
 }
 
