@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label createdTimeLabel;
+            System.Windows.Forms.Label birthdayLabel;
+            System.Windows.Forms.Label emailLabel;
+            System.Windows.Forms.Label firstNameLabel;
+            System.Windows.Forms.Label lastNameLabel;
+            System.Windows.Forms.Label localeLabel;
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,6 +44,10 @@
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.textBoxAppID = new System.Windows.Forms.TextBox();
             this.facebookBasicExperiancePage = new System.Windows.Forms.TabPage();
+            this.createdTimeDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.postsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.friendsPictureBox = new System.Windows.Forms.PictureBox();
+            this.friendsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.musicPictureBox = new System.Windows.Forms.PictureBox();
             this.musicBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupPictureBox = new System.Windows.Forms.PictureBox();
@@ -53,20 +63,91 @@
             this.likedFriendsListBox = new System.Windows.Forms.ListBox();
             this.likedMusicListBox = new System.Windows.Forms.ListBox();
             this.likedGroupsListBox = new System.Windows.Forms.ListBox();
-            this.friendsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.friendsPictureBox = new System.Windows.Forms.PictureBox();
+            this.tabProfileInfo = new System.Windows.Forms.TabPage();
+            this.localeLabel1 = new System.Windows.Forms.Label();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.birthdayLabel1 = new System.Windows.Forms.Label();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
+            this.firstNameTextBox = new System.Windows.Forms.TextBox();
+            this.ProfileInfoPictureBox = new System.Windows.Forms.PictureBox();
+            this.lastNameTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            createdTimeLabel = new System.Windows.Forms.Label();
+            birthdayLabel = new System.Windows.Forms.Label();
+            emailLabel = new System.Windows.Forms.Label();
+            firstNameLabel = new System.Windows.Forms.Label();
+            lastNameLabel = new System.Windows.Forms.Label();
+            localeLabel = new System.Windows.Forms.Label();
             this.facebookExperianceWindow.SuspendLayout();
             this.loginPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.facebookBasicExperiancePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).BeginInit();
+            this.tabProfileInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfileInfoPictureBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // createdTimeLabel
+            // 
+            createdTimeLabel.AutoSize = true;
+            createdTimeLabel.Location = new System.Drawing.Point(200, 99);
+            createdTimeLabel.Name = "createdTimeLabel";
+            createdTimeLabel.Size = new System.Drawing.Size(93, 19);
+            createdTimeLabel.TabIndex = 17;
+            createdTimeLabel.Text = "Created Time:";
+            // 
+            // birthdayLabel
+            // 
+            birthdayLabel.AutoSize = true;
+            birthdayLabel.Location = new System.Drawing.Point(15, 152);
+            birthdayLabel.Name = "birthdayLabel";
+            birthdayLabel.Size = new System.Drawing.Size(63, 19);
+            birthdayLabel.TabIndex = 0;
+            birthdayLabel.Text = "Birthday:";
+            // 
+            // emailLabel
+            // 
+            emailLabel.AutoSize = true;
+            emailLabel.Location = new System.Drawing.Point(15, 181);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new System.Drawing.Size(44, 19);
+            emailLabel.TabIndex = 2;
+            emailLabel.Text = "Email:";
+            // 
+            // firstNameLabel
+            // 
+            firstNameLabel.AutoSize = true;
+            firstNameLabel.Location = new System.Drawing.Point(15, 212);
+            firstNameLabel.Name = "firstNameLabel";
+            firstNameLabel.Size = new System.Drawing.Size(78, 19);
+            firstNameLabel.TabIndex = 4;
+            firstNameLabel.Text = "First Name:";
+            // 
+            // lastNameLabel
+            // 
+            lastNameLabel.AutoSize = true;
+            lastNameLabel.Location = new System.Drawing.Point(15, 240);
+            lastNameLabel.Name = "lastNameLabel";
+            lastNameLabel.Size = new System.Drawing.Size(77, 19);
+            lastNameLabel.TabIndex = 8;
+            lastNameLabel.Text = "Last Name:";
+            // 
+            // localeLabel
+            // 
+            localeLabel.AutoSize = true;
+            localeLabel.Location = new System.Drawing.Point(15, 265);
+            localeLabel.Name = "localeLabel";
+            localeLabel.Size = new System.Drawing.Size(50, 19);
+            localeLabel.TabIndex = 13;
+            localeLabel.Text = "Locale:";
             // 
             // buttonLogin
             // 
@@ -119,6 +200,7 @@
             // 
             this.facebookExperianceWindow.Controls.Add(this.loginPage);
             this.facebookExperianceWindow.Controls.Add(this.facebookBasicExperiancePage);
+            this.facebookExperianceWindow.Controls.Add(this.tabProfileInfo);
             this.facebookExperianceWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.facebookExperianceWindow.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.facebookExperianceWindow.Location = new System.Drawing.Point(0, 0);
@@ -139,7 +221,7 @@
             this.loginPage.Location = new System.Drawing.Point(4, 26);
             this.loginPage.Name = "loginPage";
             this.loginPage.Padding = new System.Windows.Forms.Padding(3);
-            this.loginPage.Size = new System.Drawing.Size(975, 515);
+            this.loginPage.Size = new System.Drawing.Size(971, 515);
             this.loginPage.TabIndex = 0;
             this.loginPage.Text = "Login";
             // 
@@ -183,6 +265,9 @@
             // facebookBasicExperiancePage
             // 
             this.facebookBasicExperiancePage.BackColor = System.Drawing.Color.White;
+            this.facebookBasicExperiancePage.Controls.Add(this.label2);
+            this.facebookBasicExperiancePage.Controls.Add(createdTimeLabel);
+            this.facebookBasicExperiancePage.Controls.Add(this.createdTimeDateTimePicker);
             this.facebookBasicExperiancePage.Controls.Add(this.friendsPictureBox);
             this.facebookBasicExperiancePage.Controls.Add(this.musicPictureBox);
             this.facebookBasicExperiancePage.Controls.Add(this.groupPictureBox);
@@ -203,6 +288,31 @@
             this.facebookBasicExperiancePage.Size = new System.Drawing.Size(971, 515);
             this.facebookBasicExperiancePage.TabIndex = 1;
             this.facebookBasicExperiancePage.Text = "The Facebook Experience";
+            // 
+            // createdTimeDateTimePicker
+            // 
+            this.createdTimeDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.postsBindingSource, "CreatedTime", true));
+            this.createdTimeDateTimePicker.Location = new System.Drawing.Point(299, 95);
+            this.createdTimeDateTimePicker.Name = "createdTimeDateTimePicker";
+            this.createdTimeDateTimePicker.Size = new System.Drawing.Size(222, 25);
+            this.createdTimeDateTimePicker.TabIndex = 18;
+            // 
+            // postsBindingSource
+            // 
+            this.postsBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.PostedItem);
+            // 
+            // friendsPictureBox
+            // 
+            this.friendsPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.friendsBindingSource, "ImageNormal", true));
+            this.friendsPictureBox.Location = new System.Drawing.Point(712, 251);
+            this.friendsPictureBox.Name = "friendsPictureBox";
+            this.friendsPictureBox.Size = new System.Drawing.Size(102, 93);
+            this.friendsPictureBox.TabIndex = 17;
+            this.friendsPictureBox.TabStop = false;
+            // 
+            // friendsBindingSource
+            // 
+            this.friendsBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Page);
             // 
             // musicPictureBox
             // 
@@ -258,6 +368,8 @@
             // 
             // postsComboBox
             // 
+            this.postsComboBox.DataSource = this.postsBindingSource;
+            this.postsComboBox.DisplayMember = "Message";
             this.postsComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.postsComboBox.FormattingEnabled = true;
             this.postsComboBox.Location = new System.Drawing.Point(204, 60);
@@ -365,18 +477,90 @@
             this.likedGroupsListBox.Size = new System.Drawing.Size(220, 138);
             this.likedGroupsListBox.TabIndex = 0;
             // 
-            // friendsBindingSource
+            // tabProfileInfo
             // 
-            this.friendsBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Page);
+            this.tabProfileInfo.Controls.Add(localeLabel);
+            this.tabProfileInfo.Controls.Add(this.localeLabel1);
+            this.tabProfileInfo.Controls.Add(birthdayLabel);
+            this.tabProfileInfo.Controls.Add(this.birthdayLabel1);
+            this.tabProfileInfo.Controls.Add(emailLabel);
+            this.tabProfileInfo.Controls.Add(this.emailTextBox);
+            this.tabProfileInfo.Controls.Add(firstNameLabel);
+            this.tabProfileInfo.Controls.Add(this.firstNameTextBox);
+            this.tabProfileInfo.Controls.Add(this.ProfileInfoPictureBox);
+            this.tabProfileInfo.Controls.Add(lastNameLabel);
+            this.tabProfileInfo.Controls.Add(this.lastNameTextBox);
+            this.tabProfileInfo.Location = new System.Drawing.Point(4, 26);
+            this.tabProfileInfo.Name = "tabProfileInfo";
+            this.tabProfileInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProfileInfo.Size = new System.Drawing.Size(971, 515);
+            this.tabProfileInfo.TabIndex = 2;
+            this.tabProfileInfo.Text = "Profile Info";
+            this.tabProfileInfo.UseVisualStyleBackColor = true;
             // 
-            // friendsPictureBox
+            // localeLabel1
             // 
-            this.friendsPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.friendsBindingSource, "ImageNormal", true));
-            this.friendsPictureBox.Location = new System.Drawing.Point(712, 251);
-            this.friendsPictureBox.Name = "friendsPictureBox";
-            this.friendsPictureBox.Size = new System.Drawing.Size(102, 93);
-            this.friendsPictureBox.TabIndex = 17;
-            this.friendsPictureBox.TabStop = false;
+            this.localeLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Locale", true));
+            this.localeLabel1.Location = new System.Drawing.Point(120, 265);
+            this.localeLabel1.Name = "localeLabel1";
+            this.localeLabel1.Size = new System.Drawing.Size(100, 23);
+            this.localeLabel1.TabIndex = 14;
+            this.localeLabel1.Text = "label2";
+            // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.User);
+            // 
+            // birthdayLabel1
+            // 
+            this.birthdayLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Birthday", true));
+            this.birthdayLabel1.Location = new System.Drawing.Point(120, 152);
+            this.birthdayLabel1.Name = "birthdayLabel1";
+            this.birthdayLabel1.Size = new System.Drawing.Size(217, 23);
+            this.birthdayLabel1.TabIndex = 1;
+            this.birthdayLabel1.Text = "label2";
+            // 
+            // emailTextBox
+            // 
+            this.emailTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Email", true));
+            this.emailTextBox.Location = new System.Drawing.Point(120, 178);
+            this.emailTextBox.Name = "emailTextBox";
+            this.emailTextBox.Size = new System.Drawing.Size(217, 25);
+            this.emailTextBox.TabIndex = 3;
+            // 
+            // firstNameTextBox
+            // 
+            this.firstNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "FirstName", true));
+            this.firstNameTextBox.Location = new System.Drawing.Point(120, 209);
+            this.firstNameTextBox.Name = "firstNameTextBox";
+            this.firstNameTextBox.Size = new System.Drawing.Size(217, 25);
+            this.firstNameTextBox.TabIndex = 5;
+            // 
+            // ProfileInfoPictureBox
+            // 
+            this.ProfileInfoPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.userBindingSource, "ImageNormal", true));
+            this.ProfileInfoPictureBox.Location = new System.Drawing.Point(19, 17);
+            this.ProfileInfoPictureBox.Name = "ProfileInfoPictureBox";
+            this.ProfileInfoPictureBox.Size = new System.Drawing.Size(134, 115);
+            this.ProfileInfoPictureBox.TabIndex = 7;
+            this.ProfileInfoPictureBox.TabStop = false;
+            // 
+            // lastNameTextBox
+            // 
+            this.lastNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "LastName", true));
+            this.lastNameTextBox.Location = new System.Drawing.Point(120, 237);
+            this.lastNameTextBox.Name = "lastNameTextBox";
+            this.lastNameTextBox.Size = new System.Drawing.Size(217, 25);
+            this.lastNameTextBox.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(330, 141);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 19);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "label2";
             // 
             // FormMain
             // 
@@ -395,13 +579,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.facebookBasicExperiancePage.ResumeLayout(false);
             this.facebookBasicExperiancePage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.musicBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsPictureBox)).EndInit();
+            this.tabProfileInfo.ResumeLayout(false);
+            this.tabProfileInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfileInfoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -434,6 +623,17 @@
         private System.Windows.Forms.BindingSource musicBindingSource;
         private System.Windows.Forms.PictureBox friendsPictureBox;
         private System.Windows.Forms.BindingSource friendsBindingSource;
+        private System.Windows.Forms.DateTimePicker createdTimeDateTimePicker;
+        private System.Windows.Forms.BindingSource postsBindingSource;
+        private System.Windows.Forms.BindingSource userBindingSource;
+        private System.Windows.Forms.TabPage tabProfileInfo;
+        private System.Windows.Forms.Label birthdayLabel1;
+        private System.Windows.Forms.TextBox emailTextBox;
+        private System.Windows.Forms.TextBox firstNameTextBox;
+        private System.Windows.Forms.PictureBox ProfileInfoPictureBox;
+        private System.Windows.Forms.TextBox lastNameTextBox;
+        private System.Windows.Forms.Label localeLabel1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

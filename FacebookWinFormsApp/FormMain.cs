@@ -90,27 +90,18 @@ namespace BasicFacebookFeatures
                 throw new Exception("User is not logged in");                                                                                                                                                                                                          
             }
 
+            User user = m_LoginResult.LoggedInUser;
+
             buttonConnectAsDesig.Invoke(new Action(() => buttonConnectAsDesig.Enabled = false));
             pictureBoxProfile.Invoke(new Action(()=> 
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL));
-            User user = m_LoginResult.LoggedInUser;                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                       
-            r_userPosts.Clear();                                                                                                                                                                                                                                       
-            foreach (Post post in user.Posts)                                                                                                                                                                                                                          
-            {                                                                                                                                                                                                                                                          
-                string postStatus = post.Message;                                                                                                                                                                                                                      
-                                                                                                                                                                                                                                                                       
-                if (!string.IsNullOrEmpty(postStatus))                                                                                                                                                                                                                 
-                {                                                                                                                                                                                                                                                      
-                    r_userPosts.Add(post.Message);                                                                                                                                                                                                                     
-                }                                                                                                                                                                                                                                                      
-            }
-
+                pictureBoxProfile.ImageLocation = user.PictureNormalURL));
+            new Thread(() => attachBindingSourceAfterLogin<User>(userBindingSource, new FacebookObjectCollection<User> { user })).Start();
+            new Thread(() => attachBindingSourceAfterLogin<Post>(postsBindingSource, user.Posts)).Start();
             new Thread(() => attachBindingSourceAfterLogin<Page>(groupBindingSource, user.LikedPages)).Start();
             new Thread(() => attachBindingSourceAfterLogin<Page>(musicBindingSource, user.Music)).Start();
             new Thread(() => attachBindingSourceAfterLogin<User>(friendsBindingSource, user.Friends)).Start();
+
             profilePictureBox.Invoke(new Action(() => profilePictureBox.ImageLocation = user.PictureNormalURL));
-            postsComboBox.Invoke(new Action(() => postsComboBox.DataSource = r_userPosts));
             higherOrLowerBtn.Invoke(new Action(() => higherOrLowerBtn.Enabled = true));
             buttonMostPhotogenicYear.Invoke(new Action(() => buttonMostPhotogenicYear.Enabled = true));                                                                                                                                                                                                                   
         }                                                                                                                                                                                                                                                              
@@ -164,9 +155,9 @@ namespace BasicFacebookFeatures
                                                                                                                                                                                                                                                                        
         private void selectPostBtn_Click(object sender, EventArgs e)                                                                                                                                                                                                   
         {                                                                                                                                                                                                                                                              
-            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;                                                                                                                                                                            
-                                                                                                                                                                                                                                                                       
-            currentFavoritePostLabel.Text = chosenPost;                                                                                                                                                                                                                
+            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;
+
+            label2.Text = chosenPost;                                                                                                                                                                                                                
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
         private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                                    
