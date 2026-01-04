@@ -151,15 +151,28 @@ namespace BasicFacebookFeatures
             {                                                                                                                                                                                                                                                          
                 mostPhotogenicYearAnalyzerForm.ShowDialog();                                                                                                                                                                                                           
             }                                                                                                                                                                                                                                                          
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
-        private void selectPostBtn_Click(object sender, EventArgs e)                                                                                                                                                                                                   
-        {                                                                                                                                                                                                                                                              
-            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;
+        }
 
-            currentFavoritePostLabel.Text = chosenPost;                                                                                                                                                                                                                
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
+        private void selectPostBtn_Click(object sender, EventArgs e)
+        {
+            Post selectedPost = postsComboBox.SelectedItem as Post;
+
+            if (selectedPost == null)
+            {
+                currentFavoritePostLabel.Text = "No post selected.";
+                return;
+            }
+
+            string textToShow = selectedPost.Message;
+
+            if (string.IsNullOrEmpty(textToShow))
+            {
+                textToShow = "[Post has no message]";
+            }
+
+            currentFavoritePostLabel.Text = textToShow;
+        }
+
         private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                                    
         {                                                                                                                                                                                                                                                              
             selectPostBtn.Enabled = true;                                                                                                                                                                                                                              
