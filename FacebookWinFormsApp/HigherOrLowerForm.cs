@@ -40,9 +40,8 @@ namespace BasicFacebookFeatures
                                                                                                   
             try                                                                                   
             {                                                                                     
-                Thread showLoadingScreen = new Thread(() => MessageBox.Show("Game is loading...\nPlease wait..."));
+                new Thread(() => MessageBox.Show("Game is loading...\nPlease wait...")).Start();
                                                                                                                    
-                showLoadingScreen.Start();                                                                         
                 r_HigherLowerGameLogic.SetupNewGame(r_gameItems);                                                  
             }                                                                                                      
             catch (Exception ex)                                                                                   
@@ -50,9 +49,8 @@ namespace BasicFacebookFeatures
                 StringBuilder errorMessage = new StringBuilder(ex.Message);                                        
                                                                                                                    
                 errorMessage.AppendLine("Starting game with dummy values...");                           
-                Thread errorWhileLoadingScreen = new Thread(() => MessageBox.Show(errorMessage.ToString()));       
+                new Thread(() => MessageBox.Show(errorMessage.ToString())).Start();       
                                                                                                                    
-                errorWhileLoadingScreen.Start();                                                                   
                 r_HigherLowerGameLogic.SetupNewGameWithDummyValues(r_gameItems);                                   
             }                                                                                                      
             finally                                                                                                
@@ -66,17 +64,20 @@ namespace BasicFacebookFeatures
             
             try 
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
+                new Thread(() => 
+                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups))).Start();
             }                                                   
             catch (Exception) { }
             try
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
+                new Thread(() =>
+                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages))).Start();
             }
             catch (Exception) { }
             try
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
+                new Thread(() =>
+                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts))).Start();
             }
             catch (Exception) { }                                                                         
         }                                                                                                          
@@ -88,42 +89,61 @@ namespace BasicFacebookFeatures
                                                                                                                    
             updatePictureBox(currentGroupOrProfilePictureBox, currentPostOrGroupNameLabel, currentItem);           
             updatePictureBox(nextGroupOrProfilePictureBox, nextPostOrGroupNameLabel, nextItem);                    
-            scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}";                                            
-            higherBtn.Enabled = true;                                                                              
-            lowerBtn.Enabled = true;                                                                               
-            startNewGameBtn.Enabled = false;                                                                       
-            currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}";          
+            scoreLabel.Invoke(new Action(() => scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}"));                                            
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = true));                                                                              
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = true));                                                                               
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));                                                                       
+            currentGameItemValueLabel.Invoke(new Action(() => currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}"));          
             this.BackColor = SystemColors.Control;                                                                 
-            thanLabel.Text = "than";                                                                               
-            isLabel.Text = "is";                                                                                   
+            thanLabel.Invoke(new Action(() => thanLabel.Text = "than"));                                                                               
+            isLabel.Invoke(new Action(() => isLabel.Text = "is"));                                                                                   
         }                                                                                                          
                                                                                                                    
         private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, IFacebookObjectAdapter i_Item) 
         {                                                                                                          
-                i_Label.Text = i_Item.Text;                                                           
+                i_Label.Invoke(new Action(() => i_Label.Text = i_Item.Text));                                                           
                 i_GroupOrProfilePictureBox.Load(i_Item.ImageUrl);                               
         }                                                                                                          
                                                                                                                    
-        private void higherBtn_Click(object sender, EventArgs e)                                                   
-        {                                                                                                          
-            r_HigherLowerGameLogic.MakeGuessCurrentIsHigher();                                                     
-            checkWin();                                                                                            
-        }                                                                                                          
-                                                                                                                   
+        private void higherBtn_Click(object sender, EventArgs e)
+        {
+            disableAllGameButtons();
+            new Thread(ProcessGuessHigher).Start();
+        }
+
+        private void ProcessGuessHigher()
+        {
+            r_HigherLowerGameLogic.MakeGuessCurrentIsHigher();
+            checkWin();
+        }
+
+        private void disableAllGameButtons()
+        {
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));
+        }
+
         private void endGame()                                                                                     
         {                                                                                                          
-            lowerBtn.Enabled = false;                                                                              
-            higherBtn.Enabled = false;                                                                             
-            startNewGameBtn.Enabled = true;                                                                        
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));                                                                              
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));                                                                             
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = true));                                                                        
             this.BackColor = Color.Red;                                                                            
         }                                                                                                          
                                                                                                                    
-        private void lowerBtn_Click(object sender, EventArgs e)                                                    
-        {                                                                                                          
-            r_HigherLowerGameLogic.MakeGuessCurrentIsLower();                                                      
-            checkWin();                                                                                            
-        }                                                                                                          
-                                                                                                                   
+        private void lowerBtn_Click(object sender, EventArgs e)
+        {
+            disableAllGameButtons();
+            new Thread(peocessGuessLower).Start();
+        }
+
+        private void peocessGuessLower()
+        {
+            r_HigherLowerGameLogic.MakeGuessCurrentIsLower();
+            checkWin();
+        }
+
         private void checkWin()                                                                                    
         {                                                                                                          
             if (r_HigherLowerGameLogic.GameIsRunning)                                                              

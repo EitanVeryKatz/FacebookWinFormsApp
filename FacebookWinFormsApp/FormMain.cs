@@ -9,7 +9,8 @@ using System.Threading;
 namespace BasicFacebookFeatures                                                                                                                                                                                                                                         
 {                                                                                                                                                                                                                                                                       
     public partial class FormMain : Form                                                                                                                                                                                                                                
-    {                                                                                                                                                                                                                                                                   
+    {                                                     
+        private readonly FacebookObjectAdapterFactory r_FacebookObjectAdapterFactory = new FacebookObjectAdapterFactory();
         private FacebookWrapper.LoginResult m_LoginResult;                                                                                                                                                                                                              
         private readonly List<string> r_userPosts = new List<string>();                                                                                                                                                                                                 
                                                                                                                                                                                                                                                                         
@@ -52,8 +53,8 @@ namespace BasicFacebookFeatures
                 );                                                                                                                                                                                                                                                      
                                                                                                                                                                                                                                                                         
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))                                                                                                                                                                                                       
-            {                                                                                                                                                                                                                                                           
-                afterLogin();                                                                                                                                                                                                                                           
+            {
+                new Thread(afterLogin).Start();
             }                                                                                                                                                                                                                                                           
         }                                                                                                                                                                                                                                                               
                                                                                                                                                                                                                                                                         
@@ -80,6 +81,7 @@ namespace BasicFacebookFeatures
                 buttonLogin.Enabled = false));
             buttonLogout.Invoke(new Action(() =>
                 buttonLogout.Enabled = true));
+            r_FacebookObjectAdapterFactory.UploadingUser = m_LoginResult.LoggedInUser;
             new Thread(setUpUserInformationDisplay).Start();
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
@@ -134,7 +136,6 @@ namespace BasicFacebookFeatures
                 return;                                                                                                                                                                                                                                                
             }                                                                                                                                                                                                                                                          
                                                                                                                                                                                                                                                                        
-            HigherOrLowerForm higherOrLowerForm = new HigherOrLowerForm(m_LoginResult.LoggedInUser);
             new Thread(() => new HigherOrLowerForm(m_LoginResult.LoggedInUser).ShowDialog()).Start();                                                                                                                                                                                                                                                           
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
@@ -155,21 +156,24 @@ namespace BasicFacebookFeatures
 
         private void selectPostBtn_Click(object sender, EventArgs e)
         {
-            Post selectedPost = postsComboBox.SelectedItem as Post;
-
-            if (selectedPost == null)
+            string textToShow;
+            try
             {
-                currentFavoritePostLabel.Text = "No post selected.";
-                return;
+                IFacebookObjectAdapter selectedPost = r_FacebookObjectAdapterFactory.CreateFacebookObjectAdapter(postsComboBox.SelectedItem as Post);
+
+                if (selectedPost == null)
+                {
+                    currentFavoritePostLabel.Text = "No post selected.";
+                    return;
+                }
+
+                textToShow = selectedPost.Text;
             }
-
-            string textToShow = selectedPost.Message;
-
-            if (string.IsNullOrEmpty(textToShow))
+            catch
             {
                 textToShow = "[Post has no message]";
             }
-
+            
             currentFavoritePostLabel.Text = textToShow;
         }
 
