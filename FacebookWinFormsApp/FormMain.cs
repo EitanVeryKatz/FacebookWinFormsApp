@@ -90,36 +90,25 @@ namespace BasicFacebookFeatures
                 throw new Exception("User is not logged in");                                                                                                                                                                                                          
             }
 
+            User user = m_LoginResult.LoggedInUser;
+
             buttonConnectAsDesig.Invoke(new Action(() => buttonConnectAsDesig.Enabled = false));
             pictureBoxProfile.Invoke(new Action(()=> 
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL));
-            User user = m_LoginResult.LoggedInUser;                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                       
-            r_userPosts.Clear();                                                                                                                                                                                                                                       
-            foreach (Post post in user.Posts)                                                                                                                                                                                                                          
-            {                                                                                                                                                                                                                                                          
-                string postStatus = post.Message;                                                                                                                                                                                                                      
-                                                                                                                                                                                                                                                                       
-                if (!string.IsNullOrEmpty(postStatus))                                                                                                                                                                                                                 
-                {                                                                                                                                                                                                                                                      
-                    r_userPosts.Add(post.Message);                                                                                                                                                                                                                     
-                }                                                                                                                                                                                                                                                      
-            }                                                                                                                                                                                                                                                          
-            
-            new Thread(() => updateListBoxAfterLogin<Page>(likedGroupsListBox, user.LikedPages)).Start();
-            new Thread(() => updateListBoxAfterLogin<Page>(likedMusicListBox, user.Music)).Start();
-            new Thread(() => updateListBoxAfterLogin<User>(likedFriendsListBox, user.Friends)).Start();
+                pictureBoxProfile.ImageLocation = user.PictureNormalURL));
+            new Thread(() => attachBindingSourceAfterLogin<User>(userBindingSource, new FacebookObjectCollection<User> { user })).Start();
+            new Thread(() => attachBindingSourceAfterLogin<Post>(postsBindingSource, user.Posts)).Start();
+            new Thread(() => attachBindingSourceAfterLogin<Page>(groupBindingSource, user.LikedPages)).Start();
+            new Thread(() => attachBindingSourceAfterLogin<Page>(musicBindingSource, user.Music)).Start();
+            new Thread(() => attachBindingSourceAfterLogin<User>(friendsBindingSource, user.Friends)).Start();
+
             profilePictureBox.Invoke(new Action(() => profilePictureBox.ImageLocation = user.PictureNormalURL));
-            postsComboBox.Invoke(new Action(() => postsComboBox.DataSource = r_userPosts));
             higherOrLowerBtn.Invoke(new Action(() => higherOrLowerBtn.Enabled = true));
             buttonMostPhotogenicYear.Invoke(new Action(() => buttonMostPhotogenicYear.Enabled = true));                                                                                                                                                                                                                   
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
-        private void updateListBoxAfterLogin<T>(ListBox i_ListBox, FacebookObjectCollection<T> i_ItemsToDisplay) where T : FacebookObject                                                                                                                              
+        private void attachBindingSourceAfterLogin<T>(BindingSource i_BindingSource, FacebookObjectCollection<T> i_ItemsToDisplay) where T : FacebookObject                                                                                                                              
         {
-            i_ListBox.Invoke(new Action(() =>i_ListBox.Items.Clear()));                                                                                                                                                                                                                                   
-            i_ListBox.Invoke(new Action(() => i_ListBox.DataSource = i_ItemsToDisplay));                                                                                                                                                                                                                   
-            i_ListBox.Invoke(new Action(() => i_ListBox.DisplayMember = "Name"));                                                                                                                                                                                                                          
+            this.Invoke(new Action(() => i_BindingSource.DataSource = i_ItemsToDisplay));
         }                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                        
         private void buttonLogout_Click(object sender, EventArgs e)                                                                                                                                                                                                    
@@ -131,17 +120,7 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = true;                                                                                                                                                                                                                                
             buttonLogout.Enabled = false;                                                                                                                                                                                                                              
         }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
-        private void likedMusicListBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                                
-        {                                                                                                                                                                                                                                                              
-            MusicPictureBox.ImageLocation = (likedMusicListBox.SelectedItem as Page).PictureNormalURL;                                                                                                                                                                 
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
-        private void likedGroupsListBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                               
-        {                                                                                                                                                                                                                                                              
-            GroupsPictureBox.ImageLocation = (likedGroupsListBox.SelectedItem as Page).PictureNormalURL;                                                                                                                                                               
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
         private void likedFriendsListBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                              
         {                                                                                                                                                                                                                                                              
             friendsPictureBox.ImageLocation = (likedFriendsListBox.SelectedItem as Page).PictureNormalURL;                                                                                                                                                             
@@ -172,15 +151,28 @@ namespace BasicFacebookFeatures
             {                                                                                                                                                                                                                                                          
                 mostPhotogenicYearAnalyzerForm.ShowDialog();                                                                                                                                                                                                           
             }                                                                                                                                                                                                                                                          
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
-        private void selectPostBtn_Click(object sender, EventArgs e)                                                                                                                                                                                                   
-        {                                                                                                                                                                                                                                                              
-            string chosenPost = postsComboBox.Items[postsComboBox.SelectedIndex] as string;                                                                                                                                                                            
-                                                                                                                                                                                                                                                                       
-            currentFavoritePostLabel.Text = chosenPost;                                                                                                                                                                                                                
-        }                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                       
+        }
+
+        private void selectPostBtn_Click(object sender, EventArgs e)
+        {
+            Post selectedPost = postsComboBox.SelectedItem as Post;
+
+            if (selectedPost == null)
+            {
+                currentFavoritePostLabel.Text = "No post selected.";
+                return;
+            }
+
+            string textToShow = selectedPost.Message;
+
+            if (string.IsNullOrEmpty(textToShow))
+            {
+                textToShow = "[Post has no message]";
+            }
+
+            currentFavoritePostLabel.Text = textToShow;
+        }
+
         private void postsComboBox_SelectedIndexChanged(object sender, EventArgs e)                                                                                                                                                                                    
         {                                                                                                                                                                                                                                                              
             selectPostBtn.Enabled = true;                                                                                                                                                                                                                              
