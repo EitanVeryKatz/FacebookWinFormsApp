@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    internal class FbGroupAdapter:IFacebookObjectAdapter
+    internal class FbGroupAdapter : IFacebookObjectAdapter
     {
         private readonly FacebookWrapper.ObjectModel.Group r_Group;
         private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
@@ -41,13 +41,17 @@ namespace BasicFacebookFeatures
                 try
                 {
                     result = r_Group.Members.Count;
+                    HasDefaultValue = true;
                 }
                 catch
                 {
+                    HasDefaultValue = false;
                     result = r_randomDefaultLikesCount;
                 }
                 return result;
             }
         }
+
+        public bool HasDefaultValue { get; private set; }
     }
 }

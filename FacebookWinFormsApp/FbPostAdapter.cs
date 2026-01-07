@@ -47,14 +47,19 @@ namespace BasicFacebookFeatures
                 long result;
                 try
                 {
+
                     result = r_Post.LikedBy.Count;
+                    HasDefaultValue = false;
                 }
                 catch
                 {
+                    HasDefaultValue = true;
                     result = r_randomDefaultLikesCount;
                 }
                 return result;
             }
         }
+
+        public bool HasDefaultValue { get; private set; }
     }
 }

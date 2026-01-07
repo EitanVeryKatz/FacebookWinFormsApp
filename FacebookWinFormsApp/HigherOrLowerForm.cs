@@ -40,8 +40,7 @@ namespace BasicFacebookFeatures
                                                                                                   
             try                                                                                   
             {                                                                                     
-                new Thread(() => MessageBox.Show("Game is loading...\nPlease wait...")).Start();
-                                                                                                                   
+                new Thread(() => MessageBox.Show("Game is loading...\nPlease wait...")).Start();                                                                                                   
                 r_HigherLowerGameLogic.SetupNewGame(r_gameItems);                                                  
             }                                                                                                      
             catch (Exception ex)                                                                                   

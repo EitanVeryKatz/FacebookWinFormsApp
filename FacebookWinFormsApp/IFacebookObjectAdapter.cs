@@ -11,5 +11,6 @@ namespace BasicFacebookFeatures
         String Text { get; }
         String ImageUrl { get; }
         long LikesCount { get; }
+        bool HasDefaultValue {  get; }
     }
 }
