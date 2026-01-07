@@ -60,24 +60,21 @@ namespace BasicFacebookFeatures
         }                                                                                                          
                                                                                                                    
         private void setupGameItems()                                                                              
-        {   
-            
-            try 
-            {
-                new Thread(() => 
-                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups))).Start();
-            }                                                   
-            catch (Exception) { }
+        {
+
             try
             {
-                new Thread(() =>
-                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages))).Start();
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
             }
             catch (Exception) { }
             try
             {
-                new Thread(() =>
-                    r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts))).Start();
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
+            }
+            catch (Exception) { }
+            try
+            {
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
             }
             catch (Exception) { }                                                                         
         }                                                                                                          

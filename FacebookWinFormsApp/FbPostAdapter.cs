@@ -11,6 +11,8 @@ namespace BasicFacebookFeatures
     {
         private readonly Post r_Post;
         private readonly User r_User;
+        private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
+
 
         public FbPostAdapter(Post i_Post,User i_user)
         {
@@ -49,7 +51,7 @@ namespace BasicFacebookFeatures
                 }
                 catch
                 {
-                    result = 0;
+                    result = r_randomDefaultLikesCount;
                 }
                 return result;
             }

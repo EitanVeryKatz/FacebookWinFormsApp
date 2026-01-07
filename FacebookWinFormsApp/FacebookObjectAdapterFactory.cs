@@ -11,7 +11,8 @@ namespace BasicFacebookFeatures
     public class FacebookObjectAdapterFactory
     {
         public User UploadingUser { get; set; }
-    public IFacebookObjectAdapter CreateFacebookObjectAdapter(FacebookObject i_FacebookObject)
+        private object m_FacebookObjectCollectionLock = new object();
+        public IFacebookObjectAdapter CreateFacebookObjectAdapter(FacebookObject i_FacebookObject)
         {
             IFacebookObjectAdapter facebookObjectAdapter = null;
 
@@ -42,7 +43,10 @@ namespace BasicFacebookFeatures
                     IFacebookObjectAdapter facebookObjectAdapter = CreateFacebookObjectAdapter(facebookObject);
                     if (facebookObjectAdapter != null)
                     {
-                        facebookObjectAdapterList.Add(facebookObjectAdapter);
+                        lock (m_FacebookObjectCollectionLock)
+                        {
+                            facebookObjectAdapterList.Add(facebookObjectAdapter);
+                        }
                     }
                 }
                 catch

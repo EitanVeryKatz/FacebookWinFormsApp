@@ -9,6 +9,8 @@ namespace BasicFacebookFeatures
     internal class FbGroupAdapter:IFacebookObjectAdapter
     {
         private readonly FacebookWrapper.ObjectModel.Group r_Group;
+        private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
+
 
         public FbGroupAdapter(FacebookWrapper.ObjectModel.Group i_Group)
         {
@@ -42,7 +44,7 @@ namespace BasicFacebookFeatures
                 }
                 catch
                 {
-                    result = 0;
+                    result = r_randomDefaultLikesCount;
                 }
                 return result;
             }

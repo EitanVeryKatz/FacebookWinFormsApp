@@ -9,6 +9,7 @@ namespace BasicFacebookFeatures
     internal class FbPageAdapter : IFacebookObjectAdapter
     {
         private readonly FacebookWrapper.ObjectModel.Page r_Page;
+        private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
 
         public FbPageAdapter(FacebookWrapper.ObjectModel.Page i_Page)
         {
@@ -35,7 +36,7 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Page.LikesCount ?? 0;
+                return r_Page.LikesCount ?? r_randomDefaultLikesCount;
             }
         }
     }
