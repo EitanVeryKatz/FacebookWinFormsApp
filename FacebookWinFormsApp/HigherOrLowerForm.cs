@@ -54,7 +54,6 @@ namespace BasicFacebookFeatures
                                                                                                                    
                 errorMessage.AppendLine("Starting game with dummy values...");                           
                 new Thread(() => MessageBox.Show(errorMessage.ToString())).Start();       
-                                                                                                                   
                 r_HigherLowerGameLogic.SetupNewGameWithDummyValues(r_gameItems);                                   
             }                                                                                                      
             finally                                                                                                
@@ -65,7 +64,6 @@ namespace BasicFacebookFeatures
                                                                                                                    
         private void setupGameItems()                                                                              
         {
-
             try
             {
                 r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
@@ -109,10 +107,10 @@ namespace BasicFacebookFeatures
         private void higherBtn_Click(object sender, EventArgs e)
         {
             disableAllGameButtons();
-            new Thread(ProcessGuessHigher).Start();
+            new Thread(processGuessHigher).Start();
         }
 
-        private void ProcessGuessHigher()
+        private void processGuessHigher()
         {
             r_HigherLowerGameLogic.MakeGuessCurrentIsHigher();
             checkWin();
@@ -137,10 +135,10 @@ namespace BasicFacebookFeatures
         private void lowerBtn_Click(object sender, EventArgs e)
         {
             disableAllGameButtons();
-            new Thread(peocessGuessLower).Start();
+            new Thread(processGuessLower).Start();
         }
 
-        private void peocessGuessLower()
+        private void processGuessLower()
         {
             r_HigherLowerGameLogic.MakeGuessCurrentIsLower();
             checkWin();

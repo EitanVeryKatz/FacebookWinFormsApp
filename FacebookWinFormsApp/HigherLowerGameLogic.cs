@@ -8,6 +8,11 @@ namespace BasicFacebookFeatures
     public class HigherLowerGameLogic
     {
         private readonly Dictionary<IFacebookObjectAdapter, long> r_ItemsWithValues = new Dictionary<IFacebookObjectAdapter, long>();
+        private IFacebookObjectAdapter m_currentItem;
+        private IFacebookObjectAdapter m_nextItem;
+        private Random r_random = SingletonRandomizer.Instance;
+        public event Action GameObjectWithDefaultValueDetected;
+
         public int Score { get; private set; } = 0;                                                                  
         public bool GameIsRunning{ get; private set; } = false;                                                      
         public int MaxScore { get; private set; } = 0;                                                               
@@ -22,13 +27,8 @@ namespace BasicFacebookFeatures
         public long CurrentItemValue                                                                                 
         {                                                                                                            
             get { return r_ItemsWithValues[m_currentItem]; }                                                         
-        }                                                                                                            
-                                                                                                                     
-        private IFacebookObjectAdapter m_currentItem;                                                                        
-        private IFacebookObjectAdapter m_nextItem;                                                                           
-        private Random r_random = SingletonRandomizer.Instance;
-        public event Action GameObjectWithDefaultValueDetected;
-                                                                                                                     
+        }    
+        
         public IFacebookObjectAdapter GetRandomItem()                                                                        
         {                                                                                                            
             int randomIndex = r_random.Next(r_ItemsWithValues.Count);                                                

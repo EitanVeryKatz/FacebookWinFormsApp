@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FacebookWrapper.ObjectModel;
+
 
 namespace BasicFacebookFeatures
 {
     internal class FbGroupAdapter : IFacebookObjectAdapter
     {
-        private readonly FacebookWrapper.ObjectModel.Group r_Group;
+        private readonly Group r_Group;
         private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
 
-
-        public FbGroupAdapter(FacebookWrapper.ObjectModel.Group i_Group)
+        public FbGroupAdapter(Group i_Group)
         {
             r_Group = i_Group;
         }
