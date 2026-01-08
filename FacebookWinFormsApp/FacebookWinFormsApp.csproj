@@ -78,6 +78,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FacebookObjectAdapterFactory.cs" />
+    <Compile Include="FbGroupAdapter.cs" />
+    <Compile Include="FbPageAdapter.cs" />
+    <Compile Include="FbPostAdapter.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +95,7 @@
     <Compile Include="HigherOrLowerForm.Designer.cs">
       <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IFacebookObjectAdapter.cs" />
     <Compile Include="MostPhotogenicYearAnalyzerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +104,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingletonRandomizer.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +124,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="FacebookWrapper.ObjectModel.Page.datasource" />
+    <None Include="FacebookWrapper.ObjectModel.PostedItem.datasource" />
+    <None Include="FacebookWrapper.ObjectModel.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

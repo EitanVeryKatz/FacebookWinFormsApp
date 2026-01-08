@@ -11,8 +11,11 @@ namespace BasicFacebookFeatures
     public partial class HigherOrLowerForm : Form
     {
         private readonly User r_LoggedInUser;
+        private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private readonly List<FacebookObject> r_gameItems = new List<FacebookObject>();           
+        private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();
+        private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
+            "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
                 " the next item's value is higher or lower" +                                     
                 " than the current item's value." +                                               
@@ -25,8 +28,12 @@ namespace BasicFacebookFeatures
         public HigherOrLowerForm(User i_LoggedInUser)                                             
         {                                                                                         
             InitializeComponent();                                                                
-            r_LoggedInUser = i_LoggedInUser;                                                      
-        }                                                                                         
+            r_LoggedInUser = i_LoggedInUser;
+            r_FacebookAdapterFactory.UploadingUser = r_LoggedInUser;
+            r_HigherLowerGameLogic.GameObjectWithDefaultValueDetected += new Action(()=>
+                new Thread(() => 
+                    MessageBox.Show(k_GameObjectWithDefaultValueDetectedMessage)).Start());
+        }
                                                                                                   
         private void startNewGameBtn_Click(object sender, EventArgs e)                            
         {                                                                                         
@@ -37,19 +44,15 @@ namespace BasicFacebookFeatures
                                                                                                   
             try                                                                                   
             {                                                                                     
-                Thread showLoadingScreen = new Thread(() => MessageBox.Show("Game is loading...\nPlease wait..."));
-                                                                                                                   
-                showLoadingScreen.Start();                                                                         
+                new Thread(() => MessageBox.Show("Game is loading...\nPlease wait...")).Start();                                                                                                   
                 r_HigherLowerGameLogic.SetupNewGame(r_gameItems);                                                  
             }                                                                                                      
             catch (Exception ex)                                                                                   
             {                                                                                                      
                 StringBuilder errorMessage = new StringBuilder(ex.Message);                                        
                                                                                                                    
-                errorMessage.AppendLine("Starting game with dummy values...");                                     
-                Thread errorWhileLoadingScreen = new Thread(() => MessageBox.Show(errorMessage.ToString()));       
-                                                                                                                   
-                errorWhileLoadingScreen.Start();                                                                   
+                errorMessage.AppendLine("Starting game with dummy values...");                           
+                new Thread(() => MessageBox.Show(errorMessage.ToString())).Start();       
                 r_HigherLowerGameLogic.SetupNewGameWithDummyValues(r_gameItems);                                   
             }                                                                                                      
             finally                                                                                                
@@ -59,77 +62,87 @@ namespace BasicFacebookFeatures
         }                                                                                                          
                                                                                                                    
         private void setupGameItems()                                                                              
-        {                                                                                                          
-            try { r_gameItems.AddRange(r_LoggedInUser.Groups); }                                                   
-            catch (Exception) { }                                                                                  
-            try{r_gameItems.AddRange(r_LoggedInUser.LikedPages);}                                                  
-            catch (Exception) { }                                                                                  
-            try { r_gameItems.AddRange(r_LoggedInUser.Posts); }                                                    
-            catch (Exception) { }                                                                                  
+        {
+            try
+            {
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
+            }
+            catch (Exception) { }
+            try
+            {
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
+            }
+            catch (Exception) { }
+            try
+            {
+                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
+            }
+            catch (Exception) { }                                                                         
         }                                                                                                          
                                                                                                                    
         private void updateControllsForNewRound()                                                                  
         {                                                                                                          
-            FacebookObject currentItem = r_HigherLowerGameLogic.CurrentItem;                                       
-            FacebookObject nextItem = r_HigherLowerGameLogic.NextItem;                                             
+            IFacebookObjectAdapter currentItem = r_HigherLowerGameLogic.CurrentItem;                                       
+            IFacebookObjectAdapter nextItem = r_HigherLowerGameLogic.NextItem;                                             
                                                                                                                    
             updatePictureBox(currentGroupOrProfilePictureBox, currentPostOrGroupNameLabel, currentItem);           
             updatePictureBox(nextGroupOrProfilePictureBox, nextPostOrGroupNameLabel, nextItem);                    
-            scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}";                                            
-            higherBtn.Enabled = true;                                                                              
-            lowerBtn.Enabled = true;                                                                               
-            startNewGameBtn.Enabled = false;                                                                       
-            currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}";          
+            scoreLabel.Invoke(new Action(() => scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}"));                                            
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = true));                                                                              
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = true));                                                                               
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));                                                                       
+            currentGameItemValueLabel.Invoke(new Action(() => currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}"));          
             this.BackColor = SystemColors.Control;                                                                 
-            thanLabel.Text = "than";                                                                               
-            isLabel.Text = "is";                                                                                   
+            thanLabel.Invoke(new Action(() => thanLabel.Text = "than"));                                                                               
+            isLabel.Invoke(new Action(() => isLabel.Text = "is"));                                                                                   
         }                                                                                                          
                                                                                                                    
-        private void updateHighScoreLabel()                                                                        
+        private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, IFacebookObjectAdapter i_Item) 
         {                                                                                                          
-            highscoreLabel.Text = $"Highscore: {r_HigherLowerGameLogic.MaxScore}";                                 
+                i_Label.Invoke(new Action(() => i_Label.Text = i_Item.Text));                                                           
+                i_GroupOrProfilePictureBox.Load(i_Item.ImageUrl);                               
         }                                                                                                          
                                                                                                                    
-        private void updatePictureBox(PictureBox i_GroupOrProfilePictureBox, Label i_Label, FacebookObject i_Item) 
-        {                                                                                                          
-            if (i_Item is Group)                                                                                   
-            {                                                                                                      
-                i_Label.Text = (i_Item as Group).Name;                                                             
-                i_GroupOrProfilePictureBox.Load((i_Item as Group).PictureNormalURL);                               
-            }                                                                                                      
-            else if (i_Item is Page)                                                                               
-            {                                                                                                      
-                i_Label.Text = (i_Item as Page).Name;                                                              
-                i_GroupOrProfilePictureBox.Load((i_Item as Page).PictureNormalURL);                                
-            }                                                                                                      
-            else if (i_Item is Post)                                                                               
-            {                                                                                                      
-                i_Label.Text = (i_Item as Post).Message;                                                           
-                i_GroupOrProfilePictureBox.Load(r_LoggedInUser.PictureNormalURL);                                  
-            }                                                                                                      
-        }                                                                                                          
-                                                                                                                   
-        private void higherBtn_Click(object sender, EventArgs e)                                                   
-        {                                                                                                          
-            r_HigherLowerGameLogic.MakeGuessCurrentIsHigher();                                                     
-            checkWin();                                                                                            
-        }                                                                                                          
-                                                                                                                   
+        private void higherBtn_Click(object sender, EventArgs e)
+        {
+            disableAllGameButtons();
+            new Thread(processGuessHigher).Start();
+        }
+
+        private void processGuessHigher()
+        {
+            r_HigherLowerGameLogic.MakeGuessCurrentIsHigher();
+            checkWin();
+        }
+
+        private void disableAllGameButtons()
+        {
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));
+        }
+
         private void endGame()                                                                                     
         {                                                                                                          
-            lowerBtn.Enabled = false;                                                                              
-            higherBtn.Enabled = false;                                                                             
-            startNewGameBtn.Enabled = true;                                                                        
-            this.BackColor = Color.Red;                                                                            
-            updateHighScoreLabel();                                                                                
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));                                                                              
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));                                                                             
+            startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = true));                                                                        
+            this.BackColor = Color.Red;
+            highschoreValueLabel.Invoke(new Action(() => highschoreValueLabel.Text = r_HigherLowerGameLogic.MaxScore.ToString()));
         }                                                                                                          
                                                                                                                    
-        private void lowerBtn_Click(object sender, EventArgs e)                                                    
-        {                                                                                                          
-            r_HigherLowerGameLogic.MakeGuessCurrentIsLower();                                                      
-            checkWin();                                                                                            
-        }                                                                                                          
-                                                                                                                   
+        private void lowerBtn_Click(object sender, EventArgs e)
+        {
+            disableAllGameButtons();
+            new Thread(processGuessLower).Start();
+        }
+
+        private void processGuessLower()
+        {
+            r_HigherLowerGameLogic.MakeGuessCurrentIsLower();
+            checkWin();
+        }
+
         private void checkWin()                                                                                    
         {                                                                                                          
             if (r_HigherLowerGameLogic.GameIsRunning)                                                              
