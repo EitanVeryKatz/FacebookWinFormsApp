@@ -13,7 +13,9 @@ namespace BasicFacebookFeatures
         private readonly User r_LoggedInUser;
         private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();           
+        private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();
+        private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
+            "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
                 " the next item's value is higher or lower" +                                     
                 " than the current item's value." +                                               
@@ -29,7 +31,10 @@ namespace BasicFacebookFeatures
             r_LoggedInUser = i_LoggedInUser;
             r_FacebookAdapterFactory.UploadingUser = r_LoggedInUser;
             HigherLowerDataSource.DataSource = r_HigherLowerGameLogic;
-        }                                                                                         
+            r_HigherLowerGameLogic.GameObjectWithDefaultValueDetected += new Action(()=>
+                new Thread(() => 
+                    MessageBox.Show(k_GameObjectWithDefaultValueDetectedMessage)).Start());
+        }
                                                                                                   
         private void startNewGameBtn_Click(object sender, EventArgs e)                            
         {                                                                                         
@@ -125,7 +130,8 @@ namespace BasicFacebookFeatures
             lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));                                                                              
             higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));                                                                             
             startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = true));                                                                        
-            this.BackColor = Color.Red;                                                                            
+            this.BackColor = Color.Red;
+            highschoreValueLabel.Invoke(new Action(() => highschoreValueLabel.Text = r_HigherLowerGameLogic.MaxScore.ToString()));
         }                                                                                                          
                                                                                                                    
         private void lowerBtn_Click(object sender, EventArgs e)

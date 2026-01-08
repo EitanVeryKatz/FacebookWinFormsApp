@@ -5,7 +5,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    internal class HigherLowerGameLogic
+    public class HigherLowerGameLogic
     {
         private readonly Dictionary<IFacebookObjectAdapter, long> r_ItemsWithValues = new Dictionary<IFacebookObjectAdapter, long>();
         public int Score { get; private set; } = 0;                                                                  
@@ -26,7 +26,8 @@ namespace BasicFacebookFeatures
                                                                                                                      
         private IFacebookObjectAdapter m_currentItem;                                                                        
         private IFacebookObjectAdapter m_nextItem;                                                                           
-        private Random r_random = new Random();                                                                      
+        private Random r_random = SingletonRandomizer.Instance;
+        public event Action GameObjectWithDefaultValueDetected;
                                                                                                                      
         public IFacebookObjectAdapter GetRandomItem()                                                                        
         {                                                                                                            
@@ -98,12 +99,18 @@ namespace BasicFacebookFeatures
         }                                                                                                            
                                                                                                                      
         private void addFacebookObjectsForComparison(List<IFacebookObjectAdapter> i_facebookObjects)                         
-        {                                                                                                            
+        {
+            bool gameObjectWithDefaultValueDetectedYet = false;
             foreach (IFacebookObjectAdapter facebookObject in i_facebookObjects)                                             
             {                                                                                                        
                 try                                                                                                  
                 {     
-                    r_ItemsWithValues.Add(facebookObject, facebookObject.LikesCount);                                                                        
+                    r_ItemsWithValues.Add(facebookObject, facebookObject.LikesCount);    
+                    if(facebookObject.HasDefaultValue && !gameObjectWithDefaultValueDetectedYet)
+                    {
+                        gameObjectWithDefaultValueDetectedYet = true;
+                        GameObjectWithDefaultValueDetected.Invoke();
+                    }
                 }                                                                                                    
                 catch (Exception)                                                                                    
                 {                                                                                                    
