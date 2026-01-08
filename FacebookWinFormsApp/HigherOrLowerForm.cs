@@ -30,7 +30,6 @@ namespace BasicFacebookFeatures
             InitializeComponent();                                                                
             r_LoggedInUser = i_LoggedInUser;
             r_FacebookAdapterFactory.UploadingUser = r_LoggedInUser;
-            HigherLowerDataSource.DataSource = r_HigherLowerGameLogic;
             r_HigherLowerGameLogic.GameObjectWithDefaultValueDetected += new Action(()=>
                 new Thread(() => 
                     MessageBox.Show(k_GameObjectWithDefaultValueDetectedMessage)).Start());

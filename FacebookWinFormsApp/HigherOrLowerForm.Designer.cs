@@ -34,7 +34,7 @@
             this.higherBtn = new System.Windows.Forms.Button();
             this.lowerBtn = new System.Windows.Forms.Button();
             this.startNewGameBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.orLabel = new System.Windows.Forms.Label();
             this.scoreLabel = new System.Windows.Forms.Label();
             this.rulesBtn = new System.Windows.Forms.Button();
             this.nextPostOrGroupNameLabel = new System.Windows.Forms.Label();
@@ -44,7 +44,6 @@
             this.isLabel = new System.Windows.Forms.Label();
             this.thanLabel = new System.Windows.Forms.Label();
             this.highschoreValueLabel = new System.Windows.Forms.Label();
-            this.scoreValueLabel = new System.Windows.Forms.Label();
             this.HigherLowerDataSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
@@ -125,16 +124,16 @@
             this.startNewGameBtn.UseVisualStyleBackColor = false;
             this.startNewGameBtn.Click += new System.EventHandler(this.startNewGameBtn_Click);
             // 
-            // label1
+            // orLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DimGray;
-            this.label1.Location = new System.Drawing.Point(513, 255);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 28);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Or";
+            this.orLabel.AutoSize = true;
+            this.orLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.orLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.orLabel.Location = new System.Drawing.Point(513, 255);
+            this.orLabel.Name = "orLabel";
+            this.orLabel.Size = new System.Drawing.Size(34, 28);
+            this.orLabel.TabIndex = 5;
+            this.orLabel.Text = "Or";
             // 
             // scoreLabel
             // 
@@ -222,21 +221,10 @@
             // highschoreValueLabel
             // 
             this.highschoreValueLabel.AutoSize = true;
-            this.highschoreValueLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.HigherLowerDataSource, "MaxScore", true));
             this.highschoreValueLabel.Location = new System.Drawing.Point(991, 625);
             this.highschoreValueLabel.Name = "highschoreValueLabel";
-            this.highschoreValueLabel.Size = new System.Drawing.Size(55, 23);
+            this.highschoreValueLabel.Size = new System.Drawing.Size(0, 23);
             this.highschoreValueLabel.TabIndex = 16;
-            this.highschoreValueLabel.Text = "label2";
-            // 
-            // scoreValueLabel
-            // 
-            this.scoreValueLabel.AutoSize = true;
-            this.scoreValueLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.HigherLowerDataSource, "Score", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.scoreValueLabel.Location = new System.Drawing.Point(575, 492);
-            this.scoreValueLabel.Name = "scoreValueLabel";
-            this.scoreValueLabel.Size = new System.Drawing.Size(0, 23);
-            this.scoreValueLabel.TabIndex = 17;
             // 
             // HigherLowerDataSource
             // 
@@ -248,7 +236,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1060, 668);
-            this.Controls.Add(this.scoreValueLabel);
             this.Controls.Add(this.highschoreValueLabel);
             this.Controls.Add(this.thanLabel);
             this.Controls.Add(this.isLabel);
@@ -258,7 +245,7 @@
             this.Controls.Add(this.nextPostOrGroupNameLabel);
             this.Controls.Add(this.rulesBtn);
             this.Controls.Add(this.scoreLabel);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.orLabel);
             this.Controls.Add(this.startNewGameBtn);
             this.Controls.Add(this.lowerBtn);
             this.Controls.Add(this.higherBtn);
@@ -287,7 +274,7 @@
         private System.Windows.Forms.Button higherBtn;
         private System.Windows.Forms.Button lowerBtn;
         private System.Windows.Forms.Button startNewGameBtn;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label orLabel;
         private System.Windows.Forms.Label scoreLabel;
         private System.Windows.Forms.Button rulesBtn;
         private System.Windows.Forms.Label nextPostOrGroupNameLabel;
@@ -298,6 +285,5 @@
         private System.Windows.Forms.Label thanLabel;
         private System.Windows.Forms.BindingSource HigherLowerDataSource;
         private System.Windows.Forms.Label highschoreValueLabel;
-        private System.Windows.Forms.Label scoreValueLabel;
     }
 }

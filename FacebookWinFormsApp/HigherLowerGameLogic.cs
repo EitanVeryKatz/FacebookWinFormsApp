@@ -56,32 +56,28 @@ namespace BasicFacebookFeatures
         }                                                                                                            
                                                                                                                      
         public void MakeGuessCurrentIsHigher()                                                                       
-        {                                                                                                            
-            if (r_ItemsWithValues[m_currentItem] >= r_ItemsWithValues[m_nextItem])                                   
-            {                                                                                                        
-                Score++;                                                                                             
-                generateNextItem();                                                                                  
-            }                                                                                                        
-            else                                                                                                     
-            {                                                                                                        
-                GameIsRunning = false;                                                                               
-                tryUpdatingMaxScore();                                                                               
-            }                                                                                                        
+        {
+            makeGuess(() => r_ItemsWithValues[m_currentItem] >= r_ItemsWithValues[m_nextItem]);
         }                                                                                                            
                                                                                                                      
         public void MakeGuessCurrentIsLower()                                                                        
-        {                                                                                                            
-            if (r_ItemsWithValues[m_currentItem] <= r_ItemsWithValues[m_nextItem])                                   
-            {                                                                                                        
-                Score++;                                                                                             
-                generateNextItem();                                                                                  
-            }                                                                                                        
-            else                                                                                                     
-            {                                                                                                        
-                GameIsRunning = false;                                                                               
-                tryUpdatingMaxScore();                                                                               
-            }                                                                                                        
-        }                                                                                                            
+        {
+            makeGuess(() => r_ItemsWithValues[m_currentItem] <= r_ItemsWithValues[m_nextItem]);                                  
+        }
+        
+        private void makeGuess(Func<bool> i_Strategy)
+        {
+            if (i_Strategy.Invoke())
+            {
+                Score++;
+                generateNextItem();
+            }
+            else
+            {
+                GameIsRunning = false;
+                tryUpdatingMaxScore();
+            }
+        }
                                                                                                                      
         private void tryUpdatingMaxScore()                                                                           
         {                                                                                                            
