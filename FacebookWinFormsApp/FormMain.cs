@@ -11,9 +11,8 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form                                                                                                                                                                                                                                
     {                                                     
         private readonly FacebookObjectAdapterFactory r_FacebookObjectAdapterFactory = new FacebookObjectAdapterFactory();
-        private FacebookWrapper.LoginResult m_LoginResult;                                                                                                                                                                                                              
-        private readonly List<string> r_userPosts = new List<string>();                                                                                                                                                                                                 
-                                                                                                                                                                                                                                                                        
+        private FacebookWrapper.LoginResult m_LoginResult;
+
         public FormMain()                                                                                                                                                                                                                                               
         {                                                                                                                                                                                                                                                               
             InitializeComponent();                                                                                                                                                                                                                                      
@@ -145,13 +144,9 @@ namespace BasicFacebookFeatures
             {                                                                                                                                                                                                                                                          
                 MessageBox.Show("Please login first.");                                                                                                                                                                                                                
                 return;                                                                                                                                                                                                                                                
-            }                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                       
-            MostPhotogenicYearAnalyzerForm mostPhotogenicYearAnalyzerForm = new MostPhotogenicYearAnalyzerForm(m_LoginResult.LoggedInUser);                                                                                                                            
-                                                                                                                                                                                                                                                                       
-            {                                                                                                                                                                                                                                                          
-                mostPhotogenicYearAnalyzerForm.ShowDialog();                                                                                                                                                                                                           
-            }                                                                                                                                                                                                                                                          
+            }
+
+            new Thread(() => new MostPhotogenicYearAnalyzerForm(m_LoginResult.LoggedInUser).ShowDialog()).Start();                                                                                                                                                                                                                                                          
         }
 
         private void selectPostBtn_Click(object sender, EventArgs e)
