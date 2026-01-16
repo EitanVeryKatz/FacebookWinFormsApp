@@ -28,6 +28,10 @@ namespace BasicFacebookFeatures
             {
                 facebookObjectAdapter = new FbGroupAdapter(i_FacebookObject as Group);
             }
+            else if (i_FacebookObject is Photo)
+            {
+                facebookObjectAdapter = new FbPhotoAdapter(i_FacebookObject as Photo);
+            }
 
             return facebookObjectAdapter;
         }

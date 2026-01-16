@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    internal class FbPostAdapter: IFacebookObjectAdapter
+    public class FbPostAdapter: IFacebookObjectAdapter
     {
         private readonly Post r_Post;
         private readonly User r_User;

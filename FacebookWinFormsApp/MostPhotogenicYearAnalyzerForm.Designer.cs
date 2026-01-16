@@ -42,11 +42,10 @@
             this.listBoxYearStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxYearStats.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.listBoxYearStats.FormattingEnabled = true;
-            this.listBoxYearStats.ItemHeight = 23;
-            this.listBoxYearStats.Location = new System.Drawing.Point(50, 140);
-            this.listBoxYearStats.Margin = new System.Windows.Forms.Padding(4);
+            this.listBoxYearStats.ItemHeight = 17;
+            this.listBoxYearStats.Location = new System.Drawing.Point(38, 114);
             this.listBoxYearStats.Name = "listBoxYearStats";
-            this.listBoxYearStats.Size = new System.Drawing.Size(280, 324);
+            this.listBoxYearStats.Size = new System.Drawing.Size(210, 257);
             this.listBoxYearStats.TabIndex = 0;
             this.listBoxYearStats.SelectedIndexChanged += new System.EventHandler(this.listBoxYearStats_SelectedIndexChanged);
             // 
@@ -54,10 +53,9 @@
             // 
             this.labelTopYear.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.labelTopYear.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.labelTopYear.Location = new System.Drawing.Point(12, 20);
-            this.labelTopYear.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelTopYear.Location = new System.Drawing.Point(9, 16);
             this.labelTopYear.Name = "labelTopYear";
-            this.labelTopYear.Size = new System.Drawing.Size(1043, 60);
+            this.labelTopYear.Size = new System.Drawing.Size(782, 49);
             this.labelTopYear.TabIndex = 1;
             this.labelTopYear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -66,21 +64,19 @@
             this.labelYearDetails.BackColor = System.Drawing.Color.WhiteSmoke;
             this.labelYearDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelYearDetails.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.labelYearDetails.Location = new System.Drawing.Point(360, 140);
-            this.labelYearDetails.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelYearDetails.Location = new System.Drawing.Point(270, 114);
             this.labelYearDetails.Name = "labelYearDetails";
-            this.labelYearDetails.Padding = new System.Windows.Forms.Padding(10);
-            this.labelYearDetails.Size = new System.Drawing.Size(340, 324);
+            this.labelYearDetails.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.labelYearDetails.Size = new System.Drawing.Size(256, 264);
             this.labelYearDetails.TabIndex = 2;
             // 
             // pictureBoxTopPhoto
             // 
             this.pictureBoxTopPhoto.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBoxTopPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxTopPhoto.Location = new System.Drawing.Point(730, 140);
-            this.pictureBoxTopPhoto.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBoxTopPhoto.Location = new System.Drawing.Point(548, 114);
             this.pictureBoxTopPhoto.Name = "pictureBoxTopPhoto";
-            this.pictureBoxTopPhoto.Size = new System.Drawing.Size(300, 324);
+            this.pictureBoxTopPhoto.Size = new System.Drawing.Size(226, 264);
             this.pictureBoxTopPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxTopPhoto.TabIndex = 3;
             this.pictureBoxTopPhoto.TabStop = false;
@@ -90,10 +86,9 @@
             this.labelClickListBoxInstructions.AutoSize = true;
             this.labelClickListBoxInstructions.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
             this.labelClickListBoxInstructions.ForeColor = System.Drawing.Color.DimGray;
-            this.labelClickListBoxInstructions.Location = new System.Drawing.Point(46, 113);
-            this.labelClickListBoxInstructions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelClickListBoxInstructions.Location = new System.Drawing.Point(34, 92);
             this.labelClickListBoxInstructions.Name = "labelClickListBoxInstructions";
-            this.labelClickListBoxInstructions.Size = new System.Drawing.Size(215, 23);
+            this.labelClickListBoxInstructions.Size = new System.Drawing.Size(192, 19);
             this.labelClickListBoxInstructions.TabIndex = 4;
             this.labelClickListBoxInstructions.Text = "Select an item to view details";
             // 
@@ -101,19 +96,18 @@
             // 
             this.labelMostRecentPhoto.AutoSize = true;
             this.labelMostRecentPhoto.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.labelMostRecentPhoto.Location = new System.Drawing.Point(726, 113);
-            this.labelMostRecentPhoto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelMostRecentPhoto.Location = new System.Drawing.Point(544, 92);
             this.labelMostRecentPhoto.Name = "labelMostRecentPhoto";
-            this.labelMostRecentPhoto.Size = new System.Drawing.Size(162, 23);
+            this.labelMostRecentPhoto.Size = new System.Drawing.Size(126, 19);
             this.labelMostRecentPhoto.TabIndex = 5;
-            this.labelMostRecentPhoto.Text = "Most Recent Photo";
+            this.labelMostRecentPhoto.Text = "Most Liked Photo";
             // 
-            // MostPhotogenicYearAnalyzer
+            // MostPhotogenicYearAnalyzerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.labelMostRecentPhoto);
             this.Controls.Add(this.labelClickListBoxInstructions);
             this.Controls.Add(this.pictureBoxTopPhoto);
@@ -121,14 +115,14 @@
             this.Controls.Add(this.labelTopYear);
             this.Controls.Add(this.listBoxYearStats);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "MostPhotogenicYearAnalyzer";
+            this.Name = "MostPhotogenicYearAnalyzerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MostActiveFriendAnalyzer";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTopPhoto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

@@ -10,16 +10,14 @@ namespace BasicFacebookFeatures
     public partial class MostPhotogenicYearAnalyzerForm : Form
     {
         private readonly User r_LoggedInUser;
-        private readonly Dictionary<int, int> r_PhotosPerYear = new Dictionary<int, int>();
-        private readonly Dictionary<int, Photo> r_MostRecentPhotoPerYear = new Dictionary<int, Photo>();
-        private int m_TotalPhotosCount;
+        private readonly MostPhotogenicYearAnalyzer r_MostPhotogenicYearAnalyzer;
         private LoadingTextAnimator m_LoadingTextAnimator;
 
         public MostPhotogenicYearAnalyzerForm(User i_LoggedInUser)                         
         {                                                                                  
             InitializeComponent();                                                         
             r_LoggedInUser = i_LoggedInUser;
-
+            r_MostPhotogenicYearAnalyzer = new MostPhotogenicYearAnalyzer(r_LoggedInUser);
             m_LoadingTextAnimator = new LoadingTextAnimator(labelTopYear, "Loading photo stats");
             m_LoadingTextAnimator.Start();
             listBoxYearStats.Enabled = false;
@@ -29,34 +27,31 @@ namespace BasicFacebookFeatures
 
         private void loadPhotoStats()
         {
-            r_PhotosPerYear.Clear();
-            buildPhotosPerYearDict(r_PhotosPerYear, r_MostRecentPhotoPerYear);
-            if (r_PhotosPerYear.Count == 0)
+            try
             {
-                setTopYearText("No photos with a valid date were found.");
-                this.SafelyInvoke(new Action(stopLoadingUi));
+                r_MostPhotogenicYearAnalyzer.Analyze();
+            }
+            catch (Exception ex)
+            {
+                showError("An error occurred while initializing the analyzer: " + ex.Message);
+
                 return;
             }
 
-            m_TotalPhotosCount = r_PhotosPerYear.Values.Sum();
-            List<int> orderedYears = r_PhotosPerYear
-                .OrderByDescending(pair => pair.Value)
-                .Select(pair => pair.Key)
-                .ToList();
-
-            List<string> yearStatisticsDisplayLines = new List<string>();
-            foreach (int year in orderedYears)
+            if (r_MostPhotogenicYearAnalyzer.TotalPhotos == 0)
             {
-                yearStatisticsDisplayLines.Add(string.Format("{0} - {1} photos", year, r_PhotosPerYear[year]));
+                setTopYearText("No photos were found.");
+                this.SafelyInvoke(new Action(stopLoadingUi));
+
+                return;
             }
 
-            setYearStatisticsDisplayLines(yearStatisticsDisplayLines);
-
-            int bestYear = orderedYears[0];
-            int bestCount = r_PhotosPerYear[bestYear];
+            setYearStatisticsDisplayLines(r_MostPhotogenicYearAnalyzer.YearStatisticsList);
 
             this.SafelyInvoke(
-                new Action(() => labelTopYear.Text = $"Your most photogenic year: {bestYear} ({bestCount} photos)"));
+                new Action(() => labelTopYear.Text = 
+                $"Your most photogenic year: {r_MostPhotogenicYearAnalyzer.BestYear} " +
+                $"({r_MostPhotogenicYearAnalyzer.BestYearLikes} likes)"));
 
             this.SafelyInvoke(new Action(stopLoadingUi));
         }
@@ -67,11 +62,19 @@ namespace BasicFacebookFeatures
             listBoxYearStats.Enabled = true;
         }
 
-        private void setYearStatisticsDisplayLines(List<string> i_YearStatisticsDisplayLines)
+        private void setYearStatisticsDisplayLines(List<YearLikesInfo> i_YearStatistics)
         {
             if (listBoxYearStats.IsDisposed || !listBoxYearStats.IsHandleCreated)
             {
                 return;
+            }
+
+            List<string> i_YearStatisticsDisplayLines = new List<string>();
+
+            foreach(YearLikesInfo yearLikesInfo in i_YearStatistics)
+            {
+                i_YearStatisticsDisplayLines.
+                    Add(string.Format("{0} - {1} likes", yearLikesInfo.Year, yearLikesInfo.Likes));
             }
 
             this.SafelyInvoke(
@@ -98,60 +101,7 @@ namespace BasicFacebookFeatures
         {
             this.SafelyInvoke(new Action(() => MessageBox.Show(i_Text)));
         }
-
-        private void updateMostRecentPhotoPerYearDict(
-            Dictionary<int, Photo> i_MostRecentPhotoPerYear, int year, Photo photo)
-        {
-            if (!i_MostRecentPhotoPerYear.ContainsKey(year))
-            {
-                i_MostRecentPhotoPerYear[year] = photo;
-            }
-            else
-            {
-                DateTime currentLatestTime = i_MostRecentPhotoPerYear[year].CreatedTime.Value;
-                DateTime candidateTime = photo.CreatedTime.Value;
-
-                if (candidateTime > currentLatestTime)
-                {
-                    i_MostRecentPhotoPerYear[year] = photo;
-                }
-            }
-        }
-
-        private void buildPhotosPerYearDict(Dictionary<int, int> i_PhotosPerYear, 
-                                            Dictionary<int, Photo> i_MostRecentPhotoPerYear)
-        {                                                                                     
-            try                                                                               
-            {                                                                                 
-                foreach (Album album in r_LoggedInUser.Albums)                                
-                {                                                                             
-                    try                                                                       
-                    {                                                                         
-                        foreach (Photo photo in album.Photos)                                 
-                        {                                                                     
-                            int year = photo.CreatedTime.Value.Year;                          
-                                                                                              
-                            if (!i_PhotosPerYear.ContainsKey(year))                           
-                            {                                                                 
-                                i_PhotosPerYear[year] = 0;                                    
-                            }                                                                 
-                                                                                              
-                            i_PhotosPerYear[year]++;
-                            updateMostRecentPhotoPerYearDict(i_MostRecentPhotoPerYear, year, photo);
-                        }
-                    }                                                                         
-                    catch (KeyNotFoundException)                                              
-                    {                                                                         
-                        continue;                                                             
-                    }                                                                         
-                }                                                                             
-            }                                                                                 
-            catch (Exception ex)                                                              
-            {
-                showError("An error occurred while retrieving photos: " + ex.Message);
-            }                                                                                 
-        }                                                                                     
-                                                                                              
+                                                                                
         private void listBoxYearStats_SelectedIndexChanged(object sender, EventArgs e)        
         {                                                                                     
             if (listBoxYearStats.SelectedItem == null)                                        
@@ -161,39 +111,29 @@ namespace BasicFacebookFeatures
                                                                                               
             String itemText = listBoxYearStats.SelectedItem.ToString();                       
             int year = int.Parse(itemText.Split('-')[0].Trim());                              
-                                                                                              
+                                                                                             
             updateYearDetails(year);                                                          
         }                                                                                     
                                                                                               
-        private void updateYearDetails(int i_Year)                                            
-        {                                                                                     
-            if (r_PhotosPerYear == null || !r_PhotosPerYear.ContainsKey(i_Year))              
-            {                                                                                 
-                labelYearDetails.Text = string.Empty;                                         
-                return;                                                                       
-            }                                                                                 
+        private void updateYearDetails(int i_CurrentYear)                                            
+        {                                                                                                                                                      
                                                                                               
-            int countPerYear = r_PhotosPerYear[i_Year];                                       
+            long LikesCountPerYear = r_MostPhotogenicYearAnalyzer.GetLikesOfYear(i_CurrentYear);                                       
             double percentageOfYear = 0;                                                      
                                                                                               
-            if(m_TotalPhotosCount != 0)                                                       
+            if(r_MostPhotogenicYearAnalyzer.TotalPhotosLikes != 0)                                                       
             {                                                                                 
-                percentageOfYear = (countPerYear * 100.0) / m_TotalPhotosCount;               
+                percentageOfYear = (LikesCountPerYear * 100.0) / r_MostPhotogenicYearAnalyzer.TotalPhotosLikes;               
             }                                                                                 
                                                                                               
-            labelYearDetails.Text = $"In {i_Year} you have {countPerYear} photos " +          
-                $"({percentageOfYear:F1}% of all your dated photos)";      
+            labelYearDetails.Text = $"In {i_CurrentYear} you have {LikesCountPerYear} likes " +          
+                $"({percentageOfYear:F1}% of all your overall photo's likes)";      
             
-            Photo topPhoto = null;
-
-            if (r_MostRecentPhotoPerYear.ContainsKey(i_Year))
-            {
-                topPhoto = r_MostRecentPhotoPerYear[i_Year];
-            }
+            FbPhotoAdapter topPhoto = r_MostPhotogenicYearAnalyzer.GetTopPhotoOfYear(i_CurrentYear);
 
             if (topPhoto != null)                                                             
             {                                                                                 
-                pictureBoxTopPhoto.ImageLocation = topPhoto.PictureNormalURL;                 
+                pictureBoxTopPhoto.ImageLocation = topPhoto.ImageUrl;                 
             }                                                                                 
             else                                                                              
             {                                                                                 

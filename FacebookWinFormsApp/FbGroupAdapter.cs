@@ -8,7 +8,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    internal class FbGroupAdapter : IFacebookObjectAdapter
+    public class FbGroupAdapter : IFacebookObjectAdapter
     {
         private readonly Group r_Group;
         private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);

@@ -1,27 +1,28 @@
-﻿using System;
+﻿using FacebookWrapper.ObjectModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FacebookWrapper.ObjectModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BasicFacebookFeatures
 {
-    public class FbPageAdapter : IFacebookObjectAdapter
+    public class FbPhotoAdapter : IFacebookObjectAdapter
     {
-        private readonly Page r_Page;
+        private readonly Photo r_Photo;
         private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
         
-        public FbPageAdapter(Page i_Page)
+        public FbPhotoAdapter(Photo i_Photo)
         {
-            r_Page = i_Page;
+            r_Photo = i_Photo;
         }
 
         public String Text
         {
             get
             {
-                return r_Page.Name;
+                return r_Photo.Name;
             }
         }
 
@@ -29,7 +30,7 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Page.PictureNormalURL;
+                return r_Photo.PictureNormalURL;
             }
         }
 
@@ -37,10 +38,10 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_Page.LikesCount ?? r_randomDefaultLikesCount;
+                return r_randomDefaultLikesCount;
             }
         }
 
-        public bool HasDefaultValue { get { return r_Page.LikesCount == null; } }
+        public bool HasDefaultValue { get { return true; } }
     }
 }
