@@ -12,6 +12,7 @@ namespace BasicFacebookFeatures
     {
         private readonly Photo r_Photo;
         private readonly int r_randomDefaultLikesCount = SingletonRandomizer.Instance.Next(1, 4000);
+        private readonly int r_randomDefaultCommentsCount = SingletonRandomizer.Instance.Next(1, 4000);
         
         public FbPhotoAdapter(Photo i_Photo)
         {
@@ -38,10 +39,45 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                return r_randomDefaultLikesCount;
+                int likesCount;
+
+                try 
+                {
+                    likesCount = r_Photo.LikedBy.Count;
+                    HasDefaultValue = true;
+                }
+                catch
+                {
+                    likesCount = r_randomDefaultLikesCount;
+                    HasDefaultValue = false;
+                }
+
+                return likesCount;
             }
         }
 
-        public bool HasDefaultValue { get { return true; } }
+        public long CommentsCount
+        {
+            get
+            {
+                int commentsCount;
+
+                try
+                {
+                    commentsCount = r_Photo.Comments.Count;
+                    HasDefaultValue = true;
+                }
+                catch
+                {
+                    commentsCount = r_randomDefaultCommentsCount;
+                    HasDefaultValue = false;
+                }
+                
+                return commentsCount;
+            }
+           
+        }
+
+        public bool HasDefaultValue { get; private set; }
     }
 }
