@@ -8,38 +8,40 @@ namespace BasicFacebookFeatures
     public class MostPhotogenicYearAnalyzer
     {
         private readonly User r_LoggedInUser;
-        private readonly Dictionary<int, long> r_PhotosLikesPerYear = new Dictionary<int, long>();
-        private readonly Dictionary<int, FbPhotoAdapter> r_MostLikedPhotoPerYear = new Dictionary<int, FbPhotoAdapter>();
+        private readonly Dictionary<int, long> r_PhotoMetricSumPerYear = new Dictionary<int, long>();
+        private readonly Dictionary<int, FbPhotoAdapter> r_MostPhotogenicPhotoPerYear = new Dictionary<int, FbPhotoAdapter>();
+        private readonly IPhotoMetricStrategy r_PhotoMetricStrategy;
 
-        public List<YearLikesInfo> YearStatisticsList { get; private set; }
-        public long TotalPhotosLikes { get; private set; } = 0;
+        public List<YearMetricInfo> YearStatisticsList { get; private set; }
+        public long TotalPhotosMetricValue { get; private set; } = 0;
         public int BestYear { get; private set; } = 0;
-        public long BestYearLikes
+        public long BestYearMetricValue
         {
             get
             {
-                return r_PhotosLikesPerYear.ContainsKey(BestYear) ? r_PhotosLikesPerYear[BestYear] : 0;
+                return r_PhotoMetricSumPerYear.ContainsKey(BestYear) ? r_PhotoMetricSumPerYear[BestYear] : 0;
             }
-
-            private set { }
         }
         public int TotalPhotos { get; private set; } = 0;
 
 
-        public MostPhotogenicYearAnalyzer(User i_LoggedInUser)
+        public MostPhotogenicYearAnalyzer(User i_LoggedInUser, IPhotoMetricStrategy i_PhotoMetricStrategy)
         {
-            r_LoggedInUser = i_LoggedInUser;
+            r_LoggedInUser = i_LoggedInUser ?? 
+                throw new ArgumentNullException(nameof(i_LoggedInUser));
+
+            r_PhotoMetricStrategy = i_PhotoMetricStrategy ?? 
+                throw new ArgumentNullException(nameof(i_PhotoMetricStrategy));
         }
 
         public void Analyze()
         {
-            buildPhotosLikesPerYearDict();
+            buildPhotoMetricsPerYearDict();
             BuildYearStatisticsProps();
-            BestYearLikes = GetLikesOfYear(BestYear);
-            TotalPhotosLikes = r_PhotosLikesPerYear.Values.Sum();
+            TotalPhotosMetricValue = r_PhotoMetricSumPerYear.Values.Sum();
         }
 
-        private void buildPhotosLikesPerYearDict()
+        private void buildPhotoMetricsPerYearDict()
         {
             foreach (Album album in r_LoggedInUser.Albums)
             {
@@ -47,17 +49,22 @@ namespace BasicFacebookFeatures
                 {
                     foreach (Photo photo in album.Photos)
                     {
+                        if (photo.CreatedTime == null)
+                        {
+                            continue;
+                        }
+
                         int year = photo.CreatedTime.Value.Year;
                         FbPhotoAdapter photoAdapter = new FbPhotoAdapter(photo);
 
-                        if (!r_PhotosLikesPerYear.ContainsKey(year))
+                        if (!r_PhotoMetricSumPerYear.ContainsKey(year))
                         {
-                            r_PhotosLikesPerYear[year] = 0;
+                            r_PhotoMetricSumPerYear[year] = 0;
                         }
 
-                        r_PhotosLikesPerYear[year] += photoAdapter.LikesCount;
+                        r_PhotoMetricSumPerYear[year] += r_PhotoMetricStrategy.GetMetric(photoAdapter);
                         TotalPhotos++;
-                        updateMostLikedPhotoPerYearDict(r_MostLikedPhotoPerYear, year, photoAdapter);
+                        updateMostPhotogenicPhotoPerYearDict(year, photoAdapter);
                     }
                 }
                 catch (KeyNotFoundException)
@@ -67,50 +74,49 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void updateMostLikedPhotoPerYearDict(
-            Dictionary<int, FbPhotoAdapter> i_MostLikedPhotoPerYear, int i_CurrentYear, FbPhotoAdapter i_PhotoAdapter)
+        private void updateMostPhotogenicPhotoPerYearDict(int i_CurrentYear, FbPhotoAdapter i_PhotoAdapter)
         {
-            if (!i_MostLikedPhotoPerYear.ContainsKey(i_CurrentYear))
+            if (!r_MostPhotogenicPhotoPerYear.ContainsKey(i_CurrentYear))
             {
-                i_MostLikedPhotoPerYear[i_CurrentYear] = i_PhotoAdapter;
+                r_MostPhotogenicPhotoPerYear[i_CurrentYear] = i_PhotoAdapter;
             }
             else
             {
-                long currentLikesCount = i_MostLikedPhotoPerYear[i_CurrentYear].LikesCount;
-                long candidateLikesCount = i_PhotoAdapter.LikesCount;
+                long bestMetricValueOfYear = r_PhotoMetricStrategy.GetMetric(r_MostPhotogenicPhotoPerYear[i_CurrentYear]);
+                long candidateMetricValue = r_PhotoMetricStrategy.GetMetric(i_PhotoAdapter);
 
-                if (candidateLikesCount > currentLikesCount)
+                if (r_PhotoMetricStrategy.IsBetter(candidateMetricValue, bestMetricValueOfYear))
                 {
-                    i_MostLikedPhotoPerYear[i_CurrentYear] = i_PhotoAdapter;
+                    r_MostPhotogenicPhotoPerYear[i_CurrentYear] = i_PhotoAdapter;
                 }
             }
         }
 
         private void BuildYearStatisticsProps()
         {
-            YearStatisticsList = new List<YearLikesInfo>();
+            YearStatisticsList = new List<YearMetricInfo>();
 
-            List<int> orderedYears = r_PhotosLikesPerYear
+            List<int> orderedYears = r_PhotoMetricSumPerYear
                 .OrderByDescending(pair => pair.Value)
                 .Select(pair => pair.Key)
                 .ToList();
 
             foreach (int year in orderedYears)
             {
-                YearStatisticsList.Add(new YearLikesInfo(year, r_PhotosLikesPerYear[year]));
+                YearStatisticsList.Add(new YearMetricInfo(year, r_PhotoMetricSumPerYear[year]));
             }
 
             BestYear = orderedYears.Count > 0 ? orderedYears.First() : 0;
         }
 
-        public long GetLikesOfYear(int i_Year)
+        public long GetMetricValueOfYear(int i_Year)
         {
-            return r_PhotosLikesPerYear.ContainsKey(i_Year) ? r_PhotosLikesPerYear[i_Year] : 0;
+            return r_PhotoMetricSumPerYear.ContainsKey(i_Year) ? r_PhotoMetricSumPerYear[i_Year] : 0;
         }
 
         public FbPhotoAdapter GetTopPhotoOfYear(int i_Year)
         {
-            return r_MostLikedPhotoPerYear.ContainsKey(i_Year) ? r_MostLikedPhotoPerYear[i_Year] : null;
+            return r_MostPhotogenicPhotoPerYear.ContainsKey(i_Year) ? r_MostPhotogenicPhotoPerYear[i_Year] : null;
         }
     }
 }

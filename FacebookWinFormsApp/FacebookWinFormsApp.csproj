@@ -97,6 +97,8 @@
       <DependentUpon>HigherOrLowerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="IFacebookObjectAdapter.cs" />
+    <Compile Include="IPhotoMetricStrategy.cs" />
+    <Compile Include="LikesMetricStrategy.cs" />
     <Compile Include="LoadingTextAnimator.cs" />
     <Compile Include="MostPhotogenicYearAnalyzer.cs" />
     <Compile Include="MostPhotogenicYearAnalyzerForm.cs">
@@ -109,7 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SafeInvoke.cs" />
     <Compile Include="SingletonRandomizer.cs" />
-    <Compile Include="YearLikesInfo.cs" />
+    <Compile Include="YearMetricInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

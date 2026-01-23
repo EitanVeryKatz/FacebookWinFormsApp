@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures
         {                                                                                  
             InitializeComponent();                                                         
             r_LoggedInUser = i_LoggedInUser;
-            r_MostPhotogenicYearAnalyzer = new MostPhotogenicYearAnalyzer(r_LoggedInUser);
+            r_MostPhotogenicYearAnalyzer = new MostPhotogenicYearAnalyzer(r_LoggedInUser, new LikesMetricStrategy());  
             m_LoadingTextAnimator = new LoadingTextAnimator(labelTopYear, "Loading photo stats");
             m_LoadingTextAnimator.Start();
             listBoxYearStats.Enabled = false;
@@ -51,7 +51,7 @@ namespace BasicFacebookFeatures
             this.SafelyInvoke(
                 new Action(() => labelTopYear.Text = 
                 $"Your most photogenic year: {r_MostPhotogenicYearAnalyzer.BestYear} " +
-                $"({r_MostPhotogenicYearAnalyzer.BestYearLikes} likes)"));
+                $"({r_MostPhotogenicYearAnalyzer.BestYearMetricValue} likes)"));
 
             this.SafelyInvoke(new Action(stopLoadingUi));
         }
@@ -62,7 +62,7 @@ namespace BasicFacebookFeatures
             listBoxYearStats.Enabled = true;
         }
 
-        private void setYearStatisticsDisplayLines(List<YearLikesInfo> i_YearStatistics)
+        private void setYearStatisticsDisplayLines(List<YearMetricInfo> i_YearStatistics)
         {
             if (listBoxYearStats.IsDisposed || !listBoxYearStats.IsHandleCreated)
             {
@@ -71,10 +71,10 @@ namespace BasicFacebookFeatures
 
             List<string> i_YearStatisticsDisplayLines = new List<string>();
 
-            foreach(YearLikesInfo yearLikesInfo in i_YearStatistics)
+            foreach(YearMetricInfo yearLikesInfo in i_YearStatistics)
             {
                 i_YearStatisticsDisplayLines.
-                    Add(string.Format("{0} - {1} likes", yearLikesInfo.Year, yearLikesInfo.Likes));
+                    Add(string.Format("{0} - {1} likes", yearLikesInfo.Year, yearLikesInfo.MetricValue));
             }
 
             this.SafelyInvoke(
@@ -118,12 +118,12 @@ namespace BasicFacebookFeatures
         private void updateYearDetails(int i_CurrentYear)                                            
         {                                                                                                                                                      
                                                                                               
-            long LikesCountPerYear = r_MostPhotogenicYearAnalyzer.GetLikesOfYear(i_CurrentYear);                                       
+            long LikesCountPerYear = r_MostPhotogenicYearAnalyzer.GetMetricValueOfYear(i_CurrentYear);                                       
             double percentageOfYear = 0;                                                      
                                                                                               
-            if(r_MostPhotogenicYearAnalyzer.TotalPhotosLikes != 0)                                                       
+            if(r_MostPhotogenicYearAnalyzer.TotalPhotosMetricValue != 0)                                                       
             {                                                                                 
-                percentageOfYear = (LikesCountPerYear * 100.0) / r_MostPhotogenicYearAnalyzer.TotalPhotosLikes;               
+                percentageOfYear = (LikesCountPerYear * 100.0) / r_MostPhotogenicYearAnalyzer.TotalPhotosMetricValue;               
             }                                                                                 
                                                                                               
             labelYearDetails.Text = $"In {i_CurrentYear} you have {LikesCountPerYear} likes " +          
