@@ -293,7 +293,6 @@
             this.Name = "HigherOrLowerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Higher Or Lower";
-            this.Load += new System.EventHandler(this.HigherOrLowerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();

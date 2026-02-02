@@ -10,33 +10,50 @@ namespace BasicFacebookFeatures
 {
     public class LoadingTaskRunner
     {
+        private static readonly Dictionary<Label,object> sr_LabelLocks = new Dictionary<Label,object>();
+        private readonly object r_LockDictLock = new object();
         public Action LoadingStrategy {private get; set; }
         public Action AfterLoadingStrategy { private get; set; }
         public string BaseLoadingText { get; set; }
-        public Label LoadingLabel { get; set; }
-
-        public LoadingTaskRunner(Label i_Label)
+        
+        public void RunLoadingTask(Label i_LoadingLabel)
         {
-            BaseLoadingText = "Loading";
-            LoadingLabel = i_Label;
-        }
-
-        public void RunLoadingTask()
-        {
-            if(LoadingStrategy == null)
+            if (LoadingStrategy == null)
             {
                 throw new InvalidOperationException("Loading strategy must be set before running the loading task.");
             }
-            LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(LoadingLabel,BaseLoadingText);
-            loadingTextAnimator.Start();
-            new Thread(()=>executeTask(loadingTextAnimator)).Start();
+
+            lock (r_LockDictLock)
+            {
+                if (!sr_LabelLocks.ContainsKey(i_LoadingLabel))
+                {
+                    sr_LabelLocks.Add(i_LoadingLabel, new object());
+                }
+
+            }
+
+            new Thread(() => runTaskWithLabelLock(i_LoadingLabel)).Start();
         }
 
-        private void executeTask(LoadingTextAnimator i_LoadingTextAnimator)
+        private void runTaskWithLabelLock(Label i_LoadingLabel)
         {
-            LoadingStrategy.Invoke();
-            i_LoadingTextAnimator.Stop();
-            AfterLoadingStrategy?.Invoke();
+            lock (sr_LabelLocks[i_LoadingLabel])
+            {
+                LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(i_LoadingLabel, BaseLoadingText);
+
+                i_LoadingLabel.SafelyInvoke(() => loadingTextAnimator.Start());
+
+                try
+                {
+                    LoadingStrategy.Invoke();
+                }
+                finally
+                {
+                    i_LoadingLabel.SafelyInvoke(() => loadingTextAnimator.Stop());
+                    AfterLoadingStrategy?.Invoke();
+                }
+            }
         }
+
     }
 }

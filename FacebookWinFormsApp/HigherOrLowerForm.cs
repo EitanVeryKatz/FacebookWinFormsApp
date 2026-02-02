@@ -15,7 +15,7 @@ namespace BasicFacebookFeatures
         private readonly User r_LoggedInUser;
         private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private LoadingTaskRunner m_LoadingTaskRunner;
+        private LoadingTaskRunner m_LoadingTaskRunner = new LoadingTaskRunner();
         private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
             "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
@@ -42,7 +42,7 @@ namespace BasicFacebookFeatures
             m_LoadingTaskRunner.BaseLoadingText  = "Starting Game";
             m_LoadingTaskRunner.LoadingStrategy = startNewGame;
             m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
-            m_LoadingTaskRunner.RunLoadingTask();
+            m_LoadingTaskRunner.RunLoadingTask(loadingLabel);
         }
 
 
@@ -182,13 +182,13 @@ namespace BasicFacebookFeatures
             m_LoadingTaskRunner.BaseLoadingText = "Calculating statistics";
             m_LoadingTaskRunner.LoadingStrategy = showStatistics;
             m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
-            m_LoadingTaskRunner.RunLoadingTask();
+            m_LoadingTaskRunner.RunLoadingTask(loadingLabel);
         }
 
         private void doAfterLoadingTask()
         {
-            m_LoadingTaskRunner.LoadingLabel.Text = string.Empty;
-            enablePlayerChoiseButtons();
+            loadingLabel.Invoke(new Action(() => loadingLabel.Text = string.Empty));
+            enablePlayerChoiseButtons(); 
         }
 
         private void showStatistics()
@@ -246,11 +246,6 @@ namespace BasicFacebookFeatures
             {
                 new Thread(() => MessageBox.Show($"Error showing statistics: Game Not Loaded")).Start();
             }
-        }
-
-        private void HigherOrLowerForm_Load(object sender, EventArgs e)
-        {
-            m_LoadingTaskRunner = new LoadingTaskRunner(loadingLabel);
         }
     }                                                                                                              
 }                                                                                                                  
