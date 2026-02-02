@@ -1,6 +1,8 @@
 ﻿using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading;
@@ -13,7 +15,6 @@ namespace BasicFacebookFeatures
         private readonly User r_LoggedInUser;
         private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private readonly List<IFacebookObjectAdapter> r_gameItems = new List<IFacebookObjectAdapter>();
         private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
             "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
@@ -34,48 +35,56 @@ namespace BasicFacebookFeatures
                 new Thread(() => 
                     MessageBox.Show(k_GameObjectWithDefaultValueDetectedMessage)).Start());
         }
-                                                                                                  
-        private void startNewGameBtn_Click(object sender, EventArgs e)                            
-        {                                                                                         
-            if(r_gameItems.Count == 0)                                                            
-            {                                                                                     
-                setupGameItems();                                                                 
-            }                                                                                     
-                                                                                                  
-            try                                                                                   
-            {                                                                                     
-                new Thread(() => MessageBox.Show("Game is loading...\nPlease wait...")).Start();                                                                                                   
-                r_HigherLowerGameLogic.SetupNewGame(r_gameItems);                                                  
-            }                                                                                                      
-            catch (Exception ex)                                                                                   
-            {                                                                                                      
-                StringBuilder errorMessage = new StringBuilder(ex.Message);                                        
-                                                                                                                   
-                errorMessage.AppendLine("Starting game with dummy values...");                           
-                new Thread(() => MessageBox.Show(errorMessage.ToString())).Start();       
-                r_HigherLowerGameLogic.SetupNewGameWithDummyValues(r_gameItems);                                   
-            }                                                                                                      
-            finally                                                                                                
-            {                                                                                                      
-                updateControllsForNewRound();                                                                      
-            }                                                                                                      
-        }                                                                                                          
-                                                                                                                   
-        private void setupGameItems()                                                                              
+
+        private void startNewGameBtn_Click(object sender, EventArgs e)
+        {
+            LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(loadingLabel, "Starting new game");
+            loadingTextAnimator.Start();
+            new Thread(() => startNewGame(loadingTextAnimator)).Start();
+        }
+
+        private void startNewGame(LoadingTextAnimator i_LoadingTextAnimator)
+        {
+            List<IFacebookObjectAdapter> gameItems = new List<IFacebookObjectAdapter>();
+            if (!r_HigherLowerGameLogic.ItemsAreLoaded)
+            {
+                setupGameItems(gameItems);
+            }
+
+            try
+            {
+                r_HigherLowerGameLogic.SetupNewGame(gameItems);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder errorMessage = new StringBuilder(ex.Message);
+
+                errorMessage.AppendLine("Starting game with dummy values...");
+                new Thread(() => MessageBox.Show(errorMessage.ToString())).Start();
+                r_HigherLowerGameLogic.SetupNewGameWithDummyValues(gameItems);
+            }
+            finally
+            {
+                updateControllsForNewRound();
+                i_LoadingTextAnimator.Stop();
+            }
+        }
+
+        private void setupGameItems(List<IFacebookObjectAdapter> i_GameItemCollection)                                                                              
         {
             try
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
+                i_GameItemCollection.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Groups));
             }
             catch (Exception) { }
             try
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
+                i_GameItemCollection.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.LikedPages));
             }
             catch (Exception) { }
             try
             {
-                r_gameItems.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
+                i_GameItemCollection.AddRange(r_FacebookAdapterFactory.CreateFacebookObjectAdapterList(r_LoggedInUser.Posts));
             }
             catch (Exception) { }                                                                         
         }                                                                                                          
@@ -158,6 +167,73 @@ namespace BasicFacebookFeatures
         private void rulesBtn_Click(object sender, EventArgs e)                                                    
         {                                                                                                          
             MessageBox.Show(k_RulesMessage);                                                                       
-        }                                                                                                          
+        }
+
+        private void statisticsBtn_Click(object sender, EventArgs e)
+        {
+            LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(loadingLabel, "Calculating statistics");
+            loadingTextAnimator.Start();
+            new Thread(()=>showStatistics(loadingTextAnimator)).Start();
+        }
+
+        private void showStatistics(LoadingTextAnimator i_LoadingTextAnimator)
+        {
+            try
+            {
+                float averageValue = 0;
+                int propperlyLoadedItemsCount = 0;
+                int totalItemValue = 0;
+                long maximumItemValue = 0;
+                long currentItemScore = r_HigherLowerGameLogic.CurrentItem.LikesCount;
+                int itemsHigherThanCurrent = 0;
+                int itemsLowerThanCurrent = 0;
+                float bestMoveAccuracy = 0;
+
+                StringBuilder statisticsMessage = new StringBuilder();
+                foreach (IFacebookObjectAdapter gameItem in r_HigherLowerGameLogic)
+                {
+                    propperlyLoadedItemsCount++;
+                    totalItemValue += (int)gameItem.LikesCount;
+                    maximumItemValue = Math.Max(maximumItemValue, gameItem.LikesCount);
+                    if (gameItem.LikesCount > currentItemScore)
+                    {
+                        itemsHigherThanCurrent++;
+                    }
+
+                    if (gameItem.LikesCount < currentItemScore)
+                    {
+                        itemsLowerThanCurrent++;
+                    }
+                }
+
+                if (propperlyLoadedItemsCount > 0)
+                {
+                    averageValue = (float)totalItemValue / propperlyLoadedItemsCount;
+                }
+
+                bool bestMoveIsHigher = itemsLowerThanCurrent > itemsHigherThanCurrent;
+
+
+                if (propperlyLoadedItemsCount > 0)
+                {
+                    int winningItemsCount = bestMoveIsHigher ? itemsHigherThanCurrent : itemsLowerThanCurrent;
+                    bestMoveAccuracy = 100 - ((float)winningItemsCount / propperlyLoadedItemsCount) * 100;
+                }
+
+                statisticsMessage.AppendLine($"Total properly loaded items: {propperlyLoadedItemsCount}");
+                statisticsMessage.AppendLine($"Average item value: {averageValue}");
+                statisticsMessage.AppendLine($"Best move is to guess that the currtnt item is {(bestMoveIsHigher ? "HIGHER" : "LOWER")}");
+                statisticsMessage.AppendLine($"Best move accuracy: {bestMoveAccuracy}%");
+                new Thread(()=>MessageBox.Show(statisticsMessage.ToString())).Start();
+            }
+            catch (Exception)
+            {
+                new Thread(() => MessageBox.Show($"Error showing statistics: Game Not Loaded")).Start();
+            }
+            finally
+            {
+                i_LoadingTextAnimator.Stop();
+            }
+        }
     }                                                                                                              
 }                                                                                                                  

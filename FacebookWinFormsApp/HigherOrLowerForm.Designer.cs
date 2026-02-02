@@ -45,9 +45,13 @@
             this.thanLabel = new System.Windows.Forms.Label();
             this.highschoreValueLabel = new System.Windows.Forms.Label();
             this.HigherLowerDataSource = new System.Windows.Forms.BindingSource(this.components);
+            this.eventLog1 = new System.Diagnostics.EventLog();
+            this.statisticsBtn = new System.Windows.Forms.Button();
+            this.loadingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
             // nextGroupOrProfilePictureBox
@@ -230,12 +234,42 @@
             // 
             this.HigherLowerDataSource.DataSource = typeof(BasicFacebookFeatures.HigherLowerGameLogic);
             // 
+            // eventLog1
+            // 
+            this.eventLog1.SynchronizingObject = this;
+            // 
+            // statisticsBtn
+            // 
+            this.statisticsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.statisticsBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.statisticsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statisticsBtn.Location = new System.Drawing.Point(157, 615);
+            this.statisticsBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.statisticsBtn.Name = "statisticsBtn";
+            this.statisticsBtn.Size = new System.Drawing.Size(118, 38);
+            this.statisticsBtn.TabIndex = 17;
+            this.statisticsBtn.Text = "Statistics";
+            this.statisticsBtn.UseVisualStyleBackColor = true;
+            this.statisticsBtn.Click += new System.EventHandler(this.statisticsBtn_Click);
+            // 
+            // loadingLabel
+            // 
+            this.loadingLabel.AutoSize = true;
+            this.loadingLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.loadingLabel.Location = new System.Drawing.Point(513, 28);
+            this.loadingLabel.Name = "loadingLabel";
+            this.loadingLabel.Size = new System.Drawing.Size(0, 28);
+            this.loadingLabel.TabIndex = 18;
+            // 
             // HigherOrLowerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1060, 668);
+            this.Controls.Add(this.loadingLabel);
+            this.Controls.Add(this.statisticsBtn);
             this.Controls.Add(this.highschoreValueLabel);
             this.Controls.Add(this.thanLabel);
             this.Controls.Add(this.isLabel);
@@ -262,6 +296,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,5 +320,8 @@
         private System.Windows.Forms.Label thanLabel;
         private System.Windows.Forms.BindingSource HigherLowerDataSource;
         private System.Windows.Forms.Label highschoreValueLabel;
+        private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.Button statisticsBtn;
+        private System.Windows.Forms.Label loadingLabel;
     }
 }

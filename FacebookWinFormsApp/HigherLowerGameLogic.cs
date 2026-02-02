@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    public class HigherLowerGameLogic
+    public class HigherLowerGameLogic:IEnumerable<IFacebookObjectAdapter>
     {
         private readonly Dictionary<IFacebookObjectAdapter, long> r_ItemsWithValues = new Dictionary<IFacebookObjectAdapter, long>();
         private IFacebookObjectAdapter m_currentItem;
         private IFacebookObjectAdapter m_nextItem;
         private Random r_random = SingletonRandomizer.Instance;
         public event Action GameObjectWithDefaultValueDetected;
+        
 
         public int Score { get; private set; } = 0;                                                                  
         public bool GameIsRunning{ get; private set; } = false;                                                      
@@ -27,8 +29,10 @@ namespace BasicFacebookFeatures
         public long CurrentItemValue                                                                                 
         {                                                                                                            
             get { return r_ItemsWithValues[m_currentItem]; }                                                         
-        }    
-        
+        }
+
+        public bool ItemsAreLoaded { get; private set; }
+
         public IFacebookObjectAdapter GetRandomItem()                                                                        
         {                                                                                                            
             int randomIndex = r_random.Next(r_ItemsWithValues.Count);                                                
@@ -111,7 +115,12 @@ namespace BasicFacebookFeatures
                 catch (Exception)                                                                                    
                 {                                                                                                    
                 }                                                                                                    
-            }                                                                                                        
+            }  
+
+            if (r_ItemsWithValues.Count > 0)
+            {
+                ItemsAreLoaded = true;
+            }
         }                                                                                                            
                                                                                                                      
         public void SetupNewGameWithDummyValues(List<IFacebookObjectAdapter> i_facebookObjects)                              
@@ -135,7 +144,20 @@ namespace BasicFacebookFeatures
                                                                                                                      
             GameIsRunning = true;                                                                                    
             Score = 0;                                                                                               
-        }                                                                                                            
+        }
+
+        public IEnumerator<IFacebookObjectAdapter> GetEnumerator()
+        {
+            foreach (IFacebookObjectAdapter facebookObject in r_ItemsWithValues.Keys)
+            {
+                yield return facebookObject;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }                                                                                                                
 }                                                                                                                    
                                                                                                                      
