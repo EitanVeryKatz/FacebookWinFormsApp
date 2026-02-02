@@ -43,6 +43,7 @@ namespace BasicFacebookFeatures
             new Thread(() => startNewGame(loadingTextAnimator)).Start();
         }
 
+
         private void startNewGame(LoadingTextAnimator i_LoadingTextAnimator)
         {
             List<IFacebookObjectAdapter> gameItems = new List<IFacebookObjectAdapter>();
