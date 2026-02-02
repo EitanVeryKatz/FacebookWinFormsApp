@@ -44,14 +44,14 @@
             this.isLabel = new System.Windows.Forms.Label();
             this.thanLabel = new System.Windows.Forms.Label();
             this.highschoreValueLabel = new System.Windows.Forms.Label();
-            this.HigherLowerDataSource = new System.Windows.Forms.BindingSource(this.components);
             this.eventLog1 = new System.Diagnostics.EventLog();
             this.statisticsBtn = new System.Windows.Forms.Button();
             this.loadingLabel = new System.Windows.Forms.Label();
+            this.HigherLowerDataSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nextGroupOrProfilePictureBox
@@ -230,10 +230,6 @@
             this.highschoreValueLabel.Size = new System.Drawing.Size(0, 23);
             this.highschoreValueLabel.TabIndex = 16;
             // 
-            // HigherLowerDataSource
-            // 
-            this.HigherLowerDataSource.DataSource = typeof(BasicFacebookFeatures.HigherLowerGameLogic);
-            // 
             // eventLog1
             // 
             this.eventLog1.SynchronizingObject = this;
@@ -261,6 +257,10 @@
             this.loadingLabel.Name = "loadingLabel";
             this.loadingLabel.Size = new System.Drawing.Size(0, 28);
             this.loadingLabel.TabIndex = 18;
+            // 
+            // HigherLowerDataSource
+            // 
+            this.HigherLowerDataSource.DataSource = typeof(BasicFacebookFeatures.HigherLowerGameLogic);
             // 
             // HigherOrLowerForm
             // 
@@ -293,10 +293,11 @@
             this.Name = "HigherOrLowerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Higher Or Lower";
+            this.Load += new System.EventHandler(this.HigherOrLowerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nextGroupOrProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentGroupOrProfilePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HigherLowerDataSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

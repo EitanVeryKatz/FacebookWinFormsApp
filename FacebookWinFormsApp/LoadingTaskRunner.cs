@@ -37,7 +37,6 @@ namespace BasicFacebookFeatures
             LoadingStrategy.Invoke();
             i_LoadingTextAnimator.Stop();
             AfterLoadingStrategy?.Invoke();
-
         }
     }
 }

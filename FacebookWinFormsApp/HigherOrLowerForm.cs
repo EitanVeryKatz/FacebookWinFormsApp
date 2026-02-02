@@ -15,6 +15,7 @@ namespace BasicFacebookFeatures
         private readonly User r_LoggedInUser;
         private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
+        private LoadingTaskRunner m_LoadingTaskRunner;
         private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
             "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
@@ -38,13 +39,14 @@ namespace BasicFacebookFeatures
 
         private void startNewGameBtn_Click(object sender, EventArgs e)
         {
-            LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(loadingLabel, "Starting new game");
-            loadingTextAnimator.Start();
-            new Thread(() => startNewGame(loadingTextAnimator)).Start();
+            m_LoadingTaskRunner.BaseLoadingText  = "Starting Game";
+            m_LoadingTaskRunner.LoadingStrategy = startNewGame;
+            m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
+            m_LoadingTaskRunner.RunLoadingTask();
         }
 
 
-        private void startNewGame(LoadingTextAnimator i_LoadingTextAnimator)
+        private void startNewGame()
         {
             List<IFacebookObjectAdapter> gameItems = new List<IFacebookObjectAdapter>();
             if (!r_HigherLowerGameLogic.ItemsAreLoaded)
@@ -67,7 +69,6 @@ namespace BasicFacebookFeatures
             finally
             {
                 updateControllsForNewRound();
-                i_LoadingTextAnimator.Stop();
             }
         }
 
@@ -132,6 +133,12 @@ namespace BasicFacebookFeatures
             startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));
         }
 
+        private void enablePlayerChoiseButtons()
+        {
+            higherBtn.Invoke(new Action(() => higherBtn.Enabled = true));
+            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = true));
+        }
+
         private void endGame()                                                                                     
         {                                                                                                          
             lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));                                                                              
@@ -172,13 +179,21 @@ namespace BasicFacebookFeatures
 
         private void statisticsBtn_Click(object sender, EventArgs e)
         {
-            LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(loadingLabel, "Calculating statistics");
-            loadingTextAnimator.Start();
-            new Thread(()=>showStatistics(loadingTextAnimator)).Start();
+            m_LoadingTaskRunner.BaseLoadingText = "Calculating statistics";
+            m_LoadingTaskRunner.LoadingStrategy = showStatistics;
+            m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
+            m_LoadingTaskRunner.RunLoadingTask();
         }
 
-        private void showStatistics(LoadingTextAnimator i_LoadingTextAnimator)
+        private void doAfterLoadingTask()
         {
+            m_LoadingTaskRunner.LoadingLabel.Text = string.Empty;
+            enablePlayerChoiseButtons();
+        }
+
+        private void showStatistics()
+        {
+            disableAllGameButtons();
             try
             {
                 float averageValue = 0;
@@ -231,10 +246,11 @@ namespace BasicFacebookFeatures
             {
                 new Thread(() => MessageBox.Show($"Error showing statistics: Game Not Loaded")).Start();
             }
-            finally
-            {
-                i_LoadingTextAnimator.Stop();
-            }
+        }
+
+        private void HigherOrLowerForm_Load(object sender, EventArgs e)
+        {
+            m_LoadingTaskRunner = new LoadingTaskRunner(loadingLabel);
         }
     }                                                                                                              
 }                                                                                                                  
