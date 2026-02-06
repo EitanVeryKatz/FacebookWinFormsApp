@@ -34,6 +34,7 @@
             this.pictureBoxTopPhoto = new System.Windows.Forms.PictureBox();
             this.labelClickListBoxInstructions = new System.Windows.Forms.Label();
             this.labelMostRecentPhoto = new System.Windows.Forms.Label();
+            this.loadStatsBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTopPhoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,7 +67,7 @@
             this.labelYearDetails.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.labelYearDetails.Location = new System.Drawing.Point(270, 114);
             this.labelYearDetails.Name = "labelYearDetails";
-            this.labelYearDetails.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.labelYearDetails.Padding = new System.Windows.Forms.Padding(8);
             this.labelYearDetails.Size = new System.Drawing.Size(256, 264);
             this.labelYearDetails.TabIndex = 2;
             // 
@@ -102,12 +103,28 @@
             this.labelMostRecentPhoto.TabIndex = 5;
             this.labelMostRecentPhoto.Text = "Most Liked Photo";
             // 
+            // loadStatsBtn
+            // 
+            this.loadStatsBtn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.loadStatsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.loadStatsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loadStatsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.loadStatsBtn.ForeColor = System.Drawing.Color.White;
+            this.loadStatsBtn.Location = new System.Drawing.Point(325, 392);
+            this.loadStatsBtn.Name = "loadStatsBtn";
+            this.loadStatsBtn.Size = new System.Drawing.Size(120, 35);
+            this.loadStatsBtn.TabIndex = 15;
+            this.loadStatsBtn.Text = "Load Stats";
+            this.loadStatsBtn.UseVisualStyleBackColor = false;
+            this.loadStatsBtn.Click += new System.EventHandler(this.loadStatsBtn_Click);
+            // 
             // MostPhotogenicYearAnalyzerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.loadStatsBtn);
             this.Controls.Add(this.labelMostRecentPhoto);
             this.Controls.Add(this.labelClickListBoxInstructions);
             this.Controls.Add(this.pictureBoxTopPhoto);
@@ -133,5 +150,6 @@
         private System.Windows.Forms.PictureBox pictureBoxTopPhoto;
         private System.Windows.Forms.Label labelClickListBoxInstructions;
         private System.Windows.Forms.Label labelMostRecentPhoto;
+        private System.Windows.Forms.Button loadStatsBtn;
     }
 }

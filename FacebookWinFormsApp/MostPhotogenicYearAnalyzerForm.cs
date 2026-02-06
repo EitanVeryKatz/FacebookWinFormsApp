@@ -11,22 +11,21 @@ namespace BasicFacebookFeatures
     {
         private readonly User r_LoggedInUser;
         private readonly MostPhotogenicYearAnalyzer r_MostPhotogenicYearAnalyzer;
-        private LoadingTextAnimator m_LoadingTextAnimator;
+        private LoadingTaskRunner m_LoadingTaskRunner = new LoadingTaskRunner();
 
         public MostPhotogenicYearAnalyzerForm(User i_LoggedInUser)                         
         {                                                                                  
             InitializeComponent();                                                         
             r_LoggedInUser = i_LoggedInUser;
             r_MostPhotogenicYearAnalyzer = new MostPhotogenicYearAnalyzer(r_LoggedInUser, new LikesMetricStrategy());  
-            m_LoadingTextAnimator = new LoadingTextAnimator(labelTopYear, "Loading photo stats");
-            m_LoadingTextAnimator.Start();
             listBoxYearStats.Enabled = false;
-
-            new Thread(() => loadPhotoStats()).Start();
         }
 
         private void loadPhotoStats()
         {
+            this.SafelyInvoke(new Action(() => loadStatsBtn.Enabled = false));
+            this.SafelyInvoke(new Action(() => listBoxYearStats.Enabled = false));
+
             try
             {
                 r_MostPhotogenicYearAnalyzer.Analyze();
@@ -40,26 +39,26 @@ namespace BasicFacebookFeatures
 
             if (r_MostPhotogenicYearAnalyzer.TotalPhotos == 0)
             {
-                setTopYearText("No photos were found.");
-                this.SafelyInvoke(new Action(stopLoadingUi));
-
                 return;
             }
 
             setYearStatisticsDisplayLines(r_MostPhotogenicYearAnalyzer.YearStatisticsList);
-
-            this.SafelyInvoke(
-                new Action(() => labelTopYear.Text = 
-                $"Your most photogenic year: {r_MostPhotogenicYearAnalyzer.BestYear} " +
-                $"({r_MostPhotogenicYearAnalyzer.BestYearMetricValue} likes)"));
-
-            this.SafelyInvoke(new Action(stopLoadingUi));
         }
 
-        private void stopLoadingUi()
+        private void doAfterLoadingStats()
         {
-            m_LoadingTextAnimator.Stop();
-            listBoxYearStats.Enabled = true;
+            if (r_MostPhotogenicYearAnalyzer.TotalPhotos == 0)
+            {
+                setTopYearText("No photos were found.");
+            }
+            else 
+            {
+                setTopYearText($"Your most photogenic year: {r_MostPhotogenicYearAnalyzer.BestYear} " +
+                               $"({r_MostPhotogenicYearAnalyzer.BestYearMetricValue} likes)");
+            }
+           
+            this.SafelyInvoke(new Action(() => listBoxYearStats.Enabled = true));
+            this.SafelyInvoke(new Action(() => loadStatsBtn.Enabled = true));
         }
 
         private void setYearStatisticsDisplayLines(List<YearMetricInfo> i_YearStatistics)
@@ -90,7 +89,6 @@ namespace BasicFacebookFeatures
                 listBoxYearStats.Items.Add(displayLine);
             }
         }
-
 
         private void setTopYearText(string i_Text)
         {
@@ -139,6 +137,14 @@ namespace BasicFacebookFeatures
             {                                                                                 
                 pictureBoxTopPhoto.Image = null;                                              
             }                                                                                 
+        }
+
+        private void loadStatsBtn_Click(object sender, EventArgs e)
+        {
+            m_LoadingTaskRunner.BaseLoadingText = "Loading photo stats";
+            m_LoadingTaskRunner.LoadingStrategy = loadPhotoStats;
+            m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingStats;
+            m_LoadingTaskRunner.RunLoadingTask(labelTopYear);
         }
     }
 }
