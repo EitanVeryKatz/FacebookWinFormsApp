@@ -1,11 +1,12 @@
 ﻿using FacebookWrapper.ObjectModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BasicFacebookFeatures
 {
-    public class MostPhotogenicYearAnalyzer
+    public class MostPhotogenicYearAnalyzer : IEnumerable<YearMetricInfo>
     {
         private readonly User r_LoggedInUser;
         private readonly Dictionary<int, long> r_PhotoMetricSumPerYear = new Dictionary<int, long>();
@@ -23,7 +24,6 @@ namespace BasicFacebookFeatures
             }
         }
         public int TotalPhotos { get; private set; } = 0;
-
 
         public MostPhotogenicYearAnalyzer(User i_LoggedInUser, IPhotoMetricStrategy i_PhotoMetricStrategy)
         {
@@ -117,6 +117,19 @@ namespace BasicFacebookFeatures
         public FbPhotoAdapter GetTopPhotoOfYear(int i_Year)
         {
             return r_MostPhotogenicPhotoPerYear.ContainsKey(i_Year) ? r_MostPhotogenicPhotoPerYear[i_Year] : null;
+        }
+
+        public IEnumerator<YearMetricInfo> GetEnumerator()
+        {
+            foreach (YearMetricInfo yearMetricInfo in YearStatisticsList)
+            {
+                yield return yearMetricInfo;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

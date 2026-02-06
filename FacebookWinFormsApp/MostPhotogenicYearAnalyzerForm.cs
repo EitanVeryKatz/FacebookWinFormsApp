@@ -42,7 +42,7 @@ namespace BasicFacebookFeatures
                 return;
             }
 
-            setYearStatisticsDisplayLines(r_MostPhotogenicYearAnalyzer.YearStatisticsList);
+            setYearStatisticsDisplayLines();
         }
 
         private void doAfterLoadingStats()
@@ -61,7 +61,7 @@ namespace BasicFacebookFeatures
             this.SafelyInvoke(new Action(() => loadStatsBtn.Enabled = true));
         }
 
-        private void setYearStatisticsDisplayLines(List<YearMetricInfo> i_YearStatistics)
+        private void setYearStatisticsDisplayLines()
         {
             if (listBoxYearStats.IsDisposed || !listBoxYearStats.IsHandleCreated)
             {
@@ -70,7 +70,7 @@ namespace BasicFacebookFeatures
 
             List<string> i_YearStatisticsDisplayLines = new List<string>();
 
-            foreach(YearMetricInfo yearLikesInfo in i_YearStatistics)
+            foreach(YearMetricInfo yearLikesInfo in r_MostPhotogenicYearAnalyzer)
             {
                 i_YearStatisticsDisplayLines.
                     Add(string.Format("{0} - {1} likes", yearLikesInfo.Year, yearLikesInfo.MetricValue));
