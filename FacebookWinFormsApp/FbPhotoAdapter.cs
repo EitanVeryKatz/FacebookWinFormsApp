@@ -39,20 +39,7 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                int likesCount;
-
-                try 
-                {
-                    likesCount = r_Photo.LikedBy.Count;
-                    HasDefaultValue = true;
-                }
-                catch
-                {
-                    likesCount = r_randomDefaultLikesCount;
-                    HasDefaultValue = false;
-                }
-
-                return likesCount;
+                return r_randomDefaultLikesCount;
             }
         }
 
@@ -60,24 +47,10 @@ namespace BasicFacebookFeatures
         {
             get
             {
-                int commentsCount;
-
-                try
-                {
-                    commentsCount = r_Photo.Comments.Count;
-                    HasDefaultValue = true;
-                }
-                catch
-                {
-                    commentsCount = r_randomDefaultCommentsCount;
-                    HasDefaultValue = false;
-                }
-                
-                return commentsCount;
+                return r_randomDefaultCommentsCount;
             }
-           
         }
 
-        public bool HasDefaultValue { get; private set; }
+        public bool HasDefaultValue { get { return true; } }
     }
 }
