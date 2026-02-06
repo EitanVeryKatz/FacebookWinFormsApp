@@ -12,8 +12,7 @@ namespace BasicFacebookFeatures
         private readonly Dictionary<int, long> r_PhotoMetricSumPerYear = new Dictionary<int, long>();
         private readonly Dictionary<int, FbPhotoAdapter> r_MostPhotogenicPhotoPerYear = new Dictionary<int, FbPhotoAdapter>();
         private readonly IPhotoMetricStrategy r_PhotoMetricStrategy;
-
-        public List<YearMetricInfo> YearStatisticsList { get; private set; }
+        private readonly List<YearMetricInfo> yearStatisticsList = new List<YearMetricInfo>();
         public long TotalPhotosMetricValue { get; private set; } = 0;
         public int BestYear { get; private set; } = 0;
         public long BestYearMetricValue
@@ -94,8 +93,6 @@ namespace BasicFacebookFeatures
 
         private void BuildYearStatisticsProps()
         {
-            YearStatisticsList = new List<YearMetricInfo>();
-
             List<int> orderedYears = r_PhotoMetricSumPerYear
                 .OrderByDescending(pair => pair.Value)
                 .Select(pair => pair.Key)
@@ -103,7 +100,7 @@ namespace BasicFacebookFeatures
 
             foreach (int year in orderedYears)
             {
-                YearStatisticsList.Add(new YearMetricInfo(year, r_PhotoMetricSumPerYear[year]));
+                yearStatisticsList.Add(new YearMetricInfo(year, r_PhotoMetricSumPerYear[year]));
             }
 
             BestYear = orderedYears.Count > 0 ? orderedYears.First() : 0;
@@ -121,7 +118,7 @@ namespace BasicFacebookFeatures
 
         public IEnumerator<YearMetricInfo> GetEnumerator()
         {
-            foreach (YearMetricInfo yearMetricInfo in YearStatisticsList)
+            foreach (YearMetricInfo yearMetricInfo in yearStatisticsList)
             {
                 yield return yearMetricInfo;
             }
