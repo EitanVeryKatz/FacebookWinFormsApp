@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
@@ -42,7 +39,6 @@ namespace BasicFacebookFeatures
                 LoadingTextAnimator loadingTextAnimator = new LoadingTextAnimator(i_LoadingLabel, BaseLoadingText);
 
                 i_LoadingLabel.SafelyInvoke(() => loadingTextAnimator.Start());
-
                 try
                 {
                     LoadingStrategy.Invoke();
@@ -54,6 +50,5 @@ namespace BasicFacebookFeatures
                 }
             }
         }
-
     }
 }

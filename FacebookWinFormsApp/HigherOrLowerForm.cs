@@ -1,8 +1,6 @@
 ﻿using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading;
@@ -15,7 +13,7 @@ namespace BasicFacebookFeatures
         private readonly User r_LoggedInUser;
         private readonly FacebookObjectAdapterFactory r_FacebookAdapterFactory = new FacebookObjectAdapterFactory();
         private readonly HigherLowerGameLogic r_HigherLowerGameLogic = new HigherLowerGameLogic();
-        private LoadingTaskRunner m_LoadingTaskRunner = new LoadingTaskRunner();
+        private readonly LoadingTaskRunner r_LoadingTaskRunner = new LoadingTaskRunner();
         private const string k_GameObjectWithDefaultValueDetectedMessage = "A value for a game object was not loaded correctly..." +
             "\nSome game items might hold random default values";
         private const string k_RulesMessage = "every turn you must guess whether" +               
@@ -39,16 +37,16 @@ namespace BasicFacebookFeatures
 
         private void startNewGameBtn_Click(object sender, EventArgs e)
         {
-            m_LoadingTaskRunner.BaseLoadingText  = "Starting Game";
-            m_LoadingTaskRunner.LoadingStrategy = startNewGame;
-            m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
-            m_LoadingTaskRunner.RunLoadingTask(loadingLabel);
+            r_LoadingTaskRunner.BaseLoadingText  = "Starting Game";
+            r_LoadingTaskRunner.LoadingStrategy = startNewGame;
+            r_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
+            r_LoadingTaskRunner.RunLoadingTask(loadingLabel);
         }
-
 
         private void startNewGame()
         {
             List<IFacebookObjectAdapter> gameItems = new List<IFacebookObjectAdapter>();
+
             if (!r_HigherLowerGameLogic.ItemsAreLoaded)
             {
                 setupGameItems(gameItems);
@@ -98,9 +96,8 @@ namespace BasicFacebookFeatures
                                                                                                                    
             updatePictureBox(currentGroupOrProfilePictureBox, currentPostOrGroupNameLabel, currentItem);           
             updatePictureBox(nextGroupOrProfilePictureBox, nextPostOrGroupNameLabel, nextItem);                    
-            scoreLabel.Invoke(new Action(() => scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}"));                                            
-            higherBtn.Invoke(new Action(() => higherBtn.Enabled = true));                                                                              
-            lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = true));                                                                               
+            scoreLabel.Invoke(new Action(() => scoreLabel.Text = $"Score: {r_HigherLowerGameLogic.Score}"));
+            enablePlayerChoiseButtons();
             startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = false));                                                                       
             currentGameItemValueLabel.Invoke(new Action(() => currentGameItemValueLabel.Text = $"Current Value: {r_HigherLowerGameLogic.CurrentItemValue}"));          
             this.BackColor = SystemColors.Control;                                                                 
@@ -144,7 +141,7 @@ namespace BasicFacebookFeatures
             lowerBtn.Invoke(new Action(() => lowerBtn.Enabled = false));                                                                              
             higherBtn.Invoke(new Action(() => higherBtn.Enabled = false));                                                                             
             startNewGameBtn.Invoke(new Action(() => startNewGameBtn.Enabled = true));                                                                        
-            this.BackColor = Color.Red;
+            BackColor = Color.Red;
             highschoreValueLabel.Invoke(new Action(() => highschoreValueLabel.Text = r_HigherLowerGameLogic.MaxScore.ToString()));
         }                                                                                                          
                                                                                                                    
@@ -179,10 +176,10 @@ namespace BasicFacebookFeatures
 
         private void statisticsBtn_Click(object sender, EventArgs e)
         {
-            m_LoadingTaskRunner.BaseLoadingText = "Calculating statistics";
-            m_LoadingTaskRunner.LoadingStrategy = showStatistics;
-            m_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
-            m_LoadingTaskRunner.RunLoadingTask(loadingLabel);
+            r_LoadingTaskRunner.BaseLoadingText = "Calculating statistics";
+            r_LoadingTaskRunner.LoadingStrategy = showStatistics;
+            r_LoadingTaskRunner.AfterLoadingStrategy = doAfterLoadingTask;
+            r_LoadingTaskRunner.RunLoadingTask(loadingLabel);
         }
 
         private void doAfterLoadingTask()
@@ -204,8 +201,8 @@ namespace BasicFacebookFeatures
                 int itemsHigherThanCurrent = 0;
                 int itemsLowerThanCurrent = 0;
                 float bestMoveAccuracy = 0;
-
                 StringBuilder statisticsMessage = new StringBuilder();
+
                 foreach (IFacebookObjectAdapter gameItem in r_HigherLowerGameLogic)
                 {
                     propperlyLoadedItemsCount++;

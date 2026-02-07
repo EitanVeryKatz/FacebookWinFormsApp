@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FacebookWrapper.ObjectModel;
 
 
@@ -39,6 +35,7 @@ namespace BasicFacebookFeatures
             get
             {
                 long result;
+
                 try
                 {
                     result = r_Group.Members.Count;
@@ -49,6 +46,7 @@ namespace BasicFacebookFeatures
                     HasDefaultValue = false;
                     result = r_randomDefaultLikesCount;
                 }
+
                 return result;
             }
         }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
@@ -13,25 +12,24 @@ namespace BasicFacebookFeatures
         private IFacebookObjectAdapter m_nextItem;
         private Random r_random = SingletonRandomizer.Instance;
         public event Action GameObjectWithDefaultValueDetected;
-        
-
         public int Score { get; private set; } = 0;                                                                  
         public bool GameIsRunning{ get; private set; } = false;                                                      
-        public int MaxScore { get; private set; } = 0;                                                               
+        public int MaxScore { get; private set; } = 0;
+        public bool ItemsAreLoaded { get; private set; }
         public IFacebookObjectAdapter CurrentItem                                                                            
         {                                                                                                            
             get { return m_currentItem; }                                                                            
-        }                                                                                                            
+        }                                         
+        
         public IFacebookObjectAdapter NextItem                                                                               
         {                                                                                                            
             get { return m_nextItem; }                                                                               
-        }                                                                                                            
+        }                                             
+        
         public long CurrentItemValue                                                                                 
         {                                                                                                            
             get { return r_ItemsWithValues[m_currentItem]; }                                                         
         }
-
-        public bool ItemsAreLoaded { get; private set; }
 
         public IFacebookObjectAdapter GetRandomItem()                                                                        
         {                                                                                                            

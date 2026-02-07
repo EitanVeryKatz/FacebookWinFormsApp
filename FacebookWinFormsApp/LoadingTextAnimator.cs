@@ -45,7 +45,6 @@ namespace BasicFacebookFeatures
         private void updateLabelText()
         {
             r_TargetLabel.SafelyInvoke(() => r_TargetLabel.Text = r_BaseText + new string('.', m_DotsCount));
-            
         }
     }
 }
